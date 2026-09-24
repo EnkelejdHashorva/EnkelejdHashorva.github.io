@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enkelejd Hashorva</title>
+<meta name="description" content="Enkelejd Hashorva — Professor of Actuarial Science at HEC Lausanne, University of Lausanne. Extremes, random fields, regular variation, applied probability, insurance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbfaf7; --ink:#1a1a1a; --muted:#6b6b66; --line:#e6e3dc;
+    --accent:#1f4e79; --accent-soft:#e8eef5; --card:#ffffff;
+    --serif:"Newsreader",Georgia,serif; --sans:"Inter",system-ui,sans-serif;
+    --maxw:820px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#131313; --ink:#ebe8e1; --muted:#9a978f; --line:#2a2a2a;
+      --accent:#8fb4dc; --accent-soft:#1c2733; --card:#1b1b1b;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#131313; --ink:#ebe8e1; --muted:#9a978f; --line:#2a2a2a;
+    --accent:#8fb4dc; --accent-soft:#1c2733; --card:#1b1b1b;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+  a:hover{border-bottom-color:currentColor}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+  /* nav */
+  nav{position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+  nav .brand{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--ink);letter-spacing:.01em}
+  nav ul{list-style:none;margin:0;padding:0;display:flex;gap:22px;font-size:14px}
+  nav ul a{color:var(--muted);border:none}
+  nav ul a:hover{color:var(--ink)}
+  @media(max-width:640px){nav ul{gap:14px;font-size:13px} nav ul li.hide-sm{display:none}}
+
+  /* hero */
+  header.hero{padding:72px 0 56px;border-bottom:1px solid var(--line)}
+  header.hero .grid{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+  @media(max-width:640px){header.hero .grid{grid-template-columns:1fr} header.hero{padding:48px 0 40px}}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,6vw,56px);line-height:1.05;margin:0 0 18px;letter-spacing:-.01em}
+  .lede{font-family:var(--serif);font-size:21px;line-height:1.45;font-weight:300;color:var(--ink);max-width:560px;margin:0 0 26px}
+  .lede em{font-style:italic}
+  .links{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px}
+  .links a{color:var(--ink);border-bottom:1px solid var(--line)}
+  .links a:hover{border-bottom-color:var(--ink)}
+  .portrait{width:150px;height:150px;border-radius:50%;object-fit:cover;background:var(--accent-soft);border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);font-size:12px;text-align:center}
+  @media(max-width:640px){.portrait{width:110px;height:110px;order:-1}}
+
+  /* sections */
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin:0 0 26px}
+  .sec-head .num{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:15px}
+  h2{font-family:var(--serif);font-weight:400;font-size:30px;margin:0;letter-spacing:-.01em}
+  h3{font-family:var(--sans);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:32px 0 12px}
+  p{margin:0 0 16px;max-width:66ch}
+  .prose p{font-size:17px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}
+  @media(max-width:640px){.two{grid-template-columns:1fr}}
+  ul.plain{list-style:none;margin:0;padding:0}
+  ul.plain li{padding:8px 0;border-top:1px solid var(--line);font-size:15px}
+  ul.plain li:first-child{border-top:none}
+  ul.topics{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+  ul.topics li{background:var(--accent-soft);color:var(--accent);padding:6px 12px;border-radius:999px;font-size:14px}
+
+  /* timeline-ish list */
+  dl.tl{margin:0;display:grid;grid-template-columns:120px 1fr;gap:6px 20px;font-size:15px}
+  dl.tl dt{color:var(--muted);font-variant-numeric:tabular-nums}
+  dl.tl dd{margin:0}
+  @media(max-width:520px){dl.tl{grid-template-columns:1fr;gap:0} dl.tl dt{margin-top:10px;font-size:13px}}
+
+  /* preprints */
+  ol.papers{list-style:none;margin:0;padding:0;counter-reset:p}
+  ol.papers li{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+  ol.papers li:first-child{border-top:none;padding-top:0}
+  ol.papers .yr{color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums;padding-top:3px}
+  ol.papers .t{font-family:var(--serif);font-size:20px;line-height:1.3;margin:0 0 4px}
+  ol.papers .t a{color:var(--ink);border:none}
+  ol.papers .t a:hover{color:var(--accent)}
+  ol.papers .au{font-size:14px;color:var(--muted);margin:0 0 6px}
+  .tags{display:flex;gap:8px;flex-wrap:wrap}
+  .tag{font-size:12px;letter-spacing:.04em;padding:2px 8px;border:1px solid var(--line);border-radius:4px;color:var(--muted)}
+  .tag.arxiv{color:var(--accent);border-color:var(--accent)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--ink);border-radius:6px;color:var(--ink);font-size:14px;font-weight:500;margin-top:26px}
+  .btn:hover{background:var(--ink);color:var(--bg);border-bottom-color:var(--ink)}
+  .btn svg{width:14px;height:14px}
+
+  .placeholder{border:1px dashed var(--line);border-radius:8px;padding:20px 22px;color:var(--muted);font-size:15px;background:var(--card)}
+
+  footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">E. Hashorva</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#preprints">Preprints</a></li>
+      <li class="hide-sm"><a href="#practice">Practice</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap grid">
+    <div>
+      <p class="eyebrow">HEC Lausanne · University of Lausanne</p>
+      <h1>Enkelejd Hashorva</h1>
+      <p class="lede">Professor of Actuarial Science. I work on <em>extremes, random fields and regular variation</em>, and on the probability that underlies insurance and risk.</p>
+      <div class="links">
+        <a href="https://iris.unil.ch" target="_blank" rel="noopener">Publications on IRIS</a>
+        <a href="https://arxiv.org/a/hashorva_e_1" target="_blank" rel="noopener">arXiv</a>
+        <a href="https://scholar.google.com/citations?user=2WKQt-oAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        <a href="mailto:enkelejd.hashorva@unil.ch">Email</a>
+      </div>
+    </div>
+    <img class="portrait" src="photo.jpg" alt="Enkelejd Hashorva">
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="about" class="prose">
+  <div class="sec-head"><span class="num">01</span><h2>About</h2></div>
+  <p>I am Full Professor of Actuarial Science at HEC Lausanne, University of Lausanne, in the Department of Actuarial Science.</p>
+  <p>My research lies in theoretical stochastic analysis and applied probability, with a particular focus on rare events, extremes of random fields, regular variation, shift-invariant structures, multivariate dependence, and the representation of fundamental asymptotic constants. In connection with my actuarial background, I also work on applied problems in non-life insurance, risk management and financial mathematics.</p>
+  <p>Before joining the University of Lausanne I led the non-life pricing team at Allianz Suisse. I have held the <em>Venia Docendi</em> in applied stochastics at the University of Bern since 2004, with the title of Privatdozent, and I am a qualified actuary (SAA). I obtained my PhD at the University of Bern in 1999 under the supervision of Jürg Hüsler.</p>
+
+  <div class="two">
+    <div>
+      <h3>Editorial boards</h3>
+      <ul class="plain">
+        <li>Extremes</li>
+        <li>Journal of Applied Probability</li>
+        <li>Probability and Mathematical Statistics</li>
+        <li>Statistics &amp; Probability Letters</li>
+        <li>Spanish Journal of Statistics</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Positions &amp; education</h3>
+      <dl class="tl">
+        <dt>Present</dt><dd>Professor of Actuarial Science, HEC Lausanne</dd>
+        <dt>since 2004</dt><dd>Privatdozent, applied stochastics, University of Bern</dd>
+        <dt>earlier</dt><dd>Head of non-life pricing, Allianz Suisse</dd>
+        <dt>1999</dt><dd>PhD, University of Bern (advisor: Jürg Hüsler)</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="sec-head"><span class="num">02</span><h2>Research</h2></div>
+  <p>Themes that recur across my work:</p>
+  <ul class="topics">
+    <li>Extremes of random fields</li>
+    <li>Rare events</li>
+    <li>Regular variation</li>
+    <li>Shift-invariant structures</li>
+    <li>Multivariate dependence</li>
+    <li>Asymptotic constants</li>
+    <li>Non-life insurance</li>
+    <li>Risk management</li>
+    <li>Financial mathematics</li>
+  </ul>
+  <h3>Long-standing collaborators</h3>
+  <p>Georgiy Shevchenko, Krzysztof Dębicki, Zbigniew Michna, among many others.</p>
+</section>
+
+<section id="preprints">
+  <div class="sec-head"><span class="num">03</span><h2>Recent preprints &amp; manuscripts</h2></div>
+  <p>Work in progress and papers under review. The complete, up-to-date list of published articles is on IRIS.</p>
+
+  <!-- TEMPLATE: copy one <li> per paper. Delete the sample entries below. -->
+  <ol class="papers">
+    <li>
+      <div class="yr">2026</div>
+      <div>
+        <p class="t"><a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">Title of the first preprint goes here</a></p>
+        <p class="au">E. Hashorva, Co-author A, Co-author B</p>
+        <div class="tags"><span class="tag arxiv">arXiv</span><span class="tag">submitted</span></div>
+      </div>
+    </li>
+    <li>
+      <div class="yr">2026</div>
+      <div>
+        <p class="t"><a href="#">Title of a manuscript not yet on arXiv</a></p>
+        <p class="au">E. Hashorva, Co-author C</p>
+        <div class="tags"><span class="tag">manuscript</span><span class="tag">PDF on request</span></div>
+      </div>
+    </li>
+    <li>
+      <div class="yr">2025</div>
+      <div>
+        <p class="t"><a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">Title of an older preprint, now accepted</a></p>
+        <p class="au">K. Dębicki, E. Hashorva</p>
+        <div class="tags"><span class="tag arxiv">arXiv</span><span class="tag">accepted, Extremes</span></div>
+      </div>
+    </li>
+  </ol>
+
+  <a class="btn" href="https://iris.unil.ch" target="_blank" rel="noopener">All publications on IRIS
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg>
+  </a>
+</section>
+
+<section id="practice">
+  <div class="sec-head"><span class="num">04</span><h2>Actuarial practice</h2></div>
+  <div class="placeholder">
+    This section is reserved for industry work and applied projects — non-life pricing at Allianz Suisse, consulting, and collaborations with practitioners. Content to follow.
+  </div>
+</section>
+
+<section id="contact">
+  <div class="sec-head"><span class="num">05</span><h2>Contact</h2></div>
+  <div class="two">
+    <div>
+      <dl class="tl">
+        <dt>Email</dt><dd><a href="mailto:enkelejd.hashorva@unil.ch">enkelejd.hashorva@unil.ch</a></dd>
+        <dt>Office</dt><dd>Extranef 205</dd>
+        <dt>Address</dt><dd>Department of Actuarial Science<br>HEC Lausanne, University of Lausanne<br>Quartier UNIL-Chamberonne, Bâtiment Extranef<br>CH-1015 Lausanne, Switzerland</dd>
+      </dl>
+    </div>
+    <div>
+      <dl class="tl">
+        <dt>Department</dt><dd><a href="https://www.unil.ch/hec/" target="_blank" rel="noopener">Actuarial Science @ HEC Lausanne</a></dd>
+        <dt>Profiles</dt><dd><a href="https://iris.unil.ch" target="_blank" rel="noopener">IRIS</a> · <a href="https://orcid.org" target="_blank" rel="noopener">ORCID</a> · <a href="https://scholar.google.com/citations?user=2WKQt-oAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a></dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Enkelejd Hashorva</span>
+    <span>Hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
