@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simultaneous exceedance of a bivariate Ornstein–Uhlenbeck process</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);font-size:14px}
+  .top b{font-family:Newsreader,serif;font-weight:400;font-size:18px}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  h1{font-family:Newsreader,serif;font-weight:400;font-size:30px;margin:6px 0 6px}
+  .lead{color:var(--muted);max-width:74ch;margin:0 0 18px}
+  .lay{display:grid;grid-template-columns:1fr 300px;gap:20px}
+  @media(max-width:820px){.lay{grid-template-columns:1fr}}
+  canvas{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;display:block}
+  .panel{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--card);font-size:14px}
+  .panel label{display:block;margin:12px 0 4px;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .panel label:first-child{margin-top:0}
+  .panel input[type=range]{width:100%;accent-color:var(--accent)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:6px;cursor:pointer}
+  button:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)} button:disabled{opacity:.5;cursor:default}
+  .m{font-family:Newsreader,serif;font-style:italic}
+  .regime{margin-top:14px;padding:10px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+  .regime b{font-family:Newsreader,serif;font-weight:400;font-size:17px;display:block;margin-bottom:2px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.two{grid-template-columns:1fr}}
+  figure{margin:0} figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+  .status{font-size:13px;color:var(--muted);margin-top:10px;min-height:1.4em}
+  .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="../#gallery">← back</a></div>
+<div class="wrap">
+  <h1>Simultaneous exceedance of a bivariate Ornstein–Uhlenbeck process</h1>
+  <p class="lead">The stationary companion of <a href="quadrant.html">the quadrant animation</a>. Two Ornstein–Uhlenbeck processes with covariance <span class="m">e<sup>−|t|</sup></span> and cross-correlation <span class="m">ρ</span> run over <span class="m">[0, T]</span>; the rare event is that at some time both exceed their levels, <span class="m">X₁(t) &gt; u</span> and <span class="m">X₂(t) &gt; b₂u</span>. Which coordinates are “essential” is decided by the quadratic programme <span class="m">min x<sup>⊤</sup>Σ<sup>−1</sup>x</span> over <span class="m">x ≥ (1, b₂)</span>: for <span class="m">ρ &lt; b₂</span> both are, and at the moment of entry <span class="m">X₂</span> sits right on its threshold; for <span class="m">ρ ≥ b₂</span> only <span class="m">X₁</span> is, and <span class="m">X₂</span> enters with slack ≈ <span class="m">(ρ − b₂)u</span> to spare. Unlike the Brownian case, the entry time is uniform on <span class="m">[0,T]</span> — stationarity — so the dimension reduction shows in <em>where</em> the path enters, not <em>when</em>. The exceedance probability is asymptotically <span class="m">T ℋ u<sup>2</sup> P(X(0) &gt; u b)</span> with a multidimensional Pickands constant <span class="m">ℋ</span>.
+  From <a href="https://arxiv.org/abs/1911.06350" target="_blank" rel="noopener">Dębicki, Hashorva &amp; Wang</a>, <em>Extremes of vector-valued Gaussian processes</em>.</p>
+
+  <div class="lay">
+    <div>
+      <div class="two">
+        <figure><canvas id="cp" width="520" height="520"></canvas><figcaption>the plane (X₁(t), X₂(t)); entry points marked, the part inside the quadrant in orange; paths are cut 0.8 time units after entry</figcaption></figure>
+        <figure><canvas id="ct" width="520" height="520"></canvas><figcaption>the same paths against time — X₁ (dark), X₂ (blue) — with thresholds; below, the histogram of the slack X₂(τ) − b₂u at entry and its predicted value</figcaption></figure>
+      </div>
+      <div class="status" id="st"></div>
+    </div>
+    <div class="panel">
+      <label>Cross-correlation ρ = <span id="rv">0.30</span></label>
+      <input type="range" id="r" min="-0.9" max="0.95" step="0.01" value="0.3">
+      <label>Levels: b₁ = 1 (fixed), b₂ = <span id="av">0.50</span></label>
+      <input type="range" id="a" min="0.2" max="1" step="0.05" value="0.5">
+      <label>Level u = <span id="uv">2.5</span></label>
+      <input type="range" id="u" min="1.5" max="3.5" step="0.25" value="2.5">
+      <div class="row"><button id="run">Find new paths</button><button id="pp">Pause</button></div>
+      <div class="regime" id="reg"></div>
+      <div class="note">Exact simulation of the stationary process (AR(1) step with e<sup>−dt</sup>, dt = 0.01, T = 6, stationary start). Paths are found by brute force, up to 60 000 attempts.</div>
+    </div>
+  </div>
+</div>
+<script>
+let rho=0.3,b2=0.5,u=2.5,paths=[],attempts=0,frame=0,facc=0,playing=true;
+const T=6,dt=0.01,SUB=3,SPEED=0.45;
+function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
+const dark=()=>true;
+function theory(){return rho<b2?{regime:1,slack:0}:{regime:2,slack:(rho-b2)*u}}
+async function find(){
+  const b=document.getElementById('run');b.disabled=true;paths=[];attempts=0;frame=0;
+  const steps=Math.round(T/dt),e=Math.exp(-dt),s=Math.sqrt(1-e*e),c=Math.sqrt(1-rho*rho),want=24,cap=60000;const t1=performance.now();
+  while(paths.length<want&&attempts<cap){
+    for(let k=0;k<300&&paths.length<want&&attempts<cap;k++){attempts++;
+      let z1=randn(),x=z1,y=rho*z1+c*randn();const px=[x],py=[y];let hitAt=-1,idx=-1;
+      for(let n=1;n<=steps;n++){z1=randn();const z2=rho*z1+c*randn();x=e*x+s*z1;y=e*y+s*z2;
+        if(n%SUB===0){px.push(x);py.push(y)}
+        if(hitAt<0&&x>=u&&y>=b2*u){hitAt=n*dt;idx=Math.round(n/SUB)}
+        if(hitAt>=0&&n*dt>hitAt+0.8)break}
+      if(hitAt>=0){paths.push({px,py,tau:hitAt,idx,slack:py[idx]-b2*u})}}
+    status();await new Promise(r=>setTimeout(r,0))}
+  status(true,performance.now()-t1);b.disabled=false}
+function status(done,ms){document.getElementById('st').textContent=`${paths.length} exceeding paths found in ${attempts.toLocaleString()} attempts`+(paths.length?` (empirical frequency ${(paths.length/attempts).toExponential(2)})`:'')+(done?` · ${(ms/1000).toFixed(1)} s`:' …')}
+function drawPlane(){
+  const cv=document.getElementById('cp'),ctx=cv.getContext('2d'),d=dark(),W=cv.width;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,W);
+  const L=u*1.35,lo=-3;const X=x=>W*(x-lo)/(L-lo),Y=y=>W-W*(y-lo)/(L-lo);
+  ctx.fillStyle=d?'rgba(31,95,168,.18)':'rgba(31,95,168,.13)';ctx.fillRect(X(u),0,W-X(u),Y(b2*u));
+  ctx.strokeStyle=d?'#1f5fa8':'#1f5fa8';ctx.lineWidth=1.5;ctx.strokeRect(X(u),-2,W-X(u)+4,Y(b2*u)+2);
+  ctx.strokeStyle=d?'rgba(27,42,74,.25)':'rgba(27,42,74,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(X(0),0);ctx.lineTo(X(0),W);ctx.moveTo(0,Y(0));ctx.lineTo(W,Y(0));ctx.stroke();
+  // ellipse of the stationary law (2 sd)
+  ctx.strokeStyle=d?'rgba(93,107,133,.35)':'rgba(93,107,133,.3)';ctx.beginPath();for(let k=0;k<=72;k++){const th=2*Math.PI*k/72,z1=2*Math.cos(th),z2=2*Math.sin(th);const x=z1,y=rho*z1+Math.sqrt(1-rho*rho)*z2;k?ctx.lineTo(X(x),Y(y)):ctx.moveTo(X(x),Y(y))}ctx.stroke();
+  for(const P of paths){const n=Math.min(frame,P.px.length-1),m=Math.min(n,P.idx);ctx.strokeStyle=d?'rgba(27,42,74,.45)':'rgba(27,42,74,.4)';ctx.lineWidth=1;ctx.beginPath();
+    for(let i=0;i<=m;i++){i?ctx.lineTo(X(P.px[i]),Y(P.py[i])):ctx.moveTo(X(P.px[i]),Y(P.py[i]))}ctx.stroke();
+    if(n>P.idx){ctx.strokeStyle=d?'rgba(224,114,42,.95)':'rgba(224,114,42,.9)';ctx.lineWidth=1.8;ctx.beginPath();let pen=false;for(let i=P.idx;i<=n;i++){const inq=(P.px[i]>=u&&P.py[i]>=b2*u);if(inq){pen?ctx.lineTo(X(P.px[i]),Y(P.py[i])):ctx.moveTo(X(P.px[i]),Y(P.py[i]));pen=true}else pen=false}ctx.stroke()}
+    ctx.fillStyle=d?'#1b2a4a':'#1b2a4a';ctx.beginPath();ctx.arc(X(P.px[n]),Y(P.py[n]),2.5,0,7);ctx.fill();
+    if(frame>=P.idx){ctx.fillStyle=d?'#e0722a':'#e0722a';ctx.beginPath();ctx.arc(X(P.px[P.idx]),Y(P.py[P.idx]),4.5,0,7);ctx.fill()}}
+  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText(`t = ${Math.min(frame*dt*SUB,T).toFixed(2)}`,12,W-12);ctx.fillText(`[${u.toFixed(2)},∞)×[${(b2*u).toFixed(2)},∞)`,X(u)+6,Y(b2*u)-8);ctx.fillText('stationary 2σ ellipse',X(0)+8,Y(0)-8)}
+function drawTime(){
+  const cv=document.getElementById('ct'),ctx=cv.getContext('2d'),d=dark(),W=cv.width,H=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,H);
+  const th=theory(),Hp=H*0.66;const X=t=>36+(W-52)*t/T;const ymax=u*1.35,ymin=-3;const Y=v=>16+(Hp-32)*(ymax-v)/(ymax-ymin);
+  ctx.setLineDash([5,4]);ctx.lineWidth=1.2;ctx.strokeStyle=d?'rgba(27,42,74,.6)':'rgba(27,42,74,.5)';ctx.beginPath();ctx.moveTo(X(0),Y(u));ctx.lineTo(X(T),Y(u));ctx.stroke();
+  ctx.strokeStyle=d?'#1f5fa8':'#1f5fa8';ctx.beginPath();ctx.moveTo(X(0),Y(b2*u));ctx.lineTo(X(T),Y(b2*u));ctx.stroke();ctx.setLineDash([]);
+  ctx.strokeStyle=d?'rgba(27,42,74,.2)':'rgba(27,42,74,.15)';ctx.beginPath();ctx.moveTo(X(0),Y(0));ctx.lineTo(X(T),Y(0));ctx.stroke();
+  for(const P of paths){const n=Math.min(frame,P.px.length-1);
+    ctx.strokeStyle=d?'rgba(27,42,74,.4)':'rgba(27,42,74,.35)';ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<=n;i++){const x=X(i*dt*SUB),y=Y(P.px[i]);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();
+    ctx.strokeStyle=d?'rgba(31,95,168,.5)':'rgba(31,95,168,.45)';ctx.beginPath();for(let i=0;i<=n;i++){const x=X(i*dt*SUB),y=Y(P.py[i]);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();
+    if(n>P.idx){ctx.strokeStyle=d?'rgba(224,114,42,.9)':'rgba(224,114,42,.85)';ctx.lineWidth=1.6;for(const arr of [P.px,P.py]){ctx.beginPath();let pen=false;for(let i=P.idx;i<=n;i++){const inq=(P.px[i]>=u&&P.py[i]>=b2*u);const x=X(i*dt*SUB),y=Y(arr[i]);if(inq){pen?ctx.lineTo(x,y):ctx.moveTo(x,y);pen=true}else pen=false}ctx.stroke()}ctx.lineWidth=1}
+    if(frame>=P.idx){ctx.fillStyle=d?'#e0722a':'#e0722a';ctx.beginPath();ctx.arc(X(P.tau),Y(P.py[P.idx]),3.5,0,7);ctx.fill()}}
+  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('u',10,Y(u)+4);ctx.fillText('b₂u',6,Y(b2*u)+4);
+  // slack histogram
+  const y0=Hp+10,hh=H-y0-24,smax=Math.max(1.5,u*0.9),X2=v=>36+(W-52)*v/smax;const nb=30,h=new Array(nb).fill(0);let m=1;
+  for(const P of paths)if(frame>=P.idx){const k=Math.max(0,Math.min(nb-1,Math.floor(nb*P.slack/smax)));h[k]++;m=Math.max(m,h[k])}
+  ctx.fillStyle=d?'rgba(224,114,42,.7)':'rgba(224,114,42,.6)';for(let i=0;i<nb;i++){if(!h[i])continue;const x=X2(i*smax/nb),w=(W-52)/nb-1,b=hh*h[i]/m;ctx.fillRect(x,y0+hh-b,w,b)}
+  ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(X2(th.slack),y0-4);ctx.lineTo(X2(th.slack),y0+hh+2);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.fillText(`slack of X₂ at entry; predicted ${th.regime===1?'0':'(ρ−b₂)u = '+th.slack.toFixed(2)}`,36,y0+10);ctx.fillText('0',34,H-8);ctx.fillText(smax.toFixed(1),W-30,H-8);
+  const cur=X(Math.min(frame*dt*SUB,T));ctx.strokeStyle=d?'rgba(27,42,74,.35)':'rgba(27,42,74,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cur,10);ctx.lineTo(cur,Hp);ctx.stroke()}
+function regime(){const th=theory(),reg=document.getElementById('reg');
+  reg.innerHTML=th.regime===1?`<b>Both coordinates essential</b>ρ = ${rho.toFixed(2)} &lt; b₂ = ${b2.toFixed(2)}. Entry at the corner: X₂ crosses b₂u exactly when needed. Weights w = Σ<sup>−1</sup>b̃ both positive.`
+    :`<b>Dimension reduction</b>ρ = ${rho.toFixed(2)} ≥ b₂ = ${b2.toFixed(2)}. Only X₁ is essential; given X₁ = u, X₂ ≈ ρu &gt; b₂u already. Entry on the vertical edge with slack ≈ ${th.slack.toFixed(2)}; asymptotically P(u) behaves like the one-dimensional exceedance of X₁.`}
+function loop(){if(playing){const maxLen=paths.reduce((m,P)=>Math.max(m,P.px.length),0);facc+=SPEED;if(facc>=1){frame=maxLen?(frame+Math.floor(facc))%(maxLen+60):0;facc-=Math.floor(facc)}}drawPlane();drawTime();requestAnimationFrame(loop)}
+const $=id=>document.getElementById(id);
+$('r').oninput=e=>{rho=+e.target.value;$('rv').textContent=rho.toFixed(2);regime()};
+$('a').oninput=e=>{b2=+e.target.value;$('av').textContent=b2.toFixed(2);regime()};
+$('u').oninput=e=>{u=+e.target.value;$('uv').textContent=u.toFixed(2);regime()};
+for(const id of ['r','a','u'])$(id).onchange=find;
+$('run').onclick=find;$('pp').onclick=()=>{playing=!playing;$('pp').textContent=playing?'Pause':'Play'};
+regime();find();loop();
+</script>
+</body>
+</html>

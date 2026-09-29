@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The most likely path of a large exponential integral</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);font-size:14px}
+  .top b{font-family:Newsreader,serif;font-weight:400;font-size:18px}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  h1{font-family:Newsreader,serif;font-weight:400;font-size:30px;margin:6px 0 6px}
+  .lead{color:var(--muted);max-width:74ch;margin:0 0 18px}
+  .lay{display:grid;grid-template-columns:1fr 300px;gap:20px}
+  @media(max-width:820px){.lay{grid-template-columns:1fr}}
+  canvas{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;display:block}
+  .panel{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--card);font-size:14px}
+  .panel label{display:block;margin:12px 0 4px;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .panel label:first-child{margin-top:0}
+  .panel input[type=range]{width:100%;accent-color:var(--accent)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:6px;cursor:pointer}
+  button:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)} button:disabled{opacity:.5;cursor:default}
+  .m{font-family:Newsreader,serif;font-style:italic}
+  .regime{margin-top:14px;padding:10px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+  .regime b{font-family:Newsreader,serif;font-weight:400;font-size:17px;display:block;margin-bottom:2px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.two{grid-template-columns:1fr}}
+  figure{margin:0} figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px}
+  @media(max-width:700px){.grid3{grid-template-columns:1fr}}
+  .stat{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--card)}
+  .stat .k{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .stat .v{font-family:Newsreader,serif;font-size:26px;margin:2px 0 0;line-height:1.2}
+  .stat .s{font-size:12px;color:var(--muted);margin-top:4px}
+  .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+  .status{font-size:13px;color:var(--muted);margin-top:8px;min-height:1.3em}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="../#gallery">← back</a></div>
+<div class="wrap">
+  <h1>The most likely path of a large exponential integral</h1>
+  <p class="lead">Let <span class="m">X</span> be a fractional Brownian motion with Hurst index <span class="m">H</span> on <span class="m">[0,1]</span> and <span class="m">I = ∫₀¹ e<sup>X(t)</sup> dt</span>. How does <span class="m">I</span> become larger than a big <span class="m">b</span>? The answer is a variational problem in the reproducing kernel Hilbert space: the cheapest path <span class="m">h<sub>b</sub></span> with <span class="m">∫e<sup>h<sub>b</sub></sup> ≥ b</span>, whose norm <span class="m">ρ<sub>b</sub></span> gives the Jensen–Gaussian lower bound <span class="m">P(I &gt; b) ≥ Ψ(ρ<sub>b</sub>)</span>. The paths that do exceed <span class="m">b</span> cluster around <span class="m">h<sub>b</sub></span>, which piles up at the variance-maximising endpoint <span class="m">t = 1</span>. The bound is asymptotically <em>exact</em> when <span class="m">H &gt; ½</span>; for Brownian motion the ratio tends to <span class="m">√2</span>; for rougher paths it grows.
+  From <a href="../papers/LOGN_nonstat.pdf" target="_blank" rel="noopener">Hashorva &amp; Novikov</a>, <em>Tail and density asymptotics for Gaussian exponential integrals</em>.</p>
+
+  <div class="lay">
+    <div>
+      <div class="two">
+        <figure><canvas id="cp" width="520" height="440"></canvas><figcaption>sample paths of X (dim), the paths with I &gt; b (dark), the RKHS minimiser h<sub>b</sub> (orange dashed)</figcaption></figure>
+        <figure><canvas id="cr" width="520" height="440"></canvas><figcaption>ratio P(I &gt; b) / Ψ(ρ<sub>b</sub>) from Monte Carlo against b; lines at 1 and √2</figcaption></figure>
+      </div>
+      <div class="grid3">
+        <div class="stat"><div class="k">Level b</div><div class="v" id="bv">—</div><div class="s" id="bs"></div></div>
+        <div class="stat"><div class="k">ρ<sub>b</sub> and Ψ(ρ<sub>b</sub>)</div><div class="v" id="rv">—</div><div class="s" id="rs"></div></div>
+        <div class="stat"><div class="k">Monte Carlo P(I &gt; b)</div><div class="v" id="pv">—</div><div class="s" id="ps"></div></div>
+      </div>
+      <div class="status" id="st"></div>
+    </div>
+    <div class="panel">
+      <label>Hurst index H = <span id="hv">0.75</span></label>
+      <input type="range" id="h" min="0.2" max="0.95" step="0.05" value="0.75">
+      <label>Level: log b = <span id="lv">2.0</span></label>
+      <input type="range" id="l" min="0.5" max="4" step="0.05" value="2">
+      <div class="row"><button id="run">Resimulate</button></div>
+      <div class="regime" id="reg"></div>
+      <div class="note">Grid of 60 points; fBm by Cholesky; 40 000 paths, stored so that the level slider re-reads them instantly. The minimiser solves the KKT system <span class="m">R<sup>−1</sup>h = λ e<sup>h</sup></span>, <span class="m">∫e<sup>h</sup> = b</span> by Newton continuation in <span class="m">b</span> — the Gibbs stationarity relation of the paper. For the endpoint of the ratio curve the tail estimate rests on few paths.</div>
+    </div>
+  </div>
+</div>
+<script>
+const n=60,T=1,dt=T/n,t=Array.from({length:n},(_,i)=>(i+0.5)*dt);
+let H=0.75,logb=2,L=null,Rinv=null,paths=null,I=null,order=null,sol=[],running=false;
+function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
+const dark=()=>true;
+function erfc(x){const z=Math.abs(x),s=1/(1+z/2);const r=s*Math.exp(-z*z-1.26551223+s*(1.00002368+s*(0.37409196+s*(0.09678418+s*(-0.18628806+s*(0.27886807+s*(-1.13520398+s*(1.48851587+s*(-0.82215223+s*0.17087277)))))))));return x>=0?r:2-r}
+const Psi=x=>0.5*erfc(x/Math.SQRT2);
+function cov(){const R=[];for(let i=0;i<n;i++){R.push(new Float64Array(n));for(let j=0;j<n;j++)R[i][j]=0.5*(Math.pow(t[i],2*H)+Math.pow(t[j],2*H)-Math.pow(Math.abs(t[i]-t[j]),2*H))}return R}
+function chol(A){const Lm=[];for(let i=0;i<n;i++){Lm.push(new Float64Array(n));for(let j=0;j<=i;j++){let s=A[i][j];for(let k=0;k<j;k++)s-=Lm[i][k]*Lm[j][k];Lm[i][j]=i===j?Math.sqrt(Math.max(s,1e-14)):s/Lm[j][j]}}return Lm}
+function inverse(A){const m=A.length,M=A.map((r,i)=>{const x=Array.from(r);const e=new Array(m).fill(0);e[i]=1;return x.concat(e)});
+  for(let c=0;c<m;c++){let p=c;for(let r=c+1;r<m;r++)if(Math.abs(M[r][c])>Math.abs(M[p][c]))p=r;[M[c],M[p]]=[M[p],M[c]];const d=M[c][c];for(let k=0;k<2*m;k++)M[c][k]/=d;for(let r=0;r<m;r++){if(r===c)continue;const f=M[r][c];if(!f)continue;for(let k=0;k<2*m;k++)M[r][k]-=f*M[c][k]}}
+  return M.map(r=>r.slice(m))}
+function solve(A,b){const m=b.length,M=A.map((r,i)=>Array.from(r).concat([b[i]]));for(let c=0;c<m;c++){let p=c;for(let r=c+1;r<m;r++)if(Math.abs(M[r][c])>Math.abs(M[p][c]))p=r;[M[c],M[p]]=[M[p],M[c]];for(let r=c+1;r<m;r++){const f=M[r][c]/M[c][c];if(!f)continue;for(let k=c;k<=m;k++)M[r][k]-=f*M[c][k]}}
+  const x=new Array(m);for(let r=m-1;r>=0;r--){let s=M[r][m];for(let k=r+1;k<m;k++)s-=M[r][k]*x[k];x[r]=s/M[r][r]}return x}
+// KKT Newton: F(h,lam)= [Rinv h - lam*dt*exp(h); sum dt exp(h) - b]
+function newton(h,lam,b){for(let it=0;it<60;it++){const e=h.map(Math.exp);const g=new Array(n);for(let i=0;i<n;i++){let s=0;for(let j=0;j<n;j++)s+=Rinv[i][j]*h[j];g[i]=s-lam*dt*e[i]}
+    const c=e.reduce((a,v)=>a+v,0)*dt-b;const res=Math.sqrt(g.reduce((a,v)=>a+v*v,0)+c*c);if(res<1e-9)return{h,lam,ok:true};
+    const J=[];for(let i=0;i<n;i++){const r=Array.from(Rinv[i]);r[i]-=lam*dt*e[i];r.push(-dt*e[i]);J.push(r)}const last=e.map(v=>dt*v);last.push(0);J.push(last);
+    const d=solve(J,g.concat([c]).map(v=>-v));let s=1;const norm=(hh,ll)=>{const ee=hh.map(Math.exp);let r2=0;for(let i=0;i<n;i++){let q=0;for(let j=0;j<n;j++)q+=Rinv[i][j]*hh[j];q-=ll*dt*ee[i];r2+=q*q}const cc=ee.reduce((a,v)=>a+v,0)*dt-b;return Math.sqrt(r2+cc*cc)};
+    for(let k=0;k<20;k++){const hn=h.map((v,i)=>v+s*d[i]),ln=lam+s*d[n];if(norm(hn,ln)<res){h=hn;lam=ln;break}s*=0.5;if(k===19){h=hn;lam=ln}}}
+  return{h,lam,ok:false}}
+function computeMinimisers(){sol=[];let h=new Array(n).fill(0),lam=0;const grid=[];for(let lb=0.15;lb<=4.05;lb+=0.05)grid.push(lb);
+  for(const lb of grid){const b=Math.exp(lb);const r=newton(h.slice(),lam,b);h=r.h;lam=r.lam;let rho2=0;for(let i=0;i<n;i++){let q=0;for(let j=0;j<n;j++)q+=Rinv[i][j]*h[j];rho2+=h[i]*q}sol.push({lb,b,h:h.slice(),rho:Math.sqrt(Math.max(rho2,0)),ok:r.ok})}}
+function nearest(lb){let best=sol[0];for(const s of sol)if(Math.abs(s.lb-lb)<Math.abs(best.lb-lb))best=s;return best}
+async function simulate(){if(running)return;running=true;document.getElementById('run').disabled=true;
+  const R=cov();L=chol(R);Rinv=inverse(R);computeMinimisers();
+  const N=40000;paths=new Float32Array(N*n);I=new Float64Array(N);const z=new Float64Array(n);
+  for(let p=0;p<N;p++){for(let i=0;i<n;i++)z[i]=randn();let s=0;for(let i=0;i<n;i++){let v=0;const Li=L[i];for(let k=0;k<=i;k++)v+=Li[k]*z[k];paths[p*n+i]=v;s+=Math.exp(v)}I[p]=s*dt;
+    if(p%8000===0){document.getElementById('st').textContent=`simulating… ${p}/${N}`;await new Promise(r=>setTimeout(r,0))}}
+  order=Array.from({length:N},(_,i)=>i).sort((a,b)=>I[b]-I[a]);document.getElementById('st').textContent=`${N.toLocaleString()} paths simulated`;
+  running=false;document.getElementById('run').disabled=false;update()}
+function draw(){
+  const s=nearest(logb),b=s.b,d=dark();
+  const cv=document.getElementById('cp'),ctx=cv.getContext('2d'),W=cv.width,Hh=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,Hh);
+  const ymax=Math.max(logb+1.5,3),ymin=-2.5;const X=tt=>30+(W-40)*tt/T,Y=v=>16+(Hh-40)*(ymax-v)/(ymax-ymin);
+  ctx.strokeStyle=d?'rgba(27,42,74,.2)':'rgba(27,42,74,.15)';ctx.beginPath();ctx.moveTo(X(0),Y(0));ctx.lineTo(X(T),Y(0));ctx.stroke();
+  if(paths){ctx.lineWidth=1;ctx.strokeStyle=d?'rgba(93,107,133,.18)':'rgba(93,107,133,.16)';for(let p=0;p<60;p++){ctx.beginPath();for(let i=0;i<n;i++){const y=Y(paths[p*n+i]);i?ctx.lineTo(X(t[i]),y):ctx.moveTo(X(t[i]),y)}ctx.stroke()}
+    let k=0;ctx.strokeStyle=d?'rgba(27,42,74,.7)':'rgba(27,42,74,.6)';for(const p of order){if(I[p]<=b||k>=40)break;k++;ctx.beginPath();for(let i=0;i<n;i++){const y=Y(paths[p*n+i]);i?ctx.lineTo(X(t[i]),y):ctx.moveTo(X(t[i]),y)}ctx.stroke()}}
+  ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=2.2;ctx.setLineDash([7,4]);ctx.beginPath();for(let i=0;i<n;i++){const y=Y(s.h[i]);i?ctx.lineTo(X(t[i]),y):ctx.moveTo(X(t[i]),y)}ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('t → 1',W-42,Hh-8);ctx.fillText('h_b',X(T)-30,Y(s.h[n-1])-8);ctx.fillText(`H = ${H.toFixed(2)}`,30,Hh-8);
+  // ratio panel
+  const c2=document.getElementById('cr'),cx=c2.getContext('2d'),W2=c2.width,H2=c2.height;cx.fillStyle=d?'#ffffff':'#ffffff';cx.fillRect(0,0,W2,H2);
+  const rmax=3.2;const X2=lb=>36+(W2-50)*(lb-0.15)/(4.05-0.15),Y2=r=>16+(H2-44)*(rmax-r)/rmax;
+  cx.strokeStyle=d?'rgba(27,42,74,.5)':'rgba(27,42,74,.4)';cx.setLineDash([4,4]);cx.beginPath();cx.moveTo(X2(0.15),Y2(1));cx.lineTo(X2(4.05),Y2(1));cx.moveTo(X2(0.15),Y2(Math.SQRT2));cx.lineTo(X2(4.05),Y2(Math.SQRT2));cx.stroke();cx.setLineDash([]);
+  cx.fillStyle=d?'#5d6b85':'#5d6b85';cx.fillText('1',X2(4.05)+4,Y2(1)+4);cx.fillText('√2',X2(4.05)+2,Y2(Math.SQRT2)+4);cx.fillText('log b →',W2-56,H2-8);cx.fillText('P(I>b) / Ψ(ρ_b)',36,14);
+  if(paths){cx.strokeStyle=d?'#1f5fa8':'#1f5fa8';cx.lineWidth=2;cx.beginPath();let first=true;const N=I.length;
+    for(const q of sol){let cnt=0;for(let p=0;p<N;p++)if(I[p]>q.b)cnt++;if(cnt<8)break;const r=(cnt/N)/Psi(q.rho);const x=X2(q.lb),y=Y2(Math.min(r,rmax));first?cx.moveTo(x,y):cx.lineTo(x,y);first=false}cx.stroke();
+    cx.strokeStyle=d?'#e0722a':'#e0722a';cx.lineWidth=1;cx.setLineDash([3,3]);cx.beginPath();cx.moveTo(X2(logb),16);cx.lineTo(X2(logb),H2-28);cx.stroke();cx.setLineDash([])}
+  // stats
+  document.getElementById('bv').textContent=b.toFixed(2);document.getElementById('bs').textContent=`log b = ${logb.toFixed(2)}; E I = ${(sol[0]?'':'')}${meanI().toFixed(2)}`;
+  document.getElementById('rv').textContent=s.rho.toFixed(3);document.getElementById('rs').textContent=`Ψ(ρ_b) = ${Psi(s.rho).toExponential(2)}`+(s.ok?'':' · Newton not fully converged');
+  if(paths){let cnt=0;for(let p=0;p<I.length;p++)if(I[p]>b)cnt++;const pr=cnt/I.length;document.getElementById('pv').textContent=cnt?pr.toExponential(2):'0';document.getElementById('ps').textContent=cnt?`${cnt} of ${I.length.toLocaleString()} · ratio ${(pr/Psi(s.rho)).toFixed(2)}`:'no path exceeded b'}}
+function meanI(){let s=0;for(let i=0;i<n;i++)s+=Math.exp(0.5*Math.pow(t[i],2*H));return s*dt}
+function regime(){const r=document.getElementById('reg');
+  r.innerHTML=H>0.5?`<b>Exact regime, H &gt; ½</b>Squared-increment exponent 2H exceeds the variance-loss exponent 1: P(I &gt; b) ~ Ψ(ρ<sub>b</sub>). The ratio curve should approach 1.`
+   :Math.abs(H-0.5)<1e-9?`<b>Brownian boundary, H = ½</b>Both exponents equal 1. Via Yor's representation and the Gulisashvili–Stein density, P(I &gt; b) ~ √2 · Ψ(ρ<sub>b</sub>).`
+   :`<b>Rough regime, H &lt; ½</b>Only second-order logarithmic asymptotics: log P(I &gt; b) = −ρ<sub>b</sub>²/2 + O(log b). The ratio grows with b.`}
+function update(){regime();draw()}
+const $=id=>document.getElementById(id);
+$('h').oninput=e=>{H=+e.target.value;$('hv').textContent=H.toFixed(2);regime()};$('h').onchange=simulate;
+$('l').oninput=e=>{logb=+e.target.value;$('lv').textContent=logb.toFixed(2);if(sol.length)draw()};
+$('run').onclick=simulate;
+regime();simulate();
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Branch-stationary max-stable field on a tree</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);font-size:14px}
+  .top b{font-family:Newsreader,serif;font-weight:400;font-size:18px}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  h1{font-family:Newsreader,serif;font-weight:400;font-size:30px;margin:6px 0 6px}
+  .lead{color:var(--muted);max-width:70ch;margin:0 0 18px}
+  .lay{display:grid;grid-template-columns:1fr 300px;gap:20px}
+  @media(max-width:820px){.lay{grid-template-columns:1fr}}
+  canvas{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;display:block}
+  .panel{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--card);font-size:14px}
+  .panel label{display:block;margin:12px 0 4px;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .panel input[type=range]{width:100%;accent-color:var(--accent)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:6px;cursor:pointer}
+  button.on,button:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+  .math{font-family:Newsreader,serif;font-style:italic}
+  .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+  .legend{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--muted)}
+  .bar{flex:1;height:8px;border-radius:4px;background:linear-gradient(90deg,#222a4e,#1f5fa8,#e0722a)}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="../#gallery">← back</a></div>
+<div class="wrap">
+  <h1>A branch-stationary max-stable field on a binary tree</h1>
+  <p class="lead">Vertices are words over the alphabet {L, R}. Along each edge an independent Gaussian increment with variance <span class="math">Δ</span> is added, giving a branching random walk <span class="math">W</span>. The field is
+  <span class="math">η<sub>v</sub> = max<sub>i</sub> P<sub>i</sub> exp(W<sub>v</sub><sup>(i)</sup> − Δ|v|/2)</span>, with <span class="math">P<sub>i</sub></span> the points of a Poisson process. Every subtree looks, in law, like the whole tree — that is branch-stationarity.
+  From <a href="https://arxiv.org/abs/2608.12947" target="_blank" rel="noopener">Hashorva &amp; Novikov (2026)</a>.</p>
+  <div class="lay">
+    <div>
+      <canvas id="c" width="1200" height="800"></canvas>
+      <div class="legend" id="lg" style="visibility:hidden"><span>low</span><div class="bar"></div><span>high</span></div>
+    </div>
+    <div class="panel">
+      <label>Colour</label>
+      <div class="row" style="margin-top:0">
+        <button id="mVal">log η<sub>v</sub></button>
+        <button id="mWin" class="on">winning point i</button>
+      </div>
+      <label>Edge variance Δ = <span id="dv">1.0</span></label>
+      <input type="range" id="d" min="0.1" max="3" step="0.1" value="1">
+      <label>Depth = <span id="hv">6</span></label>
+      <input type="range" id="h" min="3" max="9" step="1" value="6">
+      <label>Poisson points used = <span id="nv">40</span></label>
+      <input type="range" id="n" min="5" max="150" step="5" value="40">
+      <div class="row">
+        <button id="re">Resample</button>
+        <button id="zoom">Zoom into a random subtree</button>
+        <button id="reset">Whole tree</button>
+      </div>
+      <div class="note" id="info">Small Δ: the same Poisson point tends to win everywhere (one colour). Large Δ: the winning point changes from branch to branch — the field fragments into independent-looking patches, as the branching random walk spreads out.</div>
+    </div>
+  </div>
+</div>
+<script>
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+let mode='win',D=1,H=6,N=40,root='';
+let nodes=[],eta,win,state;
+function randn(){let u=1-Math.random(),v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function build(){ // complete binary tree, nodes indexed 1..2^(H+1)-1 (heap order)
+  const M=(1<<(H+1))-1; state={M};
+  // Poisson points P_i = 1/Gamma_i
+  let G=0; const P=[]; for(let i=0;i<N;i++){G+=-Math.log(Math.random());P.push(1/G)}
+  eta=new Float64Array(M+1).fill(-Infinity); win=new Int16Array(M+1);
+  for(let i=0;i<N;i++){
+    const W=new Float64Array(M+1); W[1]=0;
+    for(let v=2;v<=M;v++){W[v]=W[v>>1]+Math.sqrt(D)*randn()}
+    for(let v=1;v<=M;v++){
+      const depth=Math.floor(Math.log2(v));
+      const z=Math.log(P[i])+W[v]-D*depth/2;
+      if(z>eta[v]){eta[v]=z;win[v]=i}
+    }
+  }
+}
+function colVal(t){ // t in [0,1]
+  const a=[226,233,245],b=[31,95,168],c=[224,114,42];
+  const f=(p,q,s)=>p+(q-p)*s;
+  let r,g,bb; if(t<.5){const s=t*2;r=f(a[0],b[0],s);g=f(a[1],b[1],s);bb=f(a[2],b[2],s)}else{const s=(t-.5)*2;r=f(b[0],c[0],s);g=f(b[1],c[1],s);bb=f(b[2],c[2],s)}
+  return `rgb(${r|0},${g|0},${bb|0})`;
+}
+function colWin(i){return `hsl(${(i*137.508)%360},45%,${62}%)`}
+function draw(){
+  const dark=true;
+  ctx.fillStyle=dark?'#ffffff':'#ffffff'; ctx.fillRect(0,0,cv.width,cv.height);
+  // subtree rooted at r (heap index), shown to depth H - depth(r)
+  const r=state.root||1, dr=Math.floor(Math.log2(r)), levels=H-dr;
+  const W=cv.width,Hh=cv.height,pad=40, dy=(Hh-2*pad)/Math.max(levels,1);
+  // normalisation of values inside the displayed subtree
+  let lo=Infinity,hi=-Infinity; const list=[];
+  (function rec(v,d){ if(d>levels) return; list.push([v,d]); lo=Math.min(lo,eta[v]);hi=Math.max(hi,eta[v]); rec(v*2,d+1);rec(v*2+1,d+1)})(r,0);
+  const pos=v=>{ const d=Math.floor(Math.log2(v))-dr; const idx=v-(r<<d); const n=1<<d; return [pad+(W-2*pad)*(idx+.5)/n, pad+d*dy]};
+  ctx.lineWidth=1; ctx.strokeStyle=dark?'rgba(27,42,74,.18)':'rgba(27,42,74,.18)';
+  for(const [v,d] of list){ if(d===0) continue; const [x,y]=pos(v),[px,py]=pos(v>>1); ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(x,y);ctx.stroke()}
+  for(const [v,d] of list){ const [x,y]=pos(v); const rad=Math.max(3.5,11-1.2*d);
+    ctx.beginPath();ctx.arc(x,y,rad,0,7);
+    ctx.fillStyle= mode==='val'?colVal((eta[v]-lo)/(hi-lo+1e-9)):colWin(win[v]); ctx.fill()}
+  ctx.fillStyle=dark?'#5d6b85':'#5d6b85'; ctx.font='13px Inter,sans-serif';
+  ctx.fillText(state.root&&state.root!==1?`subtree below vertex "${word(state.root)}" — depth ${levels}`:`whole tree — depth ${H}`,pad,Hh-14);
+}
+function word(v){let s='';while(v>1){s=(v&1?'R':'L')+s;v>>=1}return s||'∅'}
+function all(){build();draw()}
+const $=id=>document.getElementById(id);
+$('d').oninput=e=>{D=+e.target.value;$('dv').textContent=D.toFixed(1);all()};
+$('h').oninput=e=>{H=+e.target.value;$('hv').textContent=H;state.root=1;all()};
+$('n').oninput=e=>{N=+e.target.value;$('nv').textContent=N;all()};
+$('re').onclick=all;
+$('mVal').onclick=()=>{mode='val';$('mVal').classList.add('on');$('mWin').classList.remove('on');$('lg').style.visibility='visible';draw()};
+$('mWin').onclick=()=>{mode='win';$('mWin').classList.add('on');$('mVal').classList.remove('on');$('lg').style.visibility='hidden';draw()};
+$('zoom').onclick=()=>{const d=Math.min(3,H-2);const lo=1<<d;state.root=lo+Math.floor(Math.random()*lo);draw()};
+$('reset').onclick=()=>{state.root=1;draw()};
+
+build();draw();
+</script>
+</body>
+</html>

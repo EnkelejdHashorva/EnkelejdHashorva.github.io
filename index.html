@@ -10,20 +10,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#fbfaf7; --ink:#1a1a1a; --muted:#6b6b66; --line:#e6e3dc;
-    --accent:#1f4e79; --accent-soft:#e8eef5; --card:#ffffff;
+    --bg:#f4f2e7; --ink:#252a1e; --muted:#6a6d58; --line:#ddd9c4;
+    --accent:#4a6b34; --accent-soft:#e6ead4; --card:#fbfaf1;
     --serif:"Newsreader",Georgia,serif; --sans:"Inter",system-ui,sans-serif;
     --maxw:820px;
   }
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
-      --bg:#131313; --ink:#ebe8e1; --muted:#9a978f; --line:#2a2a2a;
-      --accent:#8fb4dc; --accent-soft:#1c2733; --card:#1b1b1b;
+      --bg:#22271b; --ink:#e8e6d5; --muted:#a3a68d; --line:#38402c;
+      --accent:#a7c087; --accent-soft:#2e3623; --card:#282e1f;
     }
   }
   :root[data-theme="dark"]{
-    --bg:#131313; --ink:#ebe8e1; --muted:#9a978f; --line:#2a2a2a;
-    --accent:#8fb4dc; --accent-soft:#1c2733; --card:#1b1b1b;
+    --bg:#22271b; --ink:#e8e6d5; --muted:#a3a68d; --line:#38402c;
+    --accent:#a7c087; --accent-soft:#2e3623; --card:#282e1f;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -90,11 +90,22 @@
   ol.papers .au{font-size:14px;color:var(--muted);margin:0 0 6px}
   .tags{display:flex;gap:8px;flex-wrap:wrap}
   .tag{font-size:12px;letter-spacing:.04em;padding:2px 8px;border:1px solid var(--line);border-radius:4px;color:var(--muted)}
-  .tag.arxiv{color:var(--accent);border-color:var(--accent)}
+  .tag.arxiv,a.tag[href$=".pdf"]{color:var(--accent);border-color:var(--accent)}
+  a.tag{border-bottom:1px solid var(--line)} a.tag:hover{border-color:var(--ink);color:var(--ink)}
   .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--ink);border-radius:6px;color:var(--ink);font-size:14px;font-weight:500;margin-top:26px}
   .btn:hover{background:var(--ink);color:var(--bg);border-bottom-color:var(--ink)}
   .btn svg{width:14px;height:14px}
 
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .card{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card);color:var(--ink);transition:transform .15s,box-shadow .15s}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08);border-bottom-color:var(--line)}
+  .card img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-bottom:1px solid var(--line)}
+  .card .cb{padding:14px 16px 16px}
+  .card h4{font-family:var(--serif);font-weight:400;font-size:19px;margin:0 0 6px;line-height:1.3}
+  .card p{font-size:14px;color:var(--muted);margin:0}
+  .card .cta{font-size:13px;color:var(--accent);margin-top:8px;display:block}
+  .students dl.tl{grid-template-columns:64px 1fr}
   .placeholder{border:1px dashed var(--line);border-radius:8px;padding:20px 22px;color:var(--muted);font-size:15px;background:var(--card)}
 
   footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
@@ -110,6 +121,8 @@
       <li><a href="#about">About</a></li>
       <li><a href="#research">Research</a></li>
       <li><a href="#preprints">Preprints</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li class="hide-sm"><a href="#students">Students</a></li>
       <li class="hide-sm"><a href="#practice">Practice</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -191,25 +204,73 @@
     <li>
       <div class="yr">2026</div>
       <div>
-        <p class="t"><a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">Title of the first preprint goes here</a></p>
-        <p class="au">E. Hashorva, Co-author A, Co-author B</p>
-        <div class="tags"><span class="tag arxiv">arXiv</span><span class="tag">submitted</span></div>
+        <p class="t"><a href="https://arxiv.org/abs/2608.12947" target="_blank" rel="noopener">Branch-stationary max-stable fields on rooted trees</a></p>
+        <p class="au">E. Hashorva, S. Novikov</p>
+        <div class="tags"><a class="tag arxiv" href="https://arxiv.org/abs/2608.12947" target=_blank rel=noopener>arXiv:2608.12947</a><a class="tag" href="gallery/tree.html">interactive illustration →</a></div>
       </div>
     </li>
     <li>
       <div class="yr">2026</div>
       <div>
-        <p class="t"><a href="#">Title of a manuscript not yet on arXiv</a></p>
-        <p class="au">E. Hashorva, Co-author C</p>
-        <div class="tags"><span class="tag">manuscript</span><span class="tag">PDF on request</span></div>
+        <p class="t"><a href="papers/Simultaneous_BBM.pdf" target="_blank" rel="noopener">Parisian ruin of branching Brownian motion</a></p>
+        <p class="au">E. Hashorva, S. Novikov, T. Shashkov</p>
+        <div class="tags"><a class="tag" href="papers/Simultaneous_BBM.pdf" target=_blank rel=noopener>PDF</a><a class="tag" href="gallery/bbm.html">interactive illustration →</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="yr">2026</div>
+      <div>
+        <p class="t"><a href="papers/CovarianceQueues.pdf" target="_blank" rel="noopener">Covariance decay for Gaussian queues</a></p>
+        <p class="au">K. Dębicki, E. Hashorva, S. Novikov</p>
+        <div class="tags"><a class="tag" href="papers/CovarianceQueues.pdf" target=_blank rel=noopener>PDF</a><a class="tag" href="gallery/queue.html">interactive illustration →</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="yr">2026</div>
+      <div>
+        <p class="t"><a href="papers/Infimum_Exact.pdf" target="_blank" rel="noopener">Gumbel MDA &amp; tail behaviour of infima of Gaussian processes</a></p>
+        <p class="au">K. Dębicki, E. Hashorva, S. Novikov</p>
+        <div class="tags"><a class="tag" href="papers/Infimum_Exact.pdf" target=_blank rel=noopener>PDF</a><a class="tag" href="gallery/infimum.html">interactive illustration →</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="yr">2026</div>
+      <div>
+        <p class="t"><a href="papers/LOGN_nonstat.pdf" target="_blank" rel="noopener">Tail and density asymptotics for Gaussian exponential integrals</a></p>
+        <p class="au">E. Hashorva, S. Novikov</p>
+        <div class="tags"><a class="tag" href="papers/LOGN_nonstat.pdf" target=_blank rel=noopener>PDF</a><a class="tag" href="gallery/expint.html">interactive illustration →</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="yr">2026</div>
+      <div>
+        <p class="t"><a href="papers/SPParticles.pdf" target="_blank" rel="noopener">Stationary multihomogeneous Poisson particle systems</a></p>
+        <p class="au">E. Hashorva</p>
+        <div class="tags"><a class="tag" href="papers/SPParticles.pdf" target=_blank rel=noopener>PDF</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="yr">2026</div>
+      <div>
+        <p class="t"><a href="papers/LaplaceEH.pdf" target="_blank" rel="noopener">A radial–angular Laplace principle for homogeneous functionals</a></p>
+        <p class="au">E. Hashorva</p>
+        <div class="tags"><a class="tag" href="papers/LaplaceEH.pdf" target=_blank rel=noopener>PDF</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="yr">2026</div>
+      <div>
+        <p class="t"><a href="papers/Metrictrees.pdf" target="_blank" rel="noopener">Simultaneous ruin on Brownian metric trees with terminal groups</a></p>
+        <p class="au">E. Hashorva</p>
+        <div class="tags"><a class="tag" href="papers/Metrictrees.pdf" target=_blank rel=noopener>PDF</a></div>
       </div>
     </li>
     <li>
       <div class="yr">2025</div>
       <div>
-        <p class="t"><a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">Title of an older preprint, now accepted</a></p>
-        <p class="au">K. Dębicki, E. Hashorva</p>
-        <div class="tags"><span class="tag arxiv">arXiv</span><span class="tag">accepted, Extremes</span></div>
+        <p class="t"><a href="https://arxiv.org/abs/2510.06930" target="_blank" rel="noopener">Sojourns of vector-valued stationary Gaussian random fields</a></p>
+        <p class="au">K. Dębicki, E. Hashorva, Z. Michna</p>
+        <div class="tags"><a class="tag arxiv" href="https://arxiv.org/abs/2510.06930" target=_blank rel=noopener>arXiv:2510.06930</a><a class="tag" href="gallery/sojourn.html">interactive illustration →</a></div>
       </div>
     </li>
   </ol>
@@ -219,15 +280,137 @@
   </a>
 </section>
 
+<section id="gallery">
+  <div class="sec-head"><span class="num">04</span><h2>Gallery</h2></div>
+  <p>Interactive illustrations of objects from recent papers. Everything is simulated live in your browser — move the sliders.</p>
+  <div class="cards">
+    <a class="card" href="gallery/tree.html">
+      <img src="gallery/tree.png" alt="Max-stable field on a binary tree">
+      <div class="cb">
+        <h4>A max-stable field on a binary tree</h4>
+        <p>Brown–Resnick construction driven by a Gaussian branching random walk. Colours show which Poisson point wins at each vertex; zoom into any subtree and it looks like the whole.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+    <a class="card" href="gallery/pickands.html">
+      <img src="gallery/pickands.png" alt="Excursion set of a rough Gaussian field">
+      <div class="cb">
+        <h4>Where the Euler characteristic ends and Pickands begins</h4>
+        <p>Turn the roughness α of a Gaussian field from 2 downwards: the Euler-characteristic heuristic gives way to Pickands–Piterbarg asymptotics and the constant ℋ<sub>α</sub>. A companion to Pavel Ievlev's illustration.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+    <a class="card" href="gallery/quadrant.html">
+      <img src="gallery/quadrant.png" alt="Correlated Brownian motions entering a quadrant">
+      <div class="cb">
+        <h4>Hitting a quadrant</h4>
+        <p>Animated: the rare correlated Brownian paths with drift that ever enter a quadrant. Raise the correlation and watch the entry point move from the corner to the edge — the dimension reduction of Dębicki, Hashorva, Ji &amp; Rolski.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+    <a class="card" href="gallery/ou.html">
+      <img src="gallery/ou.png" alt="Bivariate Ornstein-Uhlenbeck process exceeding two levels">
+      <div class="cb">
+        <h4>Simultaneous exceedance, stationary case</h4>
+        <p>The Ornstein–Uhlenbeck companion: entry times are uniform, so dimension reduction shows up as the slack of the second coordinate at entry. From Dębicki, Hashorva &amp; Wang.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+    <a class="card" href="gallery/expint.html">
+      <img src="gallery/expint.png" alt="Most likely path of a large exponential integral of fBm">
+      <div class="cb">
+        <h4>The most likely path of a large exponential integral</h4>
+        <p>For ∫e<sup>X</sup> with X fractional Brownian, the paths that exceed a large b cluster around the RKHS minimiser, and the Jensen–Gaussian bound is exact for H &gt; ½, off by √2 at H = ½. From Hashorva &amp; Novikov.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+    <a class="card" href="gallery/queue.html">
+      <img src="gallery/queue.png" alt="Workload of a fractional Brownian queue and its lookback time">
+      <div class="cb">
+        <h4>How long does a Gaussian queue remember?</h4>
+        <p>The workload of a queue fed by fractional Brownian motion inherits the memory of its input: Cov(Q(0), Q(r)) ~ H(2H−1)(Eτ)² r<sup>2H−2</sup>, with Brownian input the exponential exception. From Dębicki, Hashorva &amp; Novikov.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+    <a class="card" href="gallery/bbm.html">
+      <img src="gallery/bbm.png" alt="Branching Brownian motion achieving Parisian ruin">
+      <div class="cb">
+        <h4>Parisian ruin of branching Brownian motion</h4>
+        <p>Animated trees in which every particle alive stays above the line u + ct for a whole window: probability C e<sup>−κu</sup>, κ = c + √(c²+2β), with the ruin time centred at u/a. From Hashorva, Novikov &amp; Shashkov.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+    <a class="card" href="gallery/infimum.html">
+      <img src="gallery/infimum.png" alt="fBm paths staying above a level on two intervals">
+      <div class="cb">
+        <h4>Staying high everywhere</h4>
+        <p>The infimum of fractional Brownian motion over two intervals: for H &gt; ½ the conditioned paths touch the level at one point and lift off; for Brownian motion they hug it everywhere — dominated versus full contact. From Dębicki, Hashorva &amp; Novikov.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+    <a class="card" href="gallery/brownresnick.html">
+      <img src="gallery/brownresnick.png" alt="Brown-Resnick process assembled from spectral curves">
+      <div class="cb">
+        <h4>Persistence of a Brown–Resnick process</h4>
+        <p>The max-stable envelope assembled from its log-normal spectral curves; how many exceed a level somewhere (Pickands, linear in T) versus throughout (the expected infimum 𝒢<sub>V</sub>(T), decaying like 2Ψ(√γ<sub>V</sub>(T)) for H &gt; ½). From Dębicki, Hashorva &amp; Novikov.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+    <a class="card" href="gallery/sojourn.html">
+      <img src="gallery/sojourn.png" alt="Sojourn set of a bivariate Gaussian field">
+      <div class="cb">
+        <h4>Sojourns of a bivariate Gaussian field</h4>
+        <p>Two correlated stationary components on a square; the set where both exceed a level <em>u</em>, and how its area decays as <em>u</em> grows.</p>
+        <span class="cta">Open →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="students" class="students">
+  <div class="sec-head"><span class="num">05</span><h2>Students &amp; postdocs</h2></div>
+  <div class="two">
+    <div>
+      <h3 style="margin-top:0">Current PhD students</h3>
+      <ul class="plain">
+        <li>Svyatoslav Novikov</li>
+        <li>Timofei Shashkov</li>
+        <li>Chao Lu</li>
+        <li>Simone Deponte</li>
+        <li>Maria Murillo Hernández</li>
+      </ul>
+      <h3>Postdocs</h3>
+      <div class="placeholder" style="padding:12px 14px">Names to be added.</div>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Completed PhDs <span style="font-weight:400;text-transform:none;letter-spacing:0">(University of Lausanne)</span></h3>
+      <dl class="tl">
+        <dt>2024</dt><dd><a href="https://ievlevpn.github.io/" target="_blank" rel="noopener">Pavel Ievlev</a></dd>
+        <dt>2022</dt><dd>Nikolai Kriukov</dd>
+        <dt>2021</dt><dd>Grigori Jasnovidov</dd>
+        <dt>2021</dt><dd>Konrad Krystecki</dd>
+        <dt>2018</dt><dd>Long Bai</dd>
+        <dt>2018</dt><dd>Maissa Tamraz</dd>
+        <dt>2017</dt><dd>Julia Farkas</dd>
+        <dt>2016</dt><dd>Gildas Ratovomirija</dd>
+        <dt>2014</dt><dd>Lanpeng Ji</dd>
+        <dt>2014</dt><dd>Chengxiu Ling</dd>
+        <dt>2014</dt><dd>Zhichao Weng</dd>
+      </dl>
+      <p style="font-size:13px;color:var(--muted);margin-top:10px"><a href="https://www.mathgenealogy.org/id.php?id=105879" target="_blank" rel="noopener">Mathematics Genealogy Project</a></p>
+    </div>
+  </div>
+</section>
+
 <section id="practice">
-  <div class="sec-head"><span class="num">04</span><h2>Actuarial practice</h2></div>
+  <div class="sec-head"><span class="num">06</span><h2>Actuarial practice</h2></div>
   <div class="placeholder">
     This section is reserved for industry work and applied projects — non-life pricing at Allianz Suisse, consulting, and collaborations with practitioners. Content to follow.
   </div>
 </section>
 
 <section id="contact">
-  <div class="sec-head"><span class="num">05</span><h2>Contact</h2></div>
+  <div class="sec-head"><span class="num">07</span><h2>Contact</h2></div>
   <div class="two">
     <div>
       <dl class="tl">
@@ -239,7 +422,7 @@
     <div>
       <dl class="tl">
         <dt>Department</dt><dd><a href="https://www.unil.ch/hec/" target="_blank" rel="noopener">Actuarial Science @ HEC Lausanne</a></dd>
-        <dt>Profiles</dt><dd><a href="https://iris.unil.ch" target="_blank" rel="noopener">IRIS</a> · <a href="https://orcid.org" target="_blank" rel="noopener">ORCID</a> · <a href="https://scholar.google.com/citations?user=2WKQt-oAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a></dd>
+        <dt>Profiles</dt><dd><a href="https://iris.unil.ch" target="_blank" rel="noopener">IRIS</a> · <a href="https://orcid.org/0000-0003-2851-4030" target="_blank" rel="noopener">ORCID</a> · <a href="https://scholar.google.com/citations?user=2WKQt-oAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a></dd>
       </dl>
     </div>
   </div>
