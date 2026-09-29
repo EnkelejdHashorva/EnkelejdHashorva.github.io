@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A particle system with no clock of its own</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);font-size:14px}
+  .top b{font-family:Newsreader,serif;font-weight:400;font-size:18px}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  h1{font-family:Newsreader,serif;font-weight:400;font-size:30px;margin:6px 0 6px}
+  h2{font-family:Newsreader,serif;font-weight:400;font-size:22px;margin:34px 0 6px}
+  .lead{color:var(--muted);max-width:74ch;margin:0 0 18px}
+  .lay{display:grid;grid-template-columns:1fr 300px;gap:20px}
+  @media(max-width:820px){.lay{grid-template-columns:1fr}}
+  canvas{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;display:block}
+  .panel{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--card);font-size:14px}
+  .panel label{display:block;margin:12px 0 4px;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .panel label:first-child{margin-top:0}
+  .panel input[type=range]{width:100%;accent-color:var(--accent)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:6px;cursor:pointer}
+  button:hover,button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .m{font-family:Newsreader,serif;font-style:italic}
+  .regime{margin-top:14px;padding:10px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+  .regime b{font-family:Newsreader,serif;font-weight:400;font-size:17px;display:block;margin-bottom:2px}
+  figure{margin:0 0 12px} figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media(max-width:760px){.three{grid-template-columns:1fr}}
+  .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+  .status{font-size:13px;color:var(--muted);margin-top:4px;min-height:1.3em}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="../#gallery">← back</a></div>
+<div class="wrap">
+  <h1>A particle system with no clock of its own</h1>
+  <p class="lead">Countably many particles follow <span class="m">F<sub>j</sub>(t) = R<sub>j</sub> ⊙ Z<sup>(j)</sup>(t)</span>: independent copies of a single <em>mark</em> process <span class="m">Z</span>, each rescaled componentwise by an atom <span class="m">R<sub>j</sub></span> of a Poisson measure with the scale-invariant intensity <span class="m">∏ r<sub>i</sub><sup>−2</sup>dr<sub>i</sub></span>. Taking logarithms turns scaling into shifting, so the picture is a cloud of copies of <span class="m">log Z</span> displaced by Poisson points of intensity <span class="m">e<sup>−x</sup>dx</span>. The paper's point: the <em>system</em> can be stationary although the mark is not, and stationarity is a property of the intensity <span class="m">ν<sub>Z</sub></span>, not of <span class="m">Z</span>. Every curve below carries a visible origin — its own shape is anchored at one instant — yet slide the window and the cloud never ages.
+  From <a href="../papers/SPParticles.pdf" target="_blank" rel="noopener">E. Hashorva</a>, <em>Stationary multihomogeneous Poisson particle systems</em>.</p>
+
+  <div class="lay">
+    <div>
+      <figure><canvas id="cs" width="1060" height="400"></canvas><figcaption>the system on a log scale in a window that slides with time: each curve is log F<sub>j</sub>(t) = log R<sub>j</sub> + log Z<sup>(j)</sup>(t), the upper envelope is dark, particles above the level u are orange</figcaption></figure>
+      <figure><canvas id="cn" width="1060" height="230"></canvas><figcaption>particles above u at each time (bars) against the exact mean <span class="m">e<sup>−u</sup> E Z(t)</span> (orange). Flat exactly when the intensity is shift-invariant — that is the definition, made visible.</figcaption></figure>
+      <div class="status" id="st"></div>
+    </div>
+    <div class="panel">
+      <label>Mark</label>
+      <div class="row" style="margin-top:0">
+        <button id="mA" class="on">cosine, tilted phase</button>
+        <button id="mB">cosine, uniform phase</button>
+        <button id="mC">Brown–Resnick</button>
+      </div>
+      <label>Level u = <span id="uv">-2.0</span></label>
+      <input type="range" id="u" min="-4.5" max="0" step="0.1" value="-2">
+      <label>Hurst index H = <span id="hv">0.70</span> <span style="text-transform:none;letter-spacing:0">(Brown–Resnick only)</span></label>
+      <input type="range" id="h" min="0.3" max="0.9" step="0.05" value="0.7">
+      <div class="row"><button id="re">Resample</button><button id="pp">Pause</button></div>
+      <div class="regime" id="reg"></div>
+      <div class="note">1200 Poisson atoms <span class="m">log R<sub>j</sub> = −log Γ<sub>j</sub></span>, complete down to about <span class="m">log R = −7</span>; only the curves that come near the top are drawn, all of them are counted. The cosine marks are bounded, so the truncation is harmless there and every count below is exact in law.</div>
+    </div>
+  </div>
+
+  <h2>The mixture surprise</h2>
+  <p class="lead">A finite mixture of marks with shift-invariant intensities has a shift-invariant intensity. The converse is the paper's question, and for log-Gaussian marks on a <em>connected</em> time set the answer is yes: every component must itself be stationary. Drop connectedness and it fails. Example 4.2 takes <span class="m">T = ℤ/2ℤ</span>, so a trajectory is just a pair <span class="m">(F(0), F(1))</span>, and stationarity means this cloud is <em>symmetric about the diagonal</em>. With <span class="m">log Z<sub>k</sub>(1) ∼ N(0,2)</span> and <span class="m">N(−2,2)</span> neither component is — their two level counts differ by a factor <span class="m">e</span> — and yet the mixture <span class="m">{ℒ(Z<sub>1</sub>) + e ℒ(Z<sub>2</sub>)}/(1+e)</span> is exactly symmetric.</p>
+  <div class="three">
+    <figure><canvas id="m0" width="420" height="420"></canvas><figcaption id="f0"></figcaption></figure>
+    <figure><canvas id="m1" width="420" height="420"></canvas><figcaption id="f1"></figcaption></figure>
+    <figure><canvas id="m2" width="420" height="420"></canvas><figcaption id="f2"></figcaption></figure>
+  </div>
+  <p class="lead" style="margin-top:10px">Colour is the particle density on a log scale; a stationary system gives a map symmetric about the diagonal. Counted are the particles above the level <span class="m">v</span> at time 0 (right of the vertical line) and at time 1 (above the horizontal line); orange are above at both times. The two means are <span class="m">e<sup>−v</sup></span> and <span class="m">e<sup>−v</sup>E Z(1)</span>, in ratio <span class="m">e</span>, <span class="m">e<sup>−1</sup></span>, and exactly <span class="m">1</span>. <button id="mre" style="margin-left:6px">Resample clouds</button></p>
+</div>
+<script>
+const NP=1200;
+let mark='A', H=0.7, u=-2, sys=null, pos=0, playing=true, facc=0, L=null, Lh=null;
+const NG=240;
+function TLof(){return mark==='C'?3.6:13}
+let tg=[],dtg=0;
+function grid(){const T=TLof();tg=Array.from({length:NG},(_,i)=>-T+2*T*i/(NG-1));dtg=2*T/(NG-1)}
+function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
+function chol(){const R=[];for(let i=0;i<NG;i++){R.push(new Float64Array(NG));for(let j=0;j<NG;j++)R[i][j]=0.5*(Math.pow(Math.abs(tg[i]),2*H)+Math.pow(Math.abs(tg[j]),2*H)-Math.pow(Math.abs(tg[i]-tg[j]),2*H))}
+  const M=[];for(let i=0;i<NG;i++){M.push(new Float64Array(NG));for(let j=0;j<=i;j++){let s=R[i][j];for(let k=0;k<j;k++)s-=M[i][k]*M[j][k];M[i][j]=i===j?Math.sqrt(Math.max(s,1e-12)):s/M[j][j]}}return M}
+function phaseTilted(){let p;do{p=Math.random()*2*Math.PI}while(Math.random()*3>2+Math.cos(p));return p}
+function markPath(z){
+  const X=new Float64Array(NG);
+  if(mark==='C'){for(let i=0;i<NG;i++)z[i]=randn();
+    for(let i=0;i<NG;i++){let v=0;const Li=L[i];for(let k=0;k<=i;k++)v+=Li[k]*z[k];X[i]=Math.SQRT2*v-Math.pow(Math.abs(tg[i]),2*H)}}
+  else{const ph=mark==='A'?phaseTilted():Math.random()*2*Math.PI, d=2+Math.cos(ph);
+    for(let i=0;i<NG;i++)X[i]=Math.log((2+Math.cos(tg[i]+ph))/d)}
+  return X}
+function build(){grid();
+  if(mark==='C'&&(!L||Lh!==H||L.length!==NG)){L=chol();Lh=H}
+  const z=new Float64Array(NG),P=[];let G=0;
+  for(let j=0;j<NP;j++){G+=-Math.log(Math.random());P.push({x:-Math.log(G),X:markPath(z)})}
+  sys=P;pos=0}
+function EZ(t){ // exact E Z(t)
+  if(mark==='A')return 1;
+  if(mark==='B')return 2/Math.sqrt(3)+Math.cos(t)*(1-2/Math.sqrt(3));
+  return 1}
+function countAt(i){let n=0;for(const p of sys)if(p.x+p.X[i]>u)n++;return n}
+const SPAN=96;
+function drawSys(){
+  const cv=document.getElementById('cs'),ctx=cv.getContext('2d'),W=cv.width,Hh=cv.height;
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,Hh);
+  const i0=Math.max(0,Math.min(NG-SPAN-1,Math.round(pos))), i1=i0+SPAN;
+  const ymax=Math.max(u+3.4,1.6), ymin=u-3.2;
+  const X=i=>36+(W-48)*(i-i0)/SPAN, Y=v=>14+(Hh-40)*(ymax-Math.max(Math.min(v,ymax+1),ymin-1))/(ymax-ymin);
+  ctx.setLineDash([5,4]);ctx.strokeStyle='rgba(27,42,74,.5)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(36,Y(u));ctx.lineTo(W-12,Y(u));ctx.stroke();ctx.setLineDash([]);
+  const env=new Float64Array(SPAN+1).fill(-Infinity);const cand=[];
+  for(const p of sys){let mx=-Infinity,above=false;
+    for(let i=i0;i<=i1;i++){const v=p.x+p.X[i];if(v>env[i-i0])env[i-i0]=v;if(v>mx)mx=v;if(v>u)above=true}
+    if(mx>ymin)cand.push({p,mx,above})}
+  cand.sort((a,b)=>b.mx-a.mx);const drawn=Math.min(cand.length,70);
+  for(let q=drawn-1;q>=0;q--){const {p,above}=cand[q];
+    ctx.strokeStyle=above?'rgba(224,114,42,.85)':'rgba(31,95,168,.32)';ctx.lineWidth=above?1.7:1;
+    ctx.beginPath();for(let i=i0;i<=i1;i++){const y=Y(p.x+p.X[i]);i===i0?ctx.moveTo(X(i),y):ctx.lineTo(X(i),y)}ctx.stroke()}
+  ctx.strokeStyle='#1b2a4a';ctx.lineWidth=2.2;ctx.beginPath();for(let i=i0;i<=i1;i++){const y=Y(env[i-i0]);i===i0?ctx.moveTo(X(i),y):ctx.lineTo(X(i),y)}ctx.stroke();
+  const iz=Math.round(TLof()/dtg);
+  if(iz>=i0&&iz<=i1){ctx.strokeStyle='rgba(93,107,133,.5)';ctx.lineWidth=1;ctx.setLineDash([2,4]);ctx.beginPath();ctx.moveTo(X(iz),12);ctx.lineTo(X(iz),Hh-26);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText("the marks' own origin",X(iz)+6,26)}
+  ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';
+  ctx.fillText('log F(t)',38,Hh-10);ctx.fillText(`t ∈ [${tg[i0].toFixed(1)}, ${tg[i1].toFixed(1)}]`,W-160,Hh-10);ctx.fillText('u',20,Y(u)+4);
+  document.getElementById('st').textContent=`${countAt(i0+(SPAN>>1))} particles above u at the centre of the window · top ${drawn} of ${NP} curves drawn`}
+function drawCounts(){
+  const cv=document.getElementById('cn'),ctx=cv.getContext('2d'),W=cv.width,Hh=cv.height;
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,Hh);
+  const cnt=new Array(NG);let mx=1;for(let i=0;i<NG;i++){cnt[i]=countAt(i);if(cnt[i]>mx)mx=cnt[i]}
+  for(let i=0;i<NG;i++)mx=Math.max(mx,Math.exp(-u)*EZ(tg[i])*1.25);
+  const X=i=>36+(W-48)*i/(NG-1), Y=v=>14+(Hh-42)*(1-v/mx);
+  ctx.fillStyle='rgba(31,95,168,.22)';const bw=(W-48)/NG;
+  for(let i=0;i<NG;i++){if(!cnt[i])continue;const y=Y(cnt[i]);ctx.fillRect(X(i)-bw/2,y,Math.max(bw-0.5,1),Y(0)-y)}
+  ctx.strokeStyle='#1f5fa8';ctx.lineWidth=1.8;ctx.beginPath();const w=14;
+  for(let i=0;i<NG;i++){let s=0,n=0;for(let k=Math.max(0,i-w);k<=Math.min(NG-1,i+w);k++){s+=cnt[k];n++}
+    const y=Y(s/n);i?ctx.lineTo(X(i),y):ctx.moveTo(X(i),y)}ctx.stroke();
+  const i0=Math.max(0,Math.min(NG-SPAN-1,Math.round(pos)));
+  ctx.fillStyle='rgba(27,42,74,.07)';ctx.fillRect(X(i0),12,X(i0+SPAN)-X(i0),Hh-40);
+  ctx.strokeStyle='#e0722a';ctx.lineWidth=2.4;ctx.beginPath();
+  for(let i=0;i<NG;i++){const y=Y(Math.exp(-u)*EZ(tg[i]));i?ctx.lineTo(X(i),y):ctx.moveTo(X(i),y)}ctx.stroke();
+  ctx.strokeStyle='rgba(27,42,74,.25)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(36,Y(0));ctx.lineTo(W-12,Y(0));ctx.stroke();
+  ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';
+  ctx.fillText('N_u(t), and its running mean',38,26);ctx.fillText(`t = −${TLof()}`,36,Hh-10);ctx.fillText('0',X((NG-1)/2)-3,Hh-10);ctx.fillText(`${TLof()}`,W-34,Hh-10);
+  ctx.fillStyle='#e0722a';ctx.fillText('e^(−u) · E Z(t)',W-150,26)}
+function regime(){const r=document.getElementById('reg');
+  if(mark==='A')r.innerHTML=`<b>Stationary</b>The bounded mark <span class="m">z<sub>φ</sub>(t) = (2+cos(t+φ))/(2+cos φ)</span> with phase density <span class="m">(2+cos φ)/4π</span>. It satisfies <span class="m">B<sup>h</sup>z<sub>φ</sub>/z<sub>φ</sub>(−h) = z<sub>φ−h</sub></span>, and the tilt in the density absorbs the factor <span class="m">z<sub>φ</sub>(−h)</span> exactly, so <span class="m">E Z(t) ≡ 1</span> and the intensity is shift-invariant. Example 4.3.`;
+  else if(mark==='B')r.innerHTML=`<b>Not stationary</b>The same curves with a <em>uniform</em> phase. Now <span class="m">E Z(t) = 2/√3 + (1 − 2/√3)cos t</span>, between 1 and 1.31, so the intensity breathes with period 2π and the system has a clock after all — the orange curve waves and the bars follow it.`;
+  else r.innerHTML=`<b>Stationary, but hard to draw</b>The log-Gaussian Brown–Resnick mark <span class="m">Z(t) = exp(√2 B<sub>H</sub>(t) − |t|<sup>2H</sup>)</span> has <span class="m">E Z(t) ≡ 1</span>, so the system is stationary. Unbounded marks, though, need Poisson atoms far below <span class="m">log R = −7</span> to keep the count up away from the origin, so the bars fall short of the exact orange line near the edges — a truncation artifact, not a failure of stationarity.`}
+function loop(){if(playing&&sys){facc+=0.32;if(facc>=1){pos+=Math.floor(facc);facc-=Math.floor(facc);if(pos>NG-SPAN-1)pos=0}}if(sys){drawSys();drawCounts()}requestAnimationFrame(loop)}
+// ---------- mixture ----------
+const VLEV=-4.5, LO=VLEV-4.2, HI=VLEV+4.2, NB=46;
+function mixCloud(kind){const pts=[];let G=0;const thr=VLEV-8;
+  for(;;){G+=-Math.log(Math.random());const x=-Math.log(G);if(x<thr)break;
+    let m=0;if(kind===1)m=-2;else if(kind===2)m=(Math.random()<1/(1+Math.E))?0:-2;
+    pts.push([x,x+m+Math.SQRT2*randn()]);if(pts.length>400000)break}
+  return pts}
+function ramp(t){t=Math.max(0,Math.min(1,t));const a=[255,255,255],b=[31,95,168],c=[224,114,42];
+  const f=(p,q,r)=>Math.round(p+(q-p)*r);
+  if(t<0.72){const r=t/0.72;return `rgb(${f(a[0],b[0],r)},${f(a[1],b[1],r)},${f(a[2],b[2],r)})`}
+  const r=(t-0.72)/0.28;return `rgb(${f(b[0],c[0],r)},${f(b[1],c[1],r)},${f(b[2],c[2],r)})`}
+function drawMix(id,pts,title,fid,ratio){
+  const cv=document.getElementById(id),ctx=cv.getContext('2d'),W=cv.width;
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,W);
+  const X=v=>30+(W-44)*(v-LO)/(HI-LO), Y=v=>W-28-(W-44)*(v-LO)/(HI-LO);
+  const H2=new Float64Array(NB*NB);let n0=0,n1=0,cmax=0;
+  for(let k=0;k<pts.length;k++){const a=pts[k][0],b=pts[k][1];
+    if(a>VLEV)n0++;if(b>VLEV)n1++;
+    if(a<LO||b<LO||a>=HI||b>=HI)continue;
+    const ia=Math.floor(NB*(a-LO)/(HI-LO)),ib=Math.floor(NB*(b-LO)/(HI-LO));
+    const q=++H2[ib*NB+ia];if(q>cmax)cmax=q}
+  const cw=(W-44)/NB,lg=Math.log(1+cmax);
+  for(let ia=0;ia<NB;ia++)for(let ib=0;ib<NB;ib++){const c=H2[ib*NB+ia];if(!c)continue;
+    ctx.fillStyle=ramp(Math.log(1+c)/lg);
+    ctx.fillRect(30+ia*cw,W-28-(ib+1)*cw,Math.ceil(cw)+0.5,Math.ceil(cw)+0.5)}
+  ctx.strokeStyle='rgba(27,42,74,.55)';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(X(LO),Y(LO));ctx.lineTo(X(HI),Y(HI));ctx.stroke();
+  ctx.strokeStyle='rgba(27,42,74,.5)';ctx.setLineDash([4,4]);ctx.lineWidth=1;ctx.beginPath();
+  ctx.moveTo(X(VLEV),Y(LO));ctx.lineTo(X(VLEV),Y(HI));ctx.moveTo(X(LO),Y(VLEV));ctx.lineTo(X(HI),Y(VLEV));ctx.stroke();ctx.setLineDash([]);
+  ctx.strokeStyle='rgba(27,42,74,.25)';ctx.strokeRect(30,W-28-NB*cw,NB*cw,NB*cw);
+  ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('log F(0) →',W-84,W-9);
+  ctx.save();ctx.translate(13,76);ctx.rotate(-Math.PI/2);ctx.fillText('log F(1) →',0,0);ctx.restore();
+  ctx.fillStyle='#1b2a4a';ctx.font='13px Inter,sans-serif';ctx.fillText(title,30,18);
+  document.getElementById(fid).innerHTML=`above v at time 0: <b>${n0}</b>, at time 1: <b>${n1}</b> — ratio ${(n1/Math.max(n0,1)).toFixed(2)}, mean ${ratio}`}
+function mixAll(){
+  drawMix('m0',mixCloud(0),'component 1:  log Z(1) ~ N(0, 2)','f0','e ≈ 2.72');
+  drawMix('m1',mixCloud(1),'component 2:  log Z(1) ~ N(−2, 2)','f1','1/e ≈ 0.37');
+  drawMix('m2',mixCloud(2),'mixture  {ℒ(Z₁) + e ℒ(Z₂)}/(1+e)','f2','exactly 1')}
+const $=id=>document.getElementById(id);
+$('u').oninput=e=>{u=+e.target.value;$('uv').textContent=u.toFixed(1)};
+$('h').oninput=e=>{H=+e.target.value;$('hv').textContent=H.toFixed(2);if(mark==='C'){L=null;build()}};
+for(const [id,k] of [['mA','A'],['mB','B'],['mC','C']])$(id).onclick=()=>{mark=k;for(const q of ['mA','mB','mC'])$(q).classList.toggle('on',q===id);L=null;build();regime()};
+$('re').onclick=build;$('pp').onclick=()=>{playing=!playing;$('pp').textContent=playing?'Pause':'Play'};
+$('mre').onclick=mixAll;
+regime();build();mixAll();loop();
+</script>
+</body>
+</html>
