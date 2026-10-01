@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Block and sliding-window ruin</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a;--ok:#2e8b57}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);font-size:14px}
+  .top b{font-family:Newsreader,serif;font-weight:400;font-size:18px}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  h1{font-family:Newsreader,serif;font-weight:400;font-size:30px;margin:6px 0 6px}
+  .lead{color:var(--muted);max-width:74ch;margin:0 0 18px}
+  .lay{display:grid;grid-template-columns:1fr 300px;gap:20px}
+  @media(max-width:820px){.lay{grid-template-columns:1fr}}
+  canvas{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;display:block}
+  .panel{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--card);font-size:14px}
+  .panel label{display:block;margin:12px 0 4px;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .panel label:first-child{margin-top:0}
+  .panel input[type=range]{width:100%;accent-color:var(--accent)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:6px;cursor:pointer}
+  button:hover,button.on{background:var(--accent);color:var(--bg);border-color:var(--accent)} button:disabled{opacity:.5;cursor:default}
+  .m{font-family:Newsreader,serif;font-style:italic}
+  .regime{margin-top:14px;padding:10px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+  .regime b{font-family:Newsreader,serif;font-weight:400;font-size:17px;display:block;margin-bottom:2px}
+  .regime table{border-collapse:collapse;width:100%;margin-top:6px}
+  .regime td{padding:2px 0;font-variant-numeric:tabular-nums}
+  .regime td:last-child{text-align:right}
+  figure{margin:0 0 12px} figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+  .two{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+  @media(max-width:700px){.two{grid-template-columns:1fr}}
+  .status{font-size:13px;color:var(--muted);margin-top:4px;min-height:1.3em}
+  .warn{color:var(--warn)}
+  .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="../#gallery">← back</a></div>
+<div class="wrap">
+  <h1>Ruin in every block, ruin in every window</h1>
+  <p class="lead">The loss process <span class="m">X(t) = B(t) − ct</span> of a Brownian risk model is watched over a horizon <span class="m">T = mh</span> cut into <span class="m">m</span> reporting blocks of length <span class="m">h</span>. <em>Block ruin</em> asks for an exceedance of the level <span class="m">u</span> in every block; <em>sliding-window ruin</em> asks for one in every window of length <span class="m">h</span>, wherever it is placed — equivalently, no recovery interval of length <span class="m">h</span>. Both are far rarer than ordinary ruin on <span class="m">[0, T]</span>, but not by a product of one-block probabilities. Conditional on ruin in the first block, the first hit of <span class="m">u</span> happens just before <span class="m">h</span>; the strong Markov property there turns everything that follows into a finite-level event, so
+  <span class="m">p<sup>bl</sup> ∼ 2 G<sub>m</sub> Ψ((u+ch)/√h)</span> and <span class="m">p<sup>sl</sup> ∼ 2 G<sup>sl</sup><sub>m</sub> Ψ((u+ch)/√h)</span>,
+  where <span class="m">G<sub>m</sub></span> is the probability that a fresh drifted Brownian motion is positive somewhere in each of the blocks <span class="m">[kh,(k+1)h]</span>, <span class="m">k = 1,…,m−2</span>, and <span class="m">G<sup>sl</sup><sub>m</sub></span> the Parisian-type survival probability that it never stays non-positive for a whole window. The animation rains down Brownian paths until one achieves the event, then replays it.
+  From <a href="../papers/Blockruin.pdf" target="_blank" rel="noopener">Dębicki, Hashorva &amp; Michna</a>, <em>Finite-horizon block and sliding-window ruin for Brownian risk models</em>.</p>
+
+  <div class="lay">
+    <div>
+      <figure><canvas id="ct" width="1060" height="440"></canvas><figcaption id="capt">the loss X(t) = B(t) − ct over the m blocks; the level u dashed; failed attempts in grey; the first exceedance in each block marked, and the first hitting time τ<sub>u</sub> — which crowds against h as u grows</figcaption></figure>
+      <div class="two">
+        <figure><canvas id="ce" width="700" height="220"></canvas><figcaption>empirical frequencies over all attempts against the theorems' predictions 2GΨ((u+ch)/√h), and the exact first-block ruin probability ψ(u,h), which bounds both from above</figcaption></figure>
+        <figure><canvas id="ch" width="340" height="220"></canvas><figcaption>first hitting times τ<sub>u</sub> of all paths ruined in block 1; each newly found ruin time drops into its bin; the curve is the exact conditional density (inverse Gaussian restricted to [0,h]); the lemma says τ<sub>u</sub> | τ<sub>u</sub> &lt; h → h</figcaption></figure>
+      </div>
+      <div class="status" id="st"></div>
+    </div>
+    <div class="panel">
+      <label>Level u = <span id="uv">1.5</span></label>
+      <input type="range" id="u" min="0.5" max="3" step="0.1" value="1.5">
+      <label>Premium rate c = <span id="cv">1.0</span></label>
+      <input type="range" id="c" min="0.2" max="1.5" step="0.1" value="1">
+      <label>Block length h = <span id="hv">1.0</span> · blocks m = <span id="mv">4</span></label>
+      <input type="range" id="h" min="0.5" max="2" step="0.1" value="1">
+      <input type="range" id="m" min="2" max="6" step="1" value="4">
+      <label>Replay speed ×<span id="sv">1.0</span></label>
+      <input type="range" id="s" min="0.25" max="3" step="0.25" value="1">
+      <div class="row"><button id="bbl" class="on">block ruin</button><button id="bsl">sliding window</button></div>
+      <div class="row"><button id="run">Search</button><button id="next">Next path</button><button id="pp">Pause</button></div>
+      <div class="regime" id="reg"></div>
+      <div class="note">Euler step h/200. The constants G<sub>m</sub>, G<sup>sl</sup><sub>m</sub> and the grid constant J<sub>m</sub> = P{B(jh) − cjh &gt; 0, j ≤ m−2} are themselves Monte Carlo estimates (4 000 paths, no rare event involved); the chain J<sub>m</sub> ≤ G<sup>sl</sup><sub>m</sub> ≤ G<sub>m</sub> ≤ 1 is the paper's (10). Discrete suprema slightly undercount crossings, which lowers every empirical frequency a little. Brute-force search becomes slow once ψ(u,h) drops below about 10<sup>−5</sup>; the panel says so.</div>
+    </div>
+  </div>
+</div>
+<script>
+let u=1.5,c=1,h=1,m=4,mode='block',speed=1;
+const K=200;
+let paths=[],cur=-1,frame=0,facc=0,playing=true,searching=false,holdUntil=0;
+let att=0,nBl=0,nSl=0,taus=[],faint=[],consts={G:1,Gs:1,J:1},drops=[],bins=[],NB=20;
+const $=id=>document.getElementById(id);
+function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
+function erfc(x){const z=Math.abs(x),t=1/(1+0.5*z);const r=t*Math.exp(-z*z-1.26551223+t*(1.00002368+t*(0.37409196+t*(0.09678418+t*(-0.18628806+t*(0.27886807+t*(-1.13520398+t*(1.48851587+t*(-0.82215223+t*0.17087277)))))))));return x>=0?r:2-r}
+const Psi=x=>0.5*erfc(x/Math.SQRT2);
+const psiExact=()=>Psi((u+c*h)/Math.sqrt(h))+Math.exp(-2*c*u)*Psi((u-c*h)/Math.sqrt(h));
+const lead=()=>2*Psi((u+c*h)/Math.sqrt(h));
+function fmt(x){if(x===0)return '0';if(x>=0.01)return x.toFixed(4);return x.toExponential(2)}
+
+function windowMax(x,N){ // M[i]=max x[i..i+K], i=0..N-K
+  const M=new Float64Array(N-K+1),dq=new Int32Array(N+1);let hd=0,tl=0;
+  for(let i=0;i<=N;i++){while(tl>hd&&x[dq[tl-1]]<=x[i])tl--;dq[tl++]=i;while(dq[hd]<i-K)hd++;if(i>=K)M[i-K]=x[dq[hd]]}
+  return M}
+function simulate(){const N=m*K,dt=h/K,sd=Math.sqrt(dt);const x=new Float64Array(N+1);for(let i=1;i<=N;i++)x[i]=x[i-1]+sd*randn()-c*dt;return x}
+function analyse(x){const N=m*K;const firsts=[];let block=true;
+  for(let k=0;k<m;k++){let f=-1;for(let i=k*K;i<=(k+1)*K;i++){if(x[i]>u){f=i;break}}firsts.push(f);if(f<0)block=false}
+  const M=windowMax(x,N);let minM=Infinity,arg=0;for(let i=0;i<M.length;i++)if(M[i]<minM){minM=M[i];arg=i}
+  return {x,firsts,tau:firsts[0],block,sliding:minM>u,M,minM,arg}}
+
+function computeConstants(){if(m===2){consts={G:1,Gs:1,J:1};return}
+  const L=(m-1)*K,dt=h/K,sd=Math.sqrt(dt),R=4000;let cG=0,cS=0,cJ=0;const y=new Float64Array(L+1);
+  for(let r=0;r<R;r++){for(let i=1;i<=L;i++)y[i]=y[i-1]+sd*randn()-c*dt;
+    let g=true;for(let k=1;k<=m-2&&g;k++){let s=-Infinity;for(let i=k*K;i<=(k+1)*K;i++)if(y[i]>s)s=y[i];if(s<=0)g=false}
+    let j=true;for(let q=1;q<=m-2;q++)if(y[q*K]<=0){j=false;break}
+    if(g){cG++;const M=windowMax(y,L);let ok=true;for(let i=0;i<=(m-2)*K;i++)if(M[i]<=0){ok=false;break}if(ok)cS++}
+    if(j)cJ++}
+  consts={G:cG/R,Gs:cS/R,J:cJ/R}}
+
+function reset(){paths=[];cur=-1;frame=0;att=0;nBl=0;nSl=0;taus=[];faint=[];drops=[];bins=new Array(NB).fill(0);computeConstants();regime();status()}
+function searchBatch(){const t0=performance.now();let found=false;
+  while(performance.now()-t0<12){const a=analyse(simulate());att++;
+    if(a.block){nBl++;taus.push(a.tau);if(drops.length<40)drops.push({t:a.tau,y:0,v:0})}if(a.sliding)nSl++;
+    const ok=mode==='block'?a.block:a.sliding;
+    if(ok){paths.push(a);if(paths.length>60){paths.shift();cur=Math.max(0,cur-1)}found=true;if(cur<0){cur=paths.length-1;frame=0}if(paths.length>=200)break}
+    else if(faint.length<40&&Math.random()<0.15)faint.push(a.x);
+    if(found)break}
+  status()}
+
+function status(){const p=psiExact();let s=`attempts ${att.toLocaleString()} · block ruin ${nBl} (${att?fmt(nBl/att):'–'}) · sliding ${nSl} (${att?fmt(nSl/att):'–'})`;
+  if(p<1e-5)s+=` <span class="warn">— ψ(u,h) ≈ ${fmt(p)}: one success per ${Math.round(1/p).toLocaleString()} attempts, lower u or c</span>`;
+  $('st').innerHTML=s}
+function regime(){const z=(u+c*h)/Math.sqrt(h),L=lead(),p=psiExact();
+  $('reg').innerHTML=`<b>Predictions as u → ∞</b><table>
+  <tr><td>(u+ch)/√h</td><td>${z.toFixed(2)}</td></tr>
+  <tr><td>2Ψ((u+ch)/√h)</td><td>${fmt(L)}</td></tr>
+  <tr><td>ψ(u,h) exact, first-block ruin</td><td>${fmt(p)}</td></tr>
+  <tr><td>G<sub>${m}</sub>(h,c)</td><td>${consts.G.toFixed(3)}</td></tr>
+  <tr><td>G<sup>sl</sup><sub>${m}</sub>(h,c)</td><td>${consts.Gs.toFixed(3)}</td></tr>
+  <tr><td>J<sub>${m}</sub>(h,c)</td><td>${consts.J.toFixed(3)}</td></tr>
+  <tr><td><b style="display:inline;font-size:13px;font-family:inherit">p<sup>bl</sup> ≈ 2G<sub>m</sub>Ψ</b></td><td>${fmt(2*consts.G*Psi(z))}</td></tr>
+  <tr><td><b style="display:inline;font-size:13px;font-family:inherit">p<sup>sl</sup> ≈ 2G<sup>sl</sup><sub>m</sub>Ψ</b></td><td>${fmt(2*consts.Gs*Psi(z))}</td></tr></table>
+  ${m===2?'<div style="margin-top:6px">m = 2: both constants equal one, and p<sup>sl</sup> ∼ p<sup>bl</sup> ∼ ψ(u,h).</div>':''}`}
+
+/* ---------- drawing ---------- */
+const ct=$('ct'),g=ct.getContext('2d'),ce=$('ce'),ge=ce.getContext('2d'),ch=$('ch'),gh=ch.getContext('2d');
+function drawMain(){const W=ct.width,H=ct.height,T=m*h,N=m*K;g.clearRect(0,0,W,H);
+  const ml=46,mr=16,mt=18,mb=34,pw=W-ml-mr,ph=H-mt-mb;
+  const p=cur>=0?paths[cur]:null,f=p?Math.min(frame,N):0;
+  let pmax=u;if(p){for(let i=0;i<=N;i++)if(p.x[i]>pmax)pmax=p.x[i]}
+  const ylo=Math.min(-1.2*Math.sqrt(T)-0.5*c*T,-0.6),yhi=Math.max(u+0.9*Math.sqrt(h),pmax)+0.25;
+  const X=t=>ml+pw*t/T,Y=y=>mt+ph*(yhi-y)/(yhi-ylo);
+  // blocks
+  for(let k=0;k<m;k++){let col=k%2?'rgba(27,42,74,.035)':'rgba(27,42,74,0)';
+    if(p&&mode==='block'&&p.firsts[k]>=0&&f>=p.firsts[k])col='rgba(46,139,87,.12)';
+    g.fillStyle=col;g.fillRect(X(k*h),mt,pw/m,ph)}
+  g.strokeStyle='rgba(27,42,74,.25)';g.lineWidth=1;g.setLineDash([]);
+  for(let k=0;k<=m;k++){g.beginPath();g.moveTo(X(k*h),mt);g.lineTo(X(k*h),mt+ph);g.stroke()}
+  // sliding window sweep
+  if(p&&mode==='sliding'&&f>=K){const t1=f*h/K,t0=t1-h;g.fillStyle='rgba(224,114,42,.13)';g.fillRect(X(t0),mt,X(t1)-X(t0),ph)}
+  // zero and level
+  g.strokeStyle='rgba(27,42,74,.2)';g.beginPath();g.moveTo(ml,Y(0));g.lineTo(ml+pw,Y(0));g.stroke();
+  g.setLineDash([6,5]);g.strokeStyle='#1b2a4a';g.lineWidth=1.2;g.beginPath();g.moveTo(ml,Y(u));g.lineTo(ml+pw,Y(u));g.stroke();g.setLineDash([]);
+  // faint attempts
+  g.strokeStyle='rgba(27,42,74,.10)';g.lineWidth=1;
+  for(const x of faint){g.beginPath();for(let i=0;i<=N;i+=2){const yy=Math.max(ylo,x[i]);i?g.lineTo(X(i*h/K),Y(yy)):g.moveTo(X(0),Y(yy))}g.stroke()}
+  if(p){// path
+    g.strokeStyle='#1b2a4a';g.lineWidth=1.6;g.beginPath();for(let i=0;i<=f;i++){const yy=Math.max(ylo,p.x[i]);i?g.lineTo(X(i*h/K),Y(yy)):g.moveTo(X(0),Y(yy))}g.stroke();
+    if(mode==='sliding'){// window max curve, plotted at window start, up to f-K
+      const M=p.M;g.strokeStyle='#e0722a';g.lineWidth=2;g.beginPath();for(let i=0;i<=f-K&&i<M.length;i++){i?g.lineTo(X(i*h/K),Y(M[i])):g.moveTo(X(0),Y(M[i]))}g.stroke();
+      if(f>=K){const i=Math.min(f-K,M.length-1);g.fillStyle='#e0722a';g.beginPath();g.arc(X(i*h/K),Y(M[i]),4,0,7);g.fill()}
+      if(f>=N){const i=p.arg;g.fillStyle='#e0722a';g.font='12px Inter,sans-serif';g.textAlign='center';g.fillText('weakest window: sup = '+p.minM.toFixed(2)+' > u',X(i*h/K+h/2),mt+ph-8);
+        g.strokeStyle='#e0722a';g.lineWidth=1;g.setLineDash([3,3]);g.strokeRect(X(i*h/K),mt+1,X(h)-ml,ph-2);g.setLineDash([])}
+    }else{for(let k=0;k<m;k++){const i=p.firsts[k];if(i>=0&&f>=i){g.fillStyle='#e0722a';g.beginPath();g.arc(X(i*h/K),Y(p.x[i]),4.5,0,7);g.fill()}}}
+    // tau_u
+    if(p.tau>=0&&f>=p.tau){const t=p.tau*h/K;g.strokeStyle='#e0722a';g.lineWidth=1;g.beginPath();g.moveTo(X(t),Y(u)-14);g.lineTo(X(t),mt+ph);g.stroke();
+      g.fillStyle='#e0722a';g.font='italic 13px Newsreader,serif';g.textAlign='center';g.fillText('τu = '+t.toFixed(2),X(t),Y(u)-18)}
+    // running clock and ripples at ruin epochs
+    if(f<N){const tt=f*h/K;g.strokeStyle='rgba(224,114,42,.5)';g.lineWidth=1;g.beginPath();g.moveTo(X(tt),mt);g.lineTo(X(tt),mt+ph);g.stroke();g.fillStyle='#e0722a';g.font='12px Inter,sans-serif';g.textAlign='left';g.fillText('t = '+tt.toFixed(2),X(tt)+5,mt+ph-8)}
+    for(let k=0;k<m;k++){const i=p.firsts[k];if(i>=0&&f>=i&&f-i<110){const r=2+(f-i)*0.4;g.strokeStyle='rgba(224,114,42,'+(1-(f-i)/110)+')';g.lineWidth=1.5;g.beginPath();g.arc(X(i*h/K),Y(p.x[i]),r,0,7);g.stroke()}}
+    // head
+    if(f<N){g.fillStyle='#1b2a4a';g.beginPath();g.arc(X(f*h/K),Y(Math.max(ylo,p.x[f])),3,0,7);g.fill()}
+  }
+  // axes labels
+  g.fillStyle='#5d6b85';g.font='12px Inter,sans-serif';g.textAlign='center';
+  for(let k=0;k<=m;k++)g.fillText((k*h).toFixed(1).replace(/\.0$/,''),X(k*h),H-12);
+  g.fillText('t',ml+pw+8,H-12);g.textAlign='right';g.fillText('u',ml-6,Y(u)+4);g.fillText('0',ml-6,Y(0)+4);
+  g.textAlign='left';g.font='italic 13px Newsreader,serif';for(let k=0;k<m;k++)g.fillText('block '+(k+1),X(k*h)+6,mt+14);
+  if(!p){g.fillStyle='#5d6b85';g.font='15px Inter,sans-serif';g.textAlign='center';g.fillText(searching?'searching…':'press Search',ml+pw/2,mt+ph/2)}
+}
+function drawBars(){const W=ce.width,H=ce.height;ge.clearRect(0,0,W,H);const ml=50,mr=14,mt=18,mb=40,pw=W-ml-mr,ph=H-mt-mb;
+  const z=(u+c*h)/Math.sqrt(h),P=psiExact();
+  const items=[{l:'ψ(u,h)',v:P,col:'rgba(27,42,74,.25)'},
+    {l:'block, empirical',v:att?nBl/att:0,col:'#1f5fa8'},{l:'2G·Ψ',v:2*consts.G*Psi(z),col:'rgba(31,95,168,.4)'},
+    {l:'sliding, empirical',v:att?nSl/att:0,col:'#e0722a'},{l:'2Gˢˡ·Ψ',v:2*consts.Gs*Psi(z),col:'rgba(224,114,42,.4)'}];
+  const top=Math.max(...items.slice(1).map(i=>i.v),1e-9)*1.4,Y=v=>mt+ph*(1-Math.min(v,top)/top),bw=pw/items.length;
+  ge.strokeStyle='rgba(27,42,74,.15)';ge.beginPath();ge.moveTo(ml,Y(0));ge.lineTo(ml+pw,Y(0));ge.stroke();
+  ge.font='12px Inter,sans-serif';ge.textAlign='center';
+  items.forEach((it,i)=>{const x=ml+bw*i+bw*0.18,w=bw*0.64;ge.fillStyle=it.col;ge.fillRect(x,Y(it.v),w,Y(0)-Y(it.v));
+    if(it.v>top){ge.fillStyle='#fff';ge.fillRect(x-2,mt+16,w+4,6);ge.fillStyle='#5d6b85';ge.fillText('↑ off scale',x+w/2,mt+40)}
+  });
+  if(att&&nBl){// normal-approximation error bars
+    [[1,nBl,'#1f5fa8'],[3,nSl,'#e0722a']].forEach(([i,n,col])=>{const p=n/att,se=Math.sqrt(p*(1-p)/att);const x=ml+bw*i+bw/2;ge.strokeStyle=col;ge.lineWidth=1.5;ge.beginPath();ge.moveTo(x,Y(Math.min(top,p+1.96*se)));ge.lineTo(x,Y(Math.max(0,p-1.96*se)));ge.stroke()})}
+  items.forEach((it,i)=>{const x=ml+bw*i+bw*0.18,w=bw*0.64;ge.fillStyle='#1b2a4a';ge.fillText(fmt(it.v),x+w/2,Y(it.v)-5);ge.fillStyle='#5d6b85';ge.fillText(it.l,x+w/2,H-16)});
+}
+function drawHist(){const W=ch.width,H=ch.height;gh.clearRect(0,0,W,H);const ml=14,mr=14,mt=22,mb=30,pw=W-ml-mr,ph=H-mt-mb,nb=NB;
+  const landed=bins.reduce((a,b)=>a+b,0);
+  // expected counts from the conditional inverse-Gaussian density of τu given τu < h
+  const P=psiExact(),dens=t=>t<=0?0:u/Math.sqrt(2*Math.PI*t*t*t)*Math.exp(-(u+c*t)*(u+c*t)/(2*t))/P;
+  const exp=[];for(let i=0;i<nb;i++)exp.push(Math.max(landed,1)*dens((i+0.5)/nb*h)*h/nb);
+  const mx=Math.max(1,...bins,...exp);
+  const topY=i=>mt+ph*(1-bins[i]/mx);
+  for(let i=0;i<nb;i++){const x=ml+pw*i/nb;gh.fillStyle=i===nb-1?'#e0722a':'#1f5fa8';gh.fillRect(x+1,topY(i),pw/nb-2,ph*bins[i]/mx)}
+  // density curve
+  gh.strokeStyle='rgba(27,42,74,.55)';gh.lineWidth=1.5;gh.beginPath();for(let k=0;k<=80;k++){const t=(k+0.5)/81*h,e=Math.max(landed,1)*dens(t)*h/nb;const x=ml+pw*(k+0.5)/81,y=mt+ph*(1-Math.min(e,mx)/mx);k?gh.lineTo(x,y):gh.moveTo(x,y)}gh.stroke();
+  // falling dots: each newly found ruin time drops into its bin
+  for(let d=drops.length-1;d>=0;d--){const o=drops[d];o.v+=0.3;o.y+=o.v;const i=Math.min(nb-1,Math.floor(o.t/K*nb));const target=topY(i)-mt;
+    if(o.y>=target){bins[i]++;drops.splice(d,1);continue}
+    gh.fillStyle='#e0722a';gh.beginPath();gh.arc(ml+pw*(i+0.5)/nb,mt+o.y,3.5,0,7);gh.fill()}
+  gh.strokeStyle='rgba(27,42,74,.2)';gh.beginPath();gh.moveTo(ml,mt+ph);gh.lineTo(ml+pw,mt+ph);gh.stroke();
+  gh.fillStyle='#5d6b85';gh.font='12px Inter,sans-serif';gh.textAlign='left';gh.fillText('0',ml,H-10);gh.textAlign='right';gh.fillText('h = '+h.toFixed(1),ml+pw,H-10);
+  gh.textAlign='center';gh.fillText(taus.length?'n = '+taus.length+(taus.length>20?', mean τu = '+(taus.reduce((a,t)=>a+t,0)/taus.length*h/K).toFixed(2):''):'waiting for the first ruined path…',ml+pw/2,13)}
+
+/* ---------- loop ---------- */
+let last=0;
+function loop(ts){const dtms=Math.min(50,ts-last);last=ts;
+  if(searching)searchBatch();
+  const N=m*K,p=cur>=0?paths[cur]:null;
+  if(p&&playing){if(frame<N){facc+=dtms*N*speed/8000;frame=Math.min(N,Math.floor(facc))}else{if(!holdUntil)holdUntil=ts+3000;if(ts>holdUntil&&cur<paths.length-1){cur++;frame=0;facc=0;holdUntil=0}}}
+  drawMain();drawBars();drawHist();requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+
+/* ---------- controls ---------- */
+function bind(id,set,fmtv){const el=$(id);el.addEventListener('input',()=>{set(+el.value);$(id+'v').textContent=fmtv(+el.value);reset()})}
+bind('u',v=>u=v,v=>v.toFixed(1));bind('c',v=>c=v,v=>v.toFixed(1));bind('h',v=>h=v,v=>v.toFixed(1));bind('m',v=>m=v,v=>v);
+$('s').addEventListener('input',()=>{speed=+$('s').value;$('sv').textContent=speed.toFixed(2).replace(/0$/,'')});
+$('bbl').onclick=()=>{mode='block';$('bbl').classList.add('on');$('bsl').classList.remove('on');$('capt').innerHTML='the loss X(t) = B(t) − ct over the m blocks; the level u dashed; failed attempts in grey; the first exceedance in each block marked, and the first hitting time τ<sub>u</sub> — which crowds against h as u grows';reset()};
+$('bsl').onclick=()=>{mode='sliding';$('bsl').classList.add('on');$('bbl').classList.remove('on');$('capt').innerHTML='the loss X(t) = B(t) − ct; in orange the moving-window maximum sup<sub>[t,t+h]</sub> X, plotted at the window start, which must stay above u on [0, T−h] — no recovery interval of length h; the weakest window is boxed';reset()};
+$('run').onclick=()=>{searching=!searching;$('run').textContent=searching?'Searching…':'Search';$('run').classList.toggle('on',searching)};
+$('next').onclick=()=>{if(paths.length){cur=(cur+1)%paths.length;frame=0;facc=0;holdUntil=0}};
+$('pp').onclick=()=>{playing=!playing;$('pp').textContent=playing?'Pause':'Play'};
+reset();$('run').click();
+</script>
+</body>
+</html>
