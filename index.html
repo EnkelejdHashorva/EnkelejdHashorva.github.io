@@ -5,6 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Enkelejd Hashorva</title>
 <meta name="description" content="Enkelejd Hashorva — Professor of Actuarial Science at HEC Lausanne, University of Lausanne. Extremes, random fields, regular variation, applied probability, insurance.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Enkelejd Hashorva">
+<meta property="og:description" content="Professor of Actuarial Science at HEC Lausanne, University of Lausanne. Extremes, random fields, regular variation, applied probability, insurance.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/photo.jpg">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Enkelejd Hashorva",
+  "jobTitle": "Professor of Actuarial Science",
+  "worksFor": {"@type": "Organization", "name": "HEC Lausanne, University of Lausanne", "url": "https://www.unil.ch/hec/"},
+  "url": "https://enkelejdhashorva.github.io/",
+  "image": "https://enkelejdhashorva.github.io/photo.jpg",
+  "sameAs": [
+    "https://applicationspub.unil.ch/interpub/noauth/php/Un/UnPers.php?PerNum=1112508&LanCode=8",
+    "https://iris.unil.ch/entities/person/enkelejdhashorva",
+    "https://arxiv.org/search/math?searchtype=author&query=Hashorva%2C+E",
+    "https://orcid.org/0000-0003-2851-4030",
+    "https://scholar.google.com/citations?user=2WKQt-oAAAAJ",
+    "https://www.mathgenealogy.org/id.php?id=105879"
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -35,11 +63,19 @@
   /* nav */
   nav{position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
-  nav .brand{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--ink);letter-spacing:.01em}
-  nav ul{list-style:none;margin:0;padding:0;display:flex;gap:22px;font-size:14px}
+  nav .brand{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--ink);letter-spacing:.01em;white-space:nowrap;flex:none}
+  /* the link list scrolls sideways on narrow screens instead of wrapping or being cut off */
+  nav ul{list-style:none;margin:0;padding:0;display:flex;gap:22px;font-size:14px;min-width:0;overflow-x:auto;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav ul::-webkit-scrollbar{display:none}
   nav ul a{color:var(--muted);border:none}
   nav ul a:hover{color:var(--ink)}
-  @media(max-width:640px){nav ul{gap:14px;font-size:13px} nav ul li.hide-sm{display:none}}
+  @media(max-width:640px){
+    nav .wrap{gap:12px}
+    nav .brand{font-size:17px}
+    nav ul{gap:16px;font-size:13px;padding-right:28px;
+      -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent)}
+    nav ul.end{-webkit-mask-image:none;mask-image:none}
+  }
 
   /* hero */
   header.hero{padding:72px 0 56px;border-bottom:1px solid var(--line)}
@@ -72,6 +108,12 @@
   ul.plain li:first-child{border-top:none}
   ul.topics{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
   ul.topics li{background:var(--accent-soft);color:var(--accent);padding:6px 12px;border-radius:999px;font-size:14px}
+  .themes{display:grid;grid-template-columns:1fr 1fr;gap:8px 40px;margin-top:8px}
+  @media(max-width:700px){.themes{grid-template-columns:1fr}}
+  .theme h3{margin-top:24px;font-family:var(--serif);font-size:20px;letter-spacing:0;text-transform:none;font-weight:400;color:var(--ink)}
+  .theme p{font-size:15px}
+  .theme .refs{font-size:13px;color:var(--muted);line-height:1.8}
+  .theme .refs a{border-bottom:1px solid var(--line)} .theme .refs a:hover{border-bottom-color:var(--accent)}
 
   /* timeline-ish list */
   dl.tl{margin:0;display:grid;grid-template-columns:120px 1fr;gap:6px 20px;font-size:15px}
@@ -96,15 +138,19 @@
   .btn:hover{background:var(--ink);color:var(--bg);border-bottom-color:var(--ink)}
   .btn svg{width:14px;height:14px}
 
+  /* gallery cards (same markup as gallery/index.html) */
   .cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
   @media(max-width:640px){.cards{grid-template-columns:1fr}}
-  .card{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card);color:var(--ink);transition:transform .15s,box-shadow .15s}
-  .card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08);border-bottom-color:var(--line)}
+  .card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card);color:var(--ink);transition:transform .15s,box-shadow .15s}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
   .card img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-bottom:1px solid var(--line)}
-  .card .cb{padding:14px 16px 16px}
-  .card h4{font-family:var(--serif);font-weight:400;font-size:19px;margin:0 0 6px;line-height:1.3}
-  .card p{font-size:14px;color:var(--muted);margin:0}
-  .card .cta{font-size:13px;color:var(--accent);margin-top:8px;display:block}
+  .card .main{color:var(--ink);border:none}
+  .card .main::after{content:"";position:absolute;inset:0}   /* the whole card opens the illustration */
+  .card h4{font-family:var(--serif);font-weight:400;font-size:19px;line-height:1.3;margin:0;padding:14px 16px 6px}
+  .card p{font-size:14px;color:var(--muted);margin:0;padding:0 16px;flex:1}
+  .card p a{position:relative;z-index:1}                     /* links inside the text stay clickable */
+  .card .cta{display:block;font-size:13px;color:var(--accent);padding:10px 16px 16px;border:none}
+  .card:hover .cta{color:var(--ink)}
   .students dl.tl{grid-template-columns:64px 1fr}
   .placeholder{border:1px dashed var(--line);border-radius:8px;padding:20px 22px;color:var(--muted);font-size:15px;background:var(--card)}
 
@@ -121,9 +167,10 @@
       <li><a href="#about">About</a></li>
       <li><a href="#research">Research</a></li>
       <li><a href="#preprints">Preprints</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li class="hide-sm"><a href="#students">Students</a></li>
-      <li class="hide-sm"><a href="#practice">Practice</a></li>
+      <li><a href="gallery/">Gallery</a></li>
+      <li><a href="#students">Students</a></li>
+      <!-- Re-enable together with the Actuarial practice section below:
+      <li><a href="#practice">Practice</a></li> -->
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
@@ -136,8 +183,10 @@
       <h1>Enkelejd Hashorva</h1>
       <p class="lede">Professor of Actuarial Science. I work on <em>extremes, random fields and regular variation</em>, and on the probability that underlies insurance and risk.</p>
       <div class="links">
-        <a href="https://iris.unil.ch" target="_blank" rel="noopener">Publications on IRIS</a>
+        <a href="https://iris.unil.ch/entities/person/enkelejdhashorva" target="_blank" rel="noopener">Publications on IRIS</a>
+        <a href="https://arxiv.org/search/math?searchtype=author&query=Hashorva%2C+E" target="_blank" rel="noopener">arXiv</a>
         <a href="https://scholar.google.com/citations?user=2WKQt-oAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        <a href="https://applicationspub.unil.ch/interpub/noauth/php/Un/UnPers.php?PerNum=1112508&LanCode=8" target="_blank" rel="noopener">UNIL profile</a>
         <a href="mailto:enkelejd.hashorva@unil.ch">Email</a>
       </div>
     </div>
@@ -149,16 +198,19 @@
 
 <section id="about" class="prose">
   <div class="sec-head"><span class="num">01</span><h2>About</h2></div>
-  <p>I am Full Professor of Actuarial Science at HEC Lausanne, University of Lausanne, in the Department of Actuarial Science.</p>
-  <p>My research lies in theoretical stochastic analysis and applied probability, with a particular focus on rare events, extremes of random fields, regular variation, shift-invariant structures, multivariate dependence, and the representation of fundamental asymptotic constants. In connection with my actuarial background, I also work on applied problems in non-life insurance, risk management and financial mathematics.</p>
-  <p>Before joining the University of Lausanne I led the non-life pricing team at Allianz Suisse. I have held the <em>Venia Docendi</em> in applied stochastics at the University of Bern since 2004, with the title of Privatdozent, and I am a qualified actuary (SAA). I obtained my PhD at the University of Bern in 1999 under the supervision of Jürg Hüsler.</p>
+  <p>I am Full Professor of Actuarial Science at HEC Lausanne, University of Lausanne.</p>
+  <p>My research focuses on stochastic analysis and applied probability, particularly rare events, extremes of random fields, regular variation, shift-invariant structures, multivariate dependence, and representations of asymptotic constants. Drawing on my actuarial expertise and industry experience at Allianz Suisse, I also work on applied problems in non-life insurance, risk management, and financial mathematics.</p>
+  <p>Together with Krzysztof Dębicki and his team, I have developed a theory of rare events for vector-valued Gaussian random fields, including the asymptotic constants governing their extremal behaviour.</p>
+  <p>I serve on the editorial boards of several international scientific journals, including the <em>Journal of Applied Probability</em>, <em>Advances in Applied Probability</em>, <em>Probability and Mathematical Statistics</em>, <em>Statistics &amp; Probability Letters</em>, and the <em>Spanish Journal of Statistics</em>.</p>
+  <p>Before joining the University of Lausanne, I led the non-life insurance pricing team at Allianz Suisse Insurance. I have been a qualified actuary of the Swiss Association of Actuaries (SAA) since 2004 and have served on its Education Committee since 2011.</p>
+  <p>I completed my PhD at the University of Bern in 1999 under the supervision of Professor Jürg Hüsler, received the <em>Venia Docendi</em> in Applied Stochastics from the University of Bern in 2004, and hold the title of Privatdozent.</p>
 
   <div class="two">
     <div>
       <h3>Editorial boards</h3>
       <ul class="plain">
-        <li>Extremes</li>
         <li>Journal of Applied Probability</li>
+        <li>Advances in Applied Probability</li>
         <li>Probability and Mathematical Statistics</li>
         <li>Statistics &amp; Probability Letters</li>
         <li>Spanish Journal of Statistics</li>
@@ -168,7 +220,8 @@
       <h3>Positions &amp; education</h3>
       <dl class="tl">
         <dt>Present</dt><dd>Professor of Actuarial Science, HEC Lausanne</dd>
-        <dt>since 2004</dt><dd>Privatdozent, applied stochastics, University of Bern</dd>
+        <dt>since 2011</dt><dd>Education Committee, Swiss Association of Actuaries</dd>
+        <dt>since 2004</dt><dd>Privatdozent, applied stochastics, University of Bern; qualified actuary (SAA)</dd>
         <dt>2005–2010</dt><dd>Head of non-life pricing, Allianz Suisse</dd>
         <dt>2000–2005</dt><dd>Reserving actuary, Allianz Suisse</dd>
         <dt>1999</dt><dd>PhD, University of Bern (advisor: Jürg Hüsler)</dd>
@@ -180,28 +233,49 @@
 
 <section id="research">
   <div class="sec-head"><span class="num">02</span><h2>Research</h2></div>
-  <p>Themes that recur across my work:</p>
-  <ul class="topics">
-    <li>Extremes of random fields</li>
-    <li>Rare events</li>
-    <li>Regular variation</li>
-    <li>Shift-invariant structures</li>
-    <li>Multivariate dependence</li>
-    <li>Asymptotic constants</li>
-    <li>Non-life insurance</li>
-    <li>Risk management</li>
-    <li>Financial mathematics</li>
-  </ul>
+  <p>What I am working on now, with the preprints and live illustrations that go with each theme.</p>
+
+  <div class="themes">
+    <div class="theme">
+      <h3>Extremes of Gaussian random fields</h3>
+      <p>The tail behaviour of suprema, infima and sojourn times of Gaussian processes and fields, scalar and vector-valued: how a rough field exceeds a high level, how long it stays there, and the Pickands–Piterbarg-type constants that quantify it. Recent work extends this to vector-valued stationary fields and to the much harder question of infima — a field staying high <em>everywhere</em> on a set.</p>
+      <p class="refs"><a href="https://arxiv.org/abs/2510.06930" target="_blank" rel="noopener">Sojourns of vector-valued fields</a> · <a href="papers/Infimum_Exact.pdf" target="_blank" rel="noopener">Infima of Gaussian processes</a> · <a href="gallery/pickands.html">illustration: Euler characteristic vs Pickands</a> · <a href="gallery/infimum.html">illustration: staying high everywhere</a></p>
+    </div>
+    <div class="theme">
+      <h3>Shift-invariant and max-stable structures</h3>
+      <p>Stationarity in unusual places: max-stable fields indexed by rooted trees that look the same from every branch, Poisson particle systems that are stationary although each particle is anchored at its own origin, and the persistence of Brown–Resnick processes. The common thread is a representation of the asymptotic constants through shift-invariant measures.</p>
+      <p class="refs"><a href="https://arxiv.org/abs/2608.12947" target="_blank" rel="noopener">Max-stable fields on rooted trees</a> · <a href="papers/SPParticles.pdf" target="_blank" rel="noopener">Stationary Poisson particle systems</a> · <a href="gallery/tree.html">illustration: a max-stable field on a binary tree</a> · <a href="gallery/particles.html">illustration: a particle system with no clock of its own</a></p>
+    </div>
+    <div class="theme">
+      <h3>Ruin and rare events for Brownian risk models</h3>
+      <p>Finite-horizon ruin in forms that matter for reporting and regulation — ruin in every block or every sliding window, simultaneous ruin of several lines of business on a metric tree, Parisian ruin of branching populations — and Brownian motion with exponential resetting, where restarts make the search for a high level efficient. In each case the rare event is driven by a single mechanism that the asymptotics make explicit.</p>
+      <p class="refs"><a href="papers/Blockruin.pdf" target="_blank" rel="noopener">Block and sliding-window ruin</a> · <a href="papers/Metrictrees.pdf" target="_blank" rel="noopener">Ruin on Brownian metric trees</a> · <a href="papers/Simultaneous_BBM.pdf" target="_blank" rel="noopener">Parisian ruin of branching Brownian motion</a> · <a href="https://arxiv.org/abs/2603.03050" target="_blank" rel="noopener">Brownian motion with resetting</a> · <a href="gallery/blockruin.html">illustration: ruin in every block</a> · <a href="gallery/resetting.html">illustration: back to square one</a></p>
+    </div>
+    <div class="theme">
+      <h3>Laplace principles and exponential functionals</h3>
+      <p>Tail and density asymptotics for homogeneous functionals of Gaussian vectors and for exponential integrals of Gaussian processes, via a radial–angular Laplace principle: the rare event chooses a direction, and the price of the constraint is read off from the geometry of a switching curve or an RKHS minimiser. Closely related: the long memory of Gaussian queues, whose workload covariance decays like a power of the lag.</p>
+      <p class="refs"><a href="papers/LaplaceEH.pdf" target="_blank" rel="noopener">Radial–angular Laplace principle</a> · <a href="papers/LOGN_nonstat.pdf" target="_blank" rel="noopener">Gaussian exponential integrals</a> · <a href="papers/CovarianceQueues.pdf" target="_blank" rel="noopener">Covariance decay for Gaussian queues</a> · <a href="gallery/laplace.html">illustration: the angle a rare event chooses</a> · <a href="gallery/expint.html">illustration: the most likely path</a></p>
+    </div>
+  </div>
+
   <h3>Long-standing collaborators</h3>
-  <p>Georgiy Shevchenko, Krzysztof Dębicki, Zbigniew Michna, among many others.</p>
+  <p>Krzysztof Dębicki, Zbigniew Michna, Georgiy Shevchenko, and my current and former students, among many others.</p>
 </section>
 
 <section id="preprints">
   <div class="sec-head"><span class="num">03</span><h2>Recent preprints &amp; manuscripts</h2></div>
-  <p>Work in progress and papers under review. The complete, up-to-date list of published articles is on <a href="https://iris.unil.ch/" target="_blank" rel="noopener">IRIS</a>.</p>
+  <p>Work in progress and papers under review. The complete, up-to-date list of published articles is on <a href="https://iris.unil.ch/entities/person/enkelejdhashorva" target="_blank" rel="noopener">IRIS</a>; preprints are on <a href="https://arxiv.org/search/math?searchtype=author&query=Hashorva%2C+E" target="_blank" rel="noopener">arXiv</a>.</p>
 
   <!-- TEMPLATE: copy one <li> per paper. Delete the sample entries below. -->
   <ol class="papers">
+    <li>
+      <div class="yr">2026</div>
+      <div>
+        <p class="t"><a href="https://arxiv.org/abs/2603.03050" target="_blank" rel="noopener">Distributional and extremal behaviour of Brownian motion with exponential resetting</a></p>
+        <p class="au">K. Dębicki, E. Hashorva, Z. Michna</p>
+        <div class="tags"><a class="tag arxiv" href="https://arxiv.org/abs/2603.03050" target=_blank rel=noopener>arXiv:2603.03050</a><a class="tag" href="gallery/resetting.html">interactive illustration →</a></div>
+      </div>
+    </li>
     <li>
       <div class="yr">2026</div>
       <div>
@@ -284,128 +358,53 @@
     </li>
   </ol>
 
-  <a class="btn" href="https://iris.unil.ch" target="_blank" rel="noopener">All publications on IRIS
+  <a class="btn" href="https://iris.unil.ch/entities/person/enkelejdhashorva" target="_blank" rel="noopener">All publications on IRIS
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg>
   </a>
 </section>
 
 <section id="gallery">
   <div class="sec-head"><span class="num">04</span><h2>Gallery</h2></div>
-  <p>Interactive illustrations of objects from recent papers. Everything is simulated live in your browser — move the sliders.</p>
+  <p>Interactive illustrations of objects from recent papers. Everything is simulated live in your browser — move the sliders. Four of them below; the <a href="gallery/">full gallery</a> has all fifteen.</p>
+  <!-- Featured cards: swap any of these for a card from gallery/index.html (same markup, paths prefixed with gallery/). -->
   <div class="cards">
-    <a class="card" href="gallery/tree.html">
-      <img src="gallery/tree.png" alt="Max-stable field on a binary tree">
-      <div class="cb">
-        <h4>A max-stable field on a binary tree</h4>
-        <p>Brown–Resnick construction driven by a Gaussian branching random walk. Colours show which Poisson point wins at each vertex; zoom into any subtree and it looks like the whole.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/pickands.html">
-      <img src="gallery/pickands.png" alt="Excursion set of a rough Gaussian field">
-      <div class="cb">
-        <h4>Where the Euler characteristic ends and Pickands begins</h4>
-        <p>Turn the roughness α of a Gaussian field from 2 downwards: the Euler-characteristic heuristic gives way to Pickands–Piterbarg asymptotics and the constant ℋ<sub>α</sub>. A companion to Pavel Ievlev's illustration.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/quadrant.html">
-      <img src="gallery/quadrant.png" alt="Correlated Brownian motions entering a quadrant">
-      <div class="cb">
-        <h4>Hitting a quadrant</h4>
-        <p>Animated: the rare correlated Brownian paths with drift that ever enter a quadrant. Raise the correlation and watch the entry point move from the corner to the edge — the dimension reduction of Dębicki, Hashorva, Ji &amp; Rolski.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/ou.html">
-      <img src="gallery/ou.png" alt="Bivariate Ornstein-Uhlenbeck process exceeding two levels">
-      <div class="cb">
-        <h4>Simultaneous exceedance, stationary case</h4>
-        <p>The Ornstein–Uhlenbeck companion: entry times are uniform, so dimension reduction shows up as the slack of the second coordinate at entry. From Dębicki, Hashorva &amp; Wang.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/expint.html">
-      <img src="gallery/expint.png" alt="Most likely path of a large exponential integral of fBm">
-      <div class="cb">
-        <h4>The most likely path of a large exponential integral</h4>
-        <p>For ∫e<sup>X</sup> with X fractional Brownian, the paths that exceed a large b cluster around the RKHS minimiser, and the Jensen–Gaussian bound is exact for H &gt; ½, off by √2 at H = ½. From Hashorva &amp; Novikov.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/queue.html">
-      <img src="gallery/queue.png" alt="Workload of a fractional Brownian queue and its lookback time">
-      <div class="cb">
-        <h4>How long does a Gaussian queue remember?</h4>
-        <p>The workload of a queue fed by fractional Brownian motion inherits the memory of its input: Cov(Q(0), Q(r)) ~ H(2H−1)(Eτ)² r<sup>2H−2</sup>, with Brownian input the exponential exception. From Dębicki, Hashorva &amp; Novikov.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/bbm.html">
-      <img src="gallery/bbm.png" alt="Branching Brownian motion achieving Parisian ruin">
-      <div class="cb">
-        <h4>Parisian ruin of branching Brownian motion</h4>
-        <p>Animated trees in which every particle alive stays above the line u + ct for a whole window: probability C e<sup>−κu</sup>, κ = c + √(c²+2β), with the ruin time centred at u/a. From Hashorva, Novikov &amp; Shashkov.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/infimum.html">
-      <img src="gallery/infimum.png" alt="fBm paths staying above a level on two intervals">
-      <div class="cb">
-        <h4>Staying high everywhere</h4>
-        <p>The infimum of fractional Brownian motion over two intervals: for H &gt; ½ the conditioned paths touch the level at one point and lift off; for Brownian motion they hug it everywhere — dominated versus full contact. From Dębicki, Hashorva &amp; Novikov.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/brownresnick.html">
-      <img src="gallery/brownresnick.png" alt="Brown-Resnick process assembled from spectral curves">
-      <div class="cb">
-        <h4>Persistence of a Brown–Resnick process</h4>
-        <p>The max-stable envelope assembled from its log-normal spectral curves; how many exceed a level somewhere (Pickands, linear in T) versus throughout (the expected infimum 𝒢<sub>V</sub>(T), decaying like 2Ψ(√γ<sub>V</sub>(T)) for H &gt; ½). From Dębicki, Hashorva &amp; Novikov.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/particles.html">
-      <img src="gallery/particles.png" alt="Poisson particle system of rescaled marks">
-      <div class="cb">
-        <h4>A particle system with no clock of its own</h4>
-        <p>Poisson-rescaled copies of one mark: the system is stationary although every curve is anchored at its own origin, and a mixture of two non-stationary components can be stationary. From Hashorva.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/laplace.html">
-      <img src="gallery/laplace.png" alt="Conditional angular cloud for two homogeneous constraints">
-      <div class="cb">
-        <h4>The angle a rare event chooses</h4>
-        <p>Two constraints on a squared Brownian norm: as the threshold ratio moves, the conditional angular cloud turns from a full Gaussian blob to exactly half of one, then clings to the switching curve and costs a factor u<sup>−1/2</sup>. From Hashorva.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/metrictrees.html">
-      <img src="gallery/metrictrees.png" alt="Brownian metric tree with barriers and its network of currents">
-      <div class="cb">
-        <h4>Ruin on a Brownian metric tree</h4>
-        <p>All leaves must cross their barriers at one common time. The exponent is an obstacle problem on an electrical network — active leaves inject current, inactive ones are carried along — and the constant lives in the terminal window. From Hashorva.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/blockruin.html">
-      <img src="gallery/blockruin.png" alt="Brownian loss process ruined in every reporting block">
-      <div class="cb">
+    <article class="card">
+      <a class="main" href="gallery/resetting.html">
+        <img src="gallery/resetting.png" alt="Brownian paths with resets racing to a high level">
+        <h4>Back to square one</h4>
+      </a>
+      <p>Animated: Brownian motion sent back to <em>x<sub>R</sub></em> at Poisson times. The search for a level <em>u</em> has a best reset rate λ*, the steady state is an asymmetric Laplace law, and the tail of the supremum depends on the sign of <em>x<sub>R</sub></em> — never reset, or reset exactly once, immediately. From Dębicki, Hashorva &amp; Michna.</p>
+      <a class="cta" href="gallery/resetting.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="gallery/blockruin.html">
+        <img src="gallery/blockruin.png" alt="Brownian loss process ruined in every reporting block">
         <h4>Ruin in every block, ruin in every window</h4>
-        <p>Animated: Brownian paths rain down until one exceeds <em>u</em> in each of <em>m</em> reporting blocks, or in every sliding window of length <em>h</em>. The first hit crowds against <em>h</em>, and what follows is a finite-level event: p ∼ 2G<sub>m</sub>Ψ((u+ch)/√h). From Dębicki, Hashorva &amp; Michna.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
-    <a class="card" href="gallery/sojourn.html">
-      <img src="gallery/sojourn.png" alt="Sojourn set of a bivariate Gaussian field">
-      <div class="cb">
-        <h4>Sojourns of a bivariate Gaussian field</h4>
-        <p>Two correlated stationary components on a square; the set where both exceed a level <em>u</em>, and how its area decays as <em>u</em> grows.</p>
-        <span class="cta">Open →</span>
-      </div>
-    </a>
+      </a>
+      <p>Animated: Brownian paths rain down until one exceeds <em>u</em> in each of <em>m</em> reporting blocks, or in every sliding window of length <em>h</em>. The first hit crowds against <em>h</em>, and what follows is a finite-level event: p ∼ 2G<sub>m</sub>Ψ((u+ch)/√h). From Dębicki, Hashorva &amp; Michna.</p>
+      <a class="cta" href="gallery/blockruin.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="gallery/tree.html">
+        <img src="gallery/tree.png" alt="Max-stable field on a binary tree">
+        <h4>A max-stable field on a binary tree</h4>
+      </a>
+      <p>Brown–Resnick construction driven by a Gaussian branching random walk. Colours show which Poisson point wins at each vertex; zoom into any subtree and it looks like the whole.</p>
+      <a class="cta" href="gallery/tree.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="gallery/pickands.html">
+        <img src="gallery/pickands.png" alt="Excursion set of a rough Gaussian field">
+        <h4>Where the Euler characteristic ends and Pickands begins</h4>
+      </a>
+      <p>Turn the roughness α of a Gaussian field from 2 downwards: the Euler-characteristic heuristic gives way to Pickands–Piterbarg asymptotics and the constant ℋ<sub>α</sub>. A companion to <a href="https://ievlevpn.github.io/viz/pillow.html" target="_blank" rel="noopener">Pavel Ievlev's illustration</a>.</p>
+      <a class="cta" href="gallery/pickands.html">Open →</a>
+    </article>
   </div>
+
+  <a class="btn" href="gallery/">All 15 illustrations
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
 </section>
 
 <section id="students" class="students">
@@ -425,7 +424,7 @@
         <li>Sebastian Engelke</li>
         <li>Krzysztof Bisewski</li>
         <li>Jinzhu Li</li>
-        <li>Pavel Ievlev</li>
+        <li><a href="https://ievlevpn.github.io/" target="_blank" rel="noopener">Pavel Ievlev</a></li>
         <li>Nikolai Kriukov</li>
       </ul>
     </div>
@@ -449,15 +448,19 @@
   </div>
 </section>
 
+<!-- ACTUARIAL PRACTICE — hidden until the content is ready.
+     To switch it on: remove this comment wrapper, replace the placeholder with the content,
+     un-comment the "Practice" item in the nav, and renumber Contact to 07.
 <section id="practice">
   <div class="sec-head"><span class="num">06</span><h2>Actuarial practice</h2></div>
   <div class="placeholder">
     This section is reserved for industry work and applied projects — non-life pricing at Allianz Suisse, consulting, and collaborations with practitioners. Content to follow.
   </div>
 </section>
+-->
 
 <section id="contact">
-  <div class="sec-head"><span class="num">07</span><h2>Contact</h2></div>
+  <div class="sec-head"><span class="num">06</span><h2>Contact</h2></div>
   <div class="two">
     <div>
       <dl class="tl">
@@ -468,8 +471,8 @@
     </div>
     <div>
       <dl class="tl">
-        <dt>Department</dt><dd><a href="https://www.unil.ch/hec/" target="_blank" rel="noopener">Actuarial Science @ HEC Lausanne</a></dd>
-        <dt>Profiles</dt><dd><a href="https://iris.unil.ch" target="_blank" rel="noopener">IRIS</a> · <a href="https://orcid.org/0000-0003-2851-4030" target="_blank" rel="noopener">ORCID</a> · <a href="https://scholar.google.com/citations?user=2WKQt-oAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a></dd>
+        <dt>Department</dt><dd><a href="https://www.unil.ch/hec/en/home/menuinst/faculte/departements/dsa/membres.html" target="_blank" rel="noopener">Actuarial Science @ HEC Lausanne</a></dd>
+        <dt>Profiles</dt><dd><a href="https://applicationspub.unil.ch/interpub/noauth/php/Un/UnPers.php?PerNum=1112508&LanCode=8" target="_blank" rel="noopener">UNIL</a> · <a href="https://iris.unil.ch/entities/person/enkelejdhashorva" target="_blank" rel="noopener">IRIS</a> · <a href="https://arxiv.org/search/math?searchtype=author&query=Hashorva%2C+E" target="_blank" rel="noopener">arXiv</a> · <a href="https://orcid.org/0000-0003-2851-4030" target="_blank" rel="noopener">ORCID</a> · <a href="https://scholar.google.com/citations?user=2WKQt-oAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a></dd>
       </dl>
     </div>
   </div>
@@ -484,6 +487,12 @@
   </div>
 </footer>
 
-<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+<script>
+  document.getElementById('y').textContent=new Date().getFullYear();
+  // On narrow screens the menu scrolls sideways; drop the right-edge fade once the end is reached.
+  const u=document.querySelector('nav ul');
+  const f=()=>u.classList.toggle('end',u.scrollLeft+u.clientWidth>=u.scrollWidth-1);
+  u.addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();
+</script>
 </body>
 </html>
