@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery — Enkelejd Hashorva</title>
+<meta name="description" content="Interactive illustrations of objects from recent papers by Enkelejd Hashorva and coauthors — extremes of Gaussian fields, ruin probabilities, max-stable fields, Brownian motion on trees — all simulated live in the browser.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gallery — Enkelejd Hashorva">
+<meta property="og:description" content="Interactive illustrations of objects from recent papers, simulated live in your browser.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/tree.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f2e7; --ink:#252a1e; --muted:#6a6d58; --line:#ddd9c4;
+    --accent:#4a6b34; --accent-soft:#e6ead4; --card:#fbfaf1;
+    --serif:"Newsreader",Georgia,serif; --sans:"Inter",system-ui,sans-serif;
+    --maxw:1100px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#22271b; --ink:#e8e6d5; --muted:#a3a68d; --line:#38402c;
+      --accent:#a7c087; --accent-soft:#2e3623; --card:#282e1f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#22271b; --ink:#e8e6d5; --muted:#a3a68d; --line:#38402c;
+    --accent:#a7c087; --accent-soft:#2e3623; --card:#282e1f;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+  a:hover{border-bottom-color:currentColor}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+  /* nav — same as the homepage; the link list scrolls sideways on narrow screens */
+  nav{position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+  nav .brand{font-family:var(--serif);font-size:19px;font-weight:500;color:var(--ink);letter-spacing:.01em;white-space:nowrap;flex:none}
+  nav ul{list-style:none;margin:0;padding:0;display:flex;gap:22px;font-size:14px;min-width:0;overflow-x:auto;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav ul::-webkit-scrollbar{display:none}
+  nav ul a{color:var(--muted);border:none}
+  nav ul a:hover,nav ul a[aria-current="page"]{color:var(--ink)}
+  @media(max-width:640px){
+    nav .wrap{gap:12px}
+    nav .brand{font-size:17px}
+    nav ul{gap:16px;font-size:13px;padding-right:28px;
+      -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent)}
+    nav ul.end{-webkit-mask-image:none;mask-image:none}
+  }
+
+  /* header */
+  header.hero{padding:64px 0 44px;border-bottom:1px solid var(--line)}
+  @media(max-width:640px){header.hero{padding:44px 0 32px}}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,6vw,56px);line-height:1.05;margin:0 0 18px;letter-spacing:-.01em}
+  .lede{font-family:var(--serif);font-size:21px;line-height:1.45;font-weight:300;color:var(--ink);max-width:620px;margin:0 0 26px}
+  .links{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px}
+  .links a{color:var(--ink);border-bottom:1px solid var(--line)}
+  .links a:hover{border-bottom-color:var(--ink)}
+
+  /* cards */
+  main{padding:44px 0 56px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:900px){.cards{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.cards{grid-template-columns:1fr}}
+  .card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card);color:var(--ink);transition:transform .15s,box-shadow .15s}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .card img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-bottom:1px solid var(--line)}
+  .card .main{color:var(--ink);border:none}
+  .card .main::after{content:"";position:absolute;inset:0}   /* the whole card opens the illustration */
+  .card h2{font-family:var(--serif);font-weight:400;font-size:19px;line-height:1.3;margin:0;padding:14px 16px 6px}
+  .card p{font-size:14px;color:var(--muted);margin:0;padding:0 16px;flex:1}
+  .card p a{position:relative;z-index:1}                     /* links inside the text stay clickable */
+  .card .cta{display:block;font-size:13px;color:var(--accent);padding:10px 16px 16px;border:none}
+  .card:hover .cta{color:var(--ink)}
+
+  footer{padding:36px 0 48px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="../">E. Hashorva</a>
+    <ul>
+      <li><a href="../#about">About</a></li>
+      <li><a href="../#research">Research</a></li>
+      <li><a href="../#preprints">Preprints</a></li>
+      <li><a href="./" aria-current="page">Gallery</a></li>
+      <li><a href="../#students">Students</a></li>
+      <li><a href="../#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Enkelejd Hashorva · Interactive illustrations</p>
+    <h1>Gallery</h1>
+    <p class="lede">Objects from recent papers, simulated live in your browser. Every illustration has sliders to move, a button to resample, and a short note on what the simulation does.</p>
+    <div class="links">
+      <a href="../">← Back to the homepage</a>
+      <a href="../#preprints">The papers behind them</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- TEMPLATE: copy one <article class="card"> per illustration. Thumbnail 740px wide, screenshot of the main canvas. -->
+  <div class="cards">
+    <article class="card">
+      <a class="main" href="resetting.html">
+        <img src="resetting.png" alt="Brownian paths with resets racing to a high level">
+        <h2>Back to square one</h2>
+      </a>
+      <p>Animated: Brownian motion sent back to <em>x<sub>R</sub></em> at Poisson times. The search for a level <em>u</em> has a best reset rate λ*, the steady state is an asymmetric Laplace law, and the tail of the supremum depends on the sign of <em>x<sub>R</sub></em> — never reset, or reset exactly once, immediately. From Dębicki, Hashorva &amp; Michna.</p>
+      <a class="cta" href="resetting.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="tree.html">
+        <img src="tree.png" alt="Max-stable field on a binary tree">
+        <h2>A max-stable field on a binary tree</h2>
+      </a>
+      <p>Brown–Resnick construction driven by a Gaussian branching random walk. Colours show which Poisson point wins at each vertex; zoom into any subtree and it looks like the whole.</p>
+      <a class="cta" href="tree.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="pickands.html">
+        <img src="pickands.png" alt="Excursion set of a rough Gaussian field">
+        <h2>Where the Euler characteristic ends and Pickands begins</h2>
+      </a>
+      <p>Turn the roughness α of a Gaussian field from 2 downwards: the Euler-characteristic heuristic gives way to Pickands–Piterbarg asymptotics and the constant ℋ<sub>α</sub>. A companion to <a href="https://ievlevpn.github.io/viz/pillow.html" target="_blank" rel="noopener">Pavel Ievlev's illustration</a>.</p>
+      <a class="cta" href="pickands.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="quadrant.html">
+        <img src="quadrant.png" alt="Correlated Brownian motions entering a quadrant">
+        <h2>Hitting a quadrant</h2>
+      </a>
+      <p>Animated: the rare correlated Brownian paths with drift that ever enter a quadrant. Raise the correlation and watch the entry point move from the corner to the edge — the dimension reduction of Dębicki, Hashorva, Ji &amp; Rolski.</p>
+      <a class="cta" href="quadrant.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="ou.html">
+        <img src="ou.png" alt="Bivariate Ornstein-Uhlenbeck process exceeding two levels">
+        <h2>Simultaneous exceedance, stationary case</h2>
+      </a>
+      <p>The Ornstein–Uhlenbeck companion: entry times are uniform, so dimension reduction shows up as the slack of the second coordinate at entry. From Dębicki, Hashorva &amp; Wang.</p>
+      <a class="cta" href="ou.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="expint.html">
+        <img src="expint.png" alt="Most likely path of a large exponential integral of fBm">
+        <h2>The most likely path of a large exponential integral</h2>
+      </a>
+      <p>For ∫e<sup>X</sup> with X fractional Brownian, the paths that exceed a large b cluster around the RKHS minimiser, and the Jensen–Gaussian bound is exact for H &gt; ½, off by √2 at H = ½. From Hashorva &amp; Novikov.</p>
+      <a class="cta" href="expint.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="queue.html">
+        <img src="queue.png" alt="Workload of a fractional Brownian queue and its lookback time">
+        <h2>How long does a Gaussian queue remember?</h2>
+      </a>
+      <p>The workload of a queue fed by fractional Brownian motion inherits the memory of its input: Cov(Q(0), Q(r)) ~ H(2H−1)(Eτ)² r<sup>2H−2</sup>, with Brownian input the exponential exception. From Dębicki, Hashorva &amp; Novikov.</p>
+      <a class="cta" href="queue.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="bbm.html">
+        <img src="bbm.png" alt="Branching Brownian motion achieving Parisian ruin">
+        <h2>Parisian ruin of branching Brownian motion</h2>
+      </a>
+      <p>Animated trees in which every particle alive stays above the line u + ct for a whole window: probability C e<sup>−κu</sup>, κ = c + √(c²+2β), with the ruin time centred at u/a. From Hashorva, Novikov &amp; Shashkov.</p>
+      <a class="cta" href="bbm.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="infimum.html">
+        <img src="infimum.png" alt="fBm paths staying above a level on two intervals">
+        <h2>Staying high everywhere</h2>
+      </a>
+      <p>The infimum of fractional Brownian motion over two intervals: for H &gt; ½ the conditioned paths touch the level at one point and lift off; for Brownian motion they hug it everywhere — dominated versus full contact. From Dębicki, Hashorva &amp; Novikov.</p>
+      <a class="cta" href="infimum.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="brownresnick.html">
+        <img src="brownresnick.png" alt="Brown-Resnick process assembled from spectral curves">
+        <h2>Persistence of a Brown–Resnick process</h2>
+      </a>
+      <p>The max-stable envelope assembled from its log-normal spectral curves; how many exceed a level somewhere (Pickands, linear in T) versus throughout (the expected infimum 𝒢<sub>V</sub>(T), decaying like 2Ψ(√γ<sub>V</sub>(T)) for H &gt; ½). From Dębicki, Hashorva &amp; Novikov.</p>
+      <a class="cta" href="brownresnick.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="particles.html">
+        <img src="particles.png" alt="Poisson particle system of rescaled marks">
+        <h2>A particle system with no clock of its own</h2>
+      </a>
+      <p>Poisson-rescaled copies of one mark: the system is stationary although every curve is anchored at its own origin, and a mixture of two non-stationary components can be stationary. From Hashorva.</p>
+      <a class="cta" href="particles.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="laplace.html">
+        <img src="laplace.png" alt="Conditional angular cloud for two homogeneous constraints">
+        <h2>The angle a rare event chooses</h2>
+      </a>
+      <p>Two constraints on a squared Brownian norm: as the threshold ratio moves, the conditional angular cloud turns from a full Gaussian blob to exactly half of one, then clings to the switching curve and costs a factor u<sup>−1/2</sup>. From Hashorva.</p>
+      <a class="cta" href="laplace.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="metrictrees.html">
+        <img src="metrictrees.png" alt="Brownian metric tree with barriers and its network of currents">
+        <h2>Ruin on a Brownian metric tree</h2>
+      </a>
+      <p>All leaves must cross their barriers at one common time. The exponent is an obstacle problem on an electrical network — active leaves inject current, inactive ones are carried along — and the constant lives in the terminal window. From Hashorva.</p>
+      <a class="cta" href="metrictrees.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="blockruin.html">
+        <img src="blockruin.png" alt="Brownian loss process ruined in every reporting block">
+        <h2>Ruin in every block, ruin in every window</h2>
+      </a>
+      <p>Animated: Brownian paths rain down until one exceeds <em>u</em> in each of <em>m</em> reporting blocks, or in every sliding window of length <em>h</em>. The first hit crowds against <em>h</em>, and what follows is a finite-level event: p ∼ 2G<sub>m</sub>Ψ((u+ch)/√h). From Dębicki, Hashorva &amp; Michna.</p>
+      <a class="cta" href="blockruin.html">Open →</a>
+    </article>
+    <article class="card">
+      <a class="main" href="sojourn.html">
+        <img src="sojourn.png" alt="Sojourn set of a bivariate Gaussian field">
+        <h2>Sojourns of a bivariate Gaussian field</h2>
+      </a>
+      <p>Two correlated stationary components on a square; the set where both exceed a level <em>u</em>, and how its area decays as <em>u</em> grows.</p>
+      <a class="cta" href="sojourn.html">Open →</a>
+    </article>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Enkelejd Hashorva</span>
+    <span><a href="../">Homepage</a> · Hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('y').textContent=new Date().getFullYear();
+  // On narrow screens the menu scrolls sideways; drop the right-edge fade once the end is reached.
+  const u=document.querySelector('nav ul');
+  const f=()=>u.classList.toggle('end',u.scrollLeft+u.clientWidth>=u.scrollWidth-1);
+  u.addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();
+</script>
+</body>
+</html>
