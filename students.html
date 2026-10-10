@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Students — Enkelejd Hashorva</title>
+<meta name="description" content="PhD students, postdocs and completed theses supervised by Enkelejd Hashorva.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/students.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Students — Enkelejd Hashorva">
+<meta property="og:description" content="PhD students, postdocs and completed theses supervised by Enkelejd Hashorva.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/students.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/photo.jpg">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="./">E. Hashorva</a>
+    <ul>
+      <li><a href="index.html">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="preprints.html">Preprints</a></li>
+      <li><a href="gallery/">Gallery</a></li>
+      <li><a href="students.html" aria-current="page">Students</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page"><div class="wrap"><h1>Students &amp; postdocs</h1></div></header>
+<main class="wrap">
+
+<section id="students" class="students">
+    <div class="two">
+    <div>
+      <h3 style="margin-top:0">Current PhD students</h3>
+      <ul class="plain">
+        <li>Svyatoslav Novikov</li>
+        <li>Timofei Shashkov</li>
+        <li>Chao Lu</li>
+        <li>Simone Deponte</li>
+        <li>Maria Murillo Hernández</li>
+      </ul>
+      <h3>Past postdocs</h3>
+      <ul class="plain">
+        <li>Sebastian Engelke</li>
+        <li>Krzysztof Bisewski</li>
+        <li>Jinzhu Li</li>
+        <li><a href="https://ievlevpn.github.io/" target="_blank" rel="noopener">Pavel Ievlev</a></li>
+        <li>Nikolai Kriukov</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Completed PhDs <span style="font-weight:400;text-transform:none;letter-spacing:0">(University of Lausanne)</span></h3>
+      <dl class="tl">
+        <dt>2024</dt><dd><a href="https://ievlevpn.github.io/" target="_blank" rel="noopener">Pavel Ievlev</a></dd>
+        <dt>2022</dt><dd>Nikolai Kriukov</dd>
+        <dt>2021</dt><dd>Grigori Jasnovidov</dd>
+        <dt>2021</dt><dd>Konrad Krystecki</dd>
+        <dt>2018</dt><dd>Long Bai</dd>
+        <dt>2018</dt><dd>Maissa Tamraz</dd>
+        <dt>2017</dt><dd>Julia Farkas</dd>
+        <dt>2016</dt><dd>Gildas Ratovomirija</dd>
+        <dt>2014</dt><dd>Lanpeng Ji</dd>
+        <dt>2014</dt><dd>Chengxiu Ling</dd>
+        <dt>2014</dt><dd>Zhichao Weng</dd>
+      </dl>
+      <p style="font-size:13px;color:var(--muted);margin-top:10px"><a href="https://www.mathgenealogy.org/id.php?id=105879" target="_blank" rel="noopener">Mathematics Genealogy Project</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Enkelejd Hashorva</span>
+    <span>Hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('y').textContent=new Date().getFullYear();
+  // On narrow screens the menu scrolls sideways; drop the right-edge fade once the end is reached.
+  const u=document.querySelector('nav ul');
+  const f=()=>u.classList.toggle('end',u.scrollLeft+u.clientWidth>=u.scrollWidth-1);
+  u.addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();
+</script>
+</body>
+</html>

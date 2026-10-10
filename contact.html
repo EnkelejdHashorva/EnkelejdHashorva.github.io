@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Enkelejd Hashorva</title>
+<meta name="description" content="Contact details for Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/contact.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact — Enkelejd Hashorva">
+<meta property="og:description" content="Contact details for Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/contact.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/photo.jpg">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="./">E. Hashorva</a>
+    <ul>
+      <li><a href="index.html">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="preprints.html">Preprints</a></li>
+      <li><a href="gallery/">Gallery</a></li>
+      <li><a href="students.html">Students</a></li>
+      <li><a href="contact.html" aria-current="page">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page"><div class="wrap"><h1>Contact</h1></div></header>
+<main class="wrap">
+
+<section id="contact">
+    <div class="two">
+    <div>
+      <dl class="tl">
+        <dt>Email</dt><dd><a href="mailto:enkelejd.hashorva@unil.ch">enkelejd.hashorva@unil.ch</a></dd>
+        <dt>Office</dt><dd>Extranef 205</dd>
+        <dt>Address</dt><dd>Department of Actuarial Science<br>HEC Lausanne, University of Lausanne<br>Quartier UNIL-Chamberonne, Bâtiment Extranef<br>CH-1015 Lausanne, Switzerland</dd>
+      </dl>
+    </div>
+    <div>
+      <dl class="tl">
+        <dt>Department</dt><dd><a href="https://www.unil.ch/hec/fr/home/menuinst/faculte/departements/dsa.html" target="_blank" rel="noopener">Actuarial Science @ HEC Lausanne</a></dd>
+        <dt>Profiles</dt><dd><a href="https://applicationspub.unil.ch/interpub/noauth/php/Un/UnPers.php?PerNum=1112508&LanCode=8" target="_blank" rel="noopener">UNIL</a> · <a href="https://iris.unil.ch/entities/person/enkelejdhashorva" target="_blank" rel="noopener">IRIS</a> · <a href="https://arxiv.org/search/math?searchtype=author&query=Hashorva%2C+E" target="_blank" rel="noopener">arXiv</a> · <a href="https://orcid.org/0000-0003-2851-4030" target="_blank" rel="noopener">ORCID</a> · <a href="https://scholar.google.com/citations?user=2WKQt-oAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a></dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Enkelejd Hashorva</span>
+    <span>Hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('y').textContent=new Date().getFullYear();
+  // On narrow screens the menu scrolls sideways; drop the right-edge fade once the end is reached.
+  const u=document.querySelector('nav ul');
+  const f=()=>u.classList.toggle('end',u.scrollLeft+u.clientWidth>=u.scrollWidth-1);
+  u.addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();
+</script>
+</body>
+</html>
