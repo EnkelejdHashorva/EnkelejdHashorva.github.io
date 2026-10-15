@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Students — Enkelejd Hashorva</title>
-<meta name="description" content="PhD students, postdocs and completed theses supervised by Enkelejd Hashorva.">
+<title>Students — Enkelejd Hashorva, HEC Lausanne, UNIL</title>
+<meta name="description" content="PhD students, postdocs and completed theses supervised by Enkelejd Hashorva at HEC Lausanne, University of Lausanne (UNIL).">
 <meta name="author" content="Enkelejd Hashorva">
+<meta name="keywords" content="Enkelejd Hashorva, PhD students, postdocs, PhD in actuarial science, HEC Lausanne, UNIL, University of Lausanne">
 <link rel="canonical" href="https://enkelejdhashorva.github.io/students.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Students — Enkelejd Hashorva">
-<meta property="og:description" content="PhD students, postdocs and completed theses supervised by Enkelejd Hashorva.">
+<meta property="og:title" content="Students — Enkelejd Hashorva, HEC Lausanne, UNIL">
+<meta property="og:description" content="PhD students, postdocs and completed theses supervised by Enkelejd Hashorva at HEC Lausanne, University of Lausanne (UNIL).">
 <meta property="og:url" content="https://enkelejdhashorva.github.io/students.html">
 <meta property="og:image" content="https://enkelejdhashorva.github.io/photo.jpg">
 <meta name="twitter:card" content="summary">
@@ -17,11 +18,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="site.css?v=d3fc32649f">
 </head>
 <body>
 
-<nav>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav aria-label="Main navigation">
   <div class="wrap">
     <a class="brand" href="./">E. Hashorva</a>
     <ul>
@@ -36,12 +39,12 @@
 </nav>
 
 <header class="page"><div class="wrap"><h1>Students &amp; postdocs</h1></div></header>
-<main class="wrap">
+<main class="wrap" id="main" tabindex="-1">
 
 <section id="students" class="students">
     <div class="two">
     <div>
-      <h3 style="margin-top:0">Current PhD students</h3>
+      <h2 class="section-label" style="margin-top:0">Current PhD students</h2>
       <ul class="plain">
         <li>Svyatoslav Novikov</li>
         <li>Timofei Shashkov</li>
@@ -49,7 +52,7 @@
         <li>Simone Deponte</li>
         <li>Maria Murillo Hernández</li>
       </ul>
-      <h3>Past postdocs</h3>
+      <h2 class="section-label">Past postdocs</h2>
       <ul class="plain">
         <li>Sebastian Engelke</li>
         <li>Krzysztof Bisewski</li>
@@ -59,7 +62,7 @@
       </ul>
     </div>
     <div>
-      <h3 style="margin-top:0">Completed PhDs <span style="font-weight:400;text-transform:none;letter-spacing:0">(University of Lausanne)</span></h3>
+      <h2 class="section-label" style="margin-top:0">Completed PhDs <span style="font-weight:400;text-transform:none;letter-spacing:0">(University of Lausanne)</span></h2>
       <dl class="tl">
         <dt>2024</dt><dd><a href="https://ievlevpn.github.io/" target="_blank" rel="noopener">Pavel Ievlev</a></dd>
         <dt>2022</dt><dd>Nikolai Kriukov</dd>
@@ -82,17 +85,13 @@
 
 <footer>
   <div class="wrap">
-    <span>© <span id="y"></span> Enkelejd Hashorva</span>
+    <span>© <span id="y">2026</span> Enkelejd Hashorva</span>
     <span>Hosted on GitHub Pages</span>
   </div>
 </footer>
 
 <script>
   document.getElementById('y').textContent=new Date().getFullYear();
-  // On narrow screens the menu scrolls sideways; drop the right-edge fade once the end is reached.
-  const u=document.querySelector('nav ul');
-  const f=()=>u.classList.toggle('end',u.scrollLeft+u.clientWidth>=u.scrollWidth-1);
-  u.addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();
 </script>
 </body>
 </html>

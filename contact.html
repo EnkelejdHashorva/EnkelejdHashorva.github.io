@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact — Enkelejd Hashorva</title>
-<meta name="description" content="Contact details for Enkelejd Hashorva, HEC Lausanne.">
+<title>Contact — Enkelejd Hashorva, HEC Lausanne, UNIL</title>
+<meta name="description" content="Contact details for Enkelejd Hashorva, Department of Actuarial Science, HEC Lausanne, University of Lausanne (UNIL), Switzerland.">
 <meta name="author" content="Enkelejd Hashorva">
+<meta name="keywords" content="Enkelejd Hashorva, contact, email, office, Extranef, Department of Actuarial Science, HEC Lausanne, UNIL, University of Lausanne, Lausanne, Switzerland">
 <link rel="canonical" href="https://enkelejdhashorva.github.io/contact.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Contact — Enkelejd Hashorva">
-<meta property="og:description" content="Contact details for Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:title" content="Contact — Enkelejd Hashorva, HEC Lausanne, UNIL">
+<meta property="og:description" content="Contact details for Enkelejd Hashorva, Department of Actuarial Science, HEC Lausanne, University of Lausanne (UNIL), Switzerland.">
 <meta property="og:url" content="https://enkelejdhashorva.github.io/contact.html">
 <meta property="og:image" content="https://enkelejdhashorva.github.io/photo.jpg">
 <meta name="twitter:card" content="summary">
@@ -17,11 +18,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="site.css?v=d3fc32649f">
 </head>
 <body>
 
-<nav>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav aria-label="Main navigation">
   <div class="wrap">
     <a class="brand" href="./">E. Hashorva</a>
     <ul>
@@ -36,7 +39,7 @@
 </nav>
 
 <header class="page"><div class="wrap"><h1>Contact</h1></div></header>
-<main class="wrap">
+<main class="wrap" id="main" tabindex="-1">
 
 <section id="contact">
     <div class="two">
@@ -60,17 +63,13 @@
 
 <footer>
   <div class="wrap">
-    <span>© <span id="y"></span> Enkelejd Hashorva</span>
+    <span>© <span id="y">2026</span> Enkelejd Hashorva</span>
     <span>Hosted on GitHub Pages</span>
   </div>
 </footer>
 
 <script>
   document.getElementById('y').textContent=new Date().getFullYear();
-  // On narrow screens the menu scrolls sideways; drop the right-edge fade once the end is reached.
-  const u=document.querySelector('nav ul');
-  const f=()=>u.classList.toggle('end',u.scrollLeft+u.clientWidth>=u.scrollWidth-1);
-  u.addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();
 </script>
 </body>
 </html>
