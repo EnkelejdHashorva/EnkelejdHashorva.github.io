@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How long does a Gaussian queue remember?</title>
+<title>How long does a Gaussian queue remember? — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Long memory of a Gaussian queue: the workload covariance of a queue fed by fractional Brownian motion decays like a power of the lag. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/queue.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How long does a Gaussian queue remember?">
+<meta property="og:description" content="Long memory of a Gaussian queue: the workload covariance of a queue fed by fractional Brownian motion decays like a power of the lag. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/queue.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/queue.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -51,7 +61,7 @@
     <div>
       <figure><canvas id="ca" width="1060" height="300"></canvas><figcaption>live: the net input W(t) = B<sub>H</sub>(t) − ct (dark), its running minimum (dashed), the workload Q(t) as the gap between them (blue), and the lookback τ(t) — the bracket from now back to the time of the minimum</figcaption></figure>
       <figure><canvas id="cq" width="1060" height="300"></canvas><figcaption>a stretch of the workload Q(t) (blue area) and, below it, the lookback τ(t): the age of the increment that realises the supremum</figcaption></figure>
-      <figure><canvas id="cc" width="1060" height="340"></canvas><figcaption>empirical covariance Cov(Q(0), Q(r)) against lag r on log–log axes (dots; hollow = negative), with the theoretical asymptote (dashed)</figcaption></figure>
+      <figure><canvas id="cc" width="1060" height="340"></canvas><figcaption>empirical covariance Cov(Q(0), Q(r)) against lag r on log–log axes (dots; hollow = negative), with the theoretical asymptote (dashed); its fBm constant uses the simulated mean lookback</figcaption></figure>
       <div class="grid3">
         <div class="stat"><div class="k">E τ (from the simulation)</div><div class="v" id="et">—</div><div class="s">mean lookback over time</div></div>
         <div class="stat"><div class="k">Var Q</div><div class="v" id="vq">—</div><div class="s" id="vqs"></div></div>
@@ -66,7 +76,7 @@
       <input type="range" id="c" min="0.5" max="2" step="0.1" value="1">
       <div class="row"><button id="run">Resimulate</button><button id="pp">Pause</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">Fractional Gaussian noise by circulant embedding (Davies–Harte, FFT), time step 0.02, eight independent runs of length 5 200 each; Q(t) = W(t) − min<sub>s≤t</sub>W(s), with τ the time back to the argmin. The discrete-time supremum slightly underestimates the continuous one (by about 0.58√dt for Brownian input), which shows in E Q. Covariances at large lags are noisy — the dots there rest on few effective samples.</div>
+      <div class="note">Fractional Gaussian noise by circulant embedding (Davies–Harte, FFT), time step 0.02, eight independent runs of length 5 243 each, discarding the first 15% as burn-in. The running-minimum construction starts at time zero, so this is a finite-history approximation to the stationary queue. Differences between independent runs estimate covariance without the downward bias from subtracting each run’s own sample mean. The discrete supremum underestimates the continuous one; finite history and long memory can cause further bias, especially for high H and small c. Large-lag dots are noisy, and the dashed fBm constant is itself estimated.</div>
     </div>
   </div>
 </div>
@@ -79,21 +89,25 @@ function fft(re,im){const n=re.length;for(let i=1,j=0;i<n;i++){let bit=n>>1;for(
   for(let len=2;len<=n;len<<=1){const ang=-2*Math.PI/len,wr=Math.cos(ang),wi=Math.sin(ang);for(let i=0;i<n;i+=len){let cr=1,ci=0;for(let j=0;j<len/2;j++){const ur=re[i+j],ui=im[i+j],vr=re[i+j+len/2]*cr-im[i+j+len/2]*ci,vi=re[i+j+len/2]*ci+im[i+j+len/2]*cr;re[i+j]=ur+vr;im[i+j]=ui+vi;re[i+j+len/2]=ur-vr;im[i+j+len/2]=ui-vi;const t=cr*wr-ci*wi;ci=cr*wi+ci*wr;cr=t}}}}
 let lam=null,lamH=null;
 function eig(){if(lam&&lamH===H)return;const M=2*N,re=new Float64Array(M),im=new Float64Array(M);const g=k=>0.5*(Math.pow(Math.abs(k+1),2*H)-2*Math.pow(Math.abs(k),2*H)+Math.pow(Math.abs(k-1),2*H))*Math.pow(dt,2*H);
-  for(let k=0;k<=N;k++)re[k]=g(k);for(let k=1;k<N;k++)re[M-k]=g(k);fft(re,im);lam=re.map(v=>Math.max(v,0));lamH=H}
+  for(let k=0;k<=N;k++)re[k]=g(k);for(let k=1;k<N;k++)re[M-k]=g(k);fft(re,im);let scale=0;for(const v of re)scale=Math.max(scale,Math.abs(v));for(const v of re)if(v < -1e-8*scale)throw new Error('The circulant embedding has a negative eigenvalue.');lam=re.map(v=>Math.max(v,0));lamH=H}
 function fgn(){const M=2*N,re=new Float64Array(M),im=new Float64Array(M);for(let k=0;k<M;k++){const s=Math.sqrt(lam[k]/M);re[k]=s*randn();im[k]=s*randn()}fft(re,im);return re.subarray(0,N)}
-async function simulate(){if(busy)return;busy=true;document.getElementById('run').disabled=true;const st=document.getElementById('st');st.textContent='computing spectrum…';await new Promise(r=>setTimeout(r,0));eig();
+async function simulate(){if(busy)return;busy=true;for(const id of ['run','h','c'])document.getElementById(id).disabled=true;const st=document.getElementById('st');try{st.textContent='computing spectrum…';await new Promise(r=>setTimeout(r,0));eig();
   const lags=[];for(let L=0.1;L<=(H===0.5?30:400);L*=1.15)lags.push(Math.max(1,Math.round(L/dt)));const ul=[...new Set(lags)];
-  const cov=new Float64Array(ul.length);let meanQ=0,meanTau=0,varQ=0,count=0;let sample=null,sampleTau=null,sampleW=null;
+  const cov=new Float64Array(ul.length);let meanQ=0,meanTau=0,varQ=0;let sample=null,sampleTau=null,sampleW=null,previousQ=null;
   for(let r=0;r<REP;r++){st.textContent=`simulating run ${r+1}/${REP}…`;await new Promise(z=>setTimeout(z,0));
     const inc=fgn();const Q=new Float64Array(N),tau=new Float64Array(N);
     // Q(t)=W(t)-min_{s<=t}W(s); the lookback tau is the time back to the argmin
-    let Wt=0,minW=0,argmin=0;const W=new Float64Array(N);
+    let Wt=0,minW=0,argmin=-1;const W=new Float64Array(N);
     for(let i=0;i<N;i++){Wt+=inc[i]-c*dt;W[i]=Wt;if(Wt<minW){minW=Wt;argmin=i}Q[i]=Wt-minW;tau[i]=(i-argmin)*dt}
-    const burn=Math.floor(N*0.15);let m=0,n2=0;for(let i=burn;i<N;i++){m+=Q[i];n2++}m/=n2;let v=0,mt=0;for(let i=burn;i<N;i++){v+=(Q[i]-m)*(Q[i]-m);mt+=tau[i]}v/=n2;mt/=n2;
-    meanQ+=m/REP;varQ+=v/REP;meanTau+=mt/REP;
-    for(let k=0;k<ul.length;k++){const L=ul[k];let s=0,cnt=0;for(let i=burn;i+L<N;i++){s+=(Q[i]-m)*(Q[i+L]-m);cnt++}cov[k]+=s/cnt/REP}
+    const burn=Math.floor(N*0.15);let m=0,n2=0;for(let i=burn;i<N;i++){m+=Q[i];n2++}m/=n2;let mt=0;for(let i=burn;i<N;i++)mt+=tau[i];mt/=n2;
+    meanQ+=m/REP;meanTau+=mt/REP;
+    // For independent replicas, E[(Q−Q′)(R−R′)]/2 = Cov(Q,R).
+    if(r%2===0)previousQ=Q;else{const diff=Q.map((q,i)=>q-previousQ[i]);let vv=0;for(let i=burn;i<N;i++)vv+=diff[i]*diff[i];varQ+=vv/n2/REP;
+      for(let k=0;k<ul.length;k++){const lag=ul[k];let s=0,cnt=0;for(let i=burn;i+lag<N;i++){s+=diff[i]*diff[i+lag];cnt++}cov[k]+=s/cnt/REP}previousQ=null}
     if(r===0){sample=Q.slice(burn,burn+15000);sampleTau=tau.slice(burn,burn+15000);sampleW=W.slice(burn,burn+15000)}}
-  sim={ul,cov,meanQ,varQ,meanTau,sample,sampleTau,sampleW};pos=0;st.textContent='';busy=false;document.getElementById('run').disabled=false;draw()}
+  sim={ul,cov,meanQ,varQ,meanTau,sample,sampleTau,sampleW};pos=0;st.textContent='';
+  }catch(error){sim=null;st.textContent='Simulation failed. Please resimulate: '+error.message}
+  finally{busy=false;for(const id of ['run','h','c'])document.getElementById(id).disabled=false}draw()}
 function theory(r){if(Math.abs(H-0.5)<1e-9)return Math.pow(2,1.5)/(Math.sqrt(Math.PI)*Math.pow(c,5))*Math.pow(r,-1.5)*Math.exp(-c*c*r/2);
   return H*(2*H-1)*sim.meanTau*sim.meanTau*Math.pow(r,2*H-2)}
 function draw(){if(!sim)return;const d=dark();
@@ -119,13 +133,13 @@ function draw(){if(!sim)return;const d=dark();
   const K=Math.abs(H-0.5)<1e-9?Math.pow(2,1.5)/(Math.sqrt(Math.PI)*Math.pow(c,5)):H*(2*H-1)*sim.meanTau*sim.meanTau;
   document.getElementById('kc').textContent=K.toFixed(3);document.getElementById('kcs').textContent=Math.abs(H-0.5)<1e-9?'Abate–Whitt constant 2^{3/2}/(√π c^5)':`H(2H−1)(Eτ)², sign ${H>0.5?'+':'−'}`}
 function regime(){const r=document.getElementById('reg');
-  r.innerHTML=Math.abs(H-0.5)<1e-9?`<b>Brownian input — Markovian exception</b>Exponential decay r<sup>−3/2</sup>e<sup>−c²r/2</sup>; the queue forgets quickly. The lookback τ has all exponential moments.`
+  r.innerHTML=Math.abs(H-0.5)<1e-9?`<b>Brownian input — Markovian exception</b>Exponential decay r<sup>−3/2</sup>e<sup>−c²r/2</sup>; the queue forgets quickly. The lookback τ has a finite exponential moment for sufficiently small positive rates.`
    :H>0.5?`<b>Long memory, H &gt; ½</b>Cov ~ H(2H−1)(Eτ)² r<sup>−${(2-2*H).toFixed(2)}</sup> &gt; 0, not integrable: the workload is long-range dependent, exactly like its input.`
    :`<b>Negative memory, H &lt; ½</b>Cov ~ H(2H−1)(Eτ)² r<sup>−${(2-2*H).toFixed(2)}</sup> &lt; 0: eventually negative and integrable — short-range dependent, hollow dots in the plot.`}
 let pos=0,playing=true;
 function drawLive(){if(!sim)return;const d=dark();const cv=document.getElementById('ca'),ctx=cv.getContext('2d'),W=cv.width,Hh=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,Hh);
   const win=Math.round(40/dt),n=sim.sampleW.length,i1=Math.min(pos,n-1),i0=Math.max(0,i1-win);
-  let lo=Infinity,hi=-Infinity;for(let i=i0;i<=i1;i++){lo=Math.min(lo,sim.sampleW[i]);hi=Math.max(hi,sim.sampleW[i])}const pad=(hi-lo)*0.15+0.5;lo-=pad;hi+=pad;
+  let lo=Infinity,hi=-Infinity;for(let i=i0;i<=i1;i++){lo=Math.min(lo,sim.sampleW[i]-sim.sample[i]);hi=Math.max(hi,sim.sampleW[i])}const pad=(hi-lo)*0.15+0.5;lo-=pad;hi+=pad;
   const X=i=>30+(W-40)*(i-i0)/win,Y=v=>14+(Hh-40)*(hi-v)/(hi-lo);
   // running min (min over s<=t of W) recomputed relative to window start: use W[i]-Q[i]
   ctx.setLineDash([5,4]);ctx.strokeStyle=d?'rgba(27,42,74,.55)':'rgba(27,42,74,.5)';ctx.lineWidth=1.2;ctx.beginPath();for(let i=i0;i<=i1;i++){const y=Y(sim.sampleW[i]-sim.sample[i]);i===i0?ctx.moveTo(X(i),y):ctx.lineTo(X(i),y)}ctx.stroke();ctx.setLineDash([]);
@@ -136,16 +150,16 @@ function drawLive(){if(!sim)return;const d=dark();const cv=document.getElementBy
   // lookback bracket
   const tau=sim.sampleTau[i1],ia=Math.max(i0,i1-Math.round(tau/dt)),ym=Y(sim.sampleW[i1]-sim.sample[i1]);
   ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(X(ia),ym+14);ctx.lineTo(X(ia),ym+22);ctx.lineTo(X(i1),ym+22);ctx.lineTo(X(i1),ym+14);ctx.stroke();
-  ctx.fillStyle=d?'#e0722a':'#e0722a';ctx.beginPath();ctx.arc(X(ia),ym,4,0,7);ctx.fill();
+  if(i1-Math.round(tau/dt)>=i0){ctx.fillStyle='#e0722a';ctx.beginPath();ctx.arc(X(ia),ym,4,0,7);ctx.fill()}
   // current point and Q bar
   ctx.strokeStyle=d?'#1f5fa8':'#1f5fa8';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(i1),Y(sim.sampleW[i1]));ctx.lineTo(X(i1),ym);ctx.stroke();
   ctx.fillStyle=d?'#1b2a4a':'#1b2a4a';ctx.beginPath();ctx.arc(X(i1),Y(sim.sampleW[i1]),4,0,7);ctx.fill();
-  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText(`t = ${(i1*dt).toFixed(1)}   Q(t) = ${sim.sample[i1].toFixed(2)}   τ(t) = ${tau.toFixed(1)}`,34,Hh-10);ctx.fillText('W(t) = B_H(t) − ct',34,20)}
+  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText(`t = ${(i1*dt).toFixed(1)}   Q(t) = ${sim.sample[i1].toFixed(2)}   τ(t) = ${tau.toFixed(1)}${i1-Math.round(tau/dt)<i0?' (starts before view)':''}`,34,Hh-10);ctx.fillText('W(t) = B_H(t) − ct',34,20)}
 function loop(){if(sim&&playing){pos+=3;if(pos>=sim.sampleW.length)pos=0}drawLive();requestAnimationFrame(loop)}
 const $=id=>document.getElementById(id);
 $('pp').onclick=()=>{playing=!playing;$('pp').textContent=playing?'Pause':'Play'};loop();
-$('h').oninput=e=>{H=+e.target.value;$('hv').textContent=H.toFixed(2);regime()};$('h').onchange=simulate;
-$('c').oninput=e=>{c=+e.target.value;$('cv').textContent=c.toFixed(1)};$('c').onchange=simulate;
+$('h').oninput=e=>{if(busy)return;H=+e.target.value;$('hv').textContent=H.toFixed(2);regime()};$('h').onchange=simulate;
+$('c').oninput=e=>{if(busy)return;c=+e.target.value;$('cv').textContent=c.toFixed(1)};$('c').onchange=simulate;
 $('run').onclick=simulate;
 regime();simulate();
 </script>

@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hitting a quadrant: correlated Brownian motions that make it</title>
+<title>Hitting a quadrant: correlated Brownian motions that make it — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Correlated Brownian motions with drift that enter a quadrant: as the correlation rises, the entry point moves from the corner to the edge (dimension reduction). Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/quadrant.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hitting a quadrant: correlated Brownian motions that make it">
+<meta property="og:description" content="Correlated Brownian motions with drift that enter a quadrant: as the correlation rises, the entry point moves from the corner to the edge (dimension reduction). Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/quadrant.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/quadrant.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -39,14 +49,14 @@
 <div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
 <div class="wrap">
   <h1>Hitting a quadrant: the correlated Brownian motions that make it</h1>
-  <p class="lead">Two Brownian motions with correlation <span class="m">ρ</span>, each with drift −1, start at the origin and, almost surely, drift off to −∞. Rarely, at <em>some</em> time both are above their thresholds <span class="m">α₁u</span> and <span class="m">α₂u</span> at once: the path enters the shaded quadrant. The animation shows only those rare paths. Watch <em>where</em> and <em>when</em> they enter: for weak correlation both coordinates have to work and the entry happens near the corner at time ≈ <span class="m">t₀u</span>; for correlation above <span class="m">ρ* = (α₁+α₂)/(2α₁)</span> the second coordinate comes along for free, the problem collapses to one dimension and the entry drifts up the vertical edge at time ≈ <span class="m">α₁u</span>.
+  <p class="lead">Two Brownian motions with correlation <span class="m">ρ</span>, each with drift −1, start at the origin and, almost surely, drift off to −∞. Rarely, at <em>some</em> time both are above their thresholds <span class="m">α₁u</span> and <span class="m">α₂u</span> at once: the path enters the shaded quadrant. The animation shows paths detected on a time grid within a finite window. Watch <em>where</em> and <em>when</em> they enter: as the level grows, for weak correlation both coordinates are essential and entry concentrates near the corner at time ≈ <span class="m">t₀u</span>; for correlation above <span class="m">ρ* = (α₁+α₂)/(2α₁)</span> the second coordinate comes along for free, the problem collapses to one dimension and the entry moves up the vertical edge at time ≈ <span class="m">α₁u</span>. Exactly at <span class="m">ρ = ρ*</span>, the second coordinate is weakly essential: it still affects the leading constant and the limiting entry-time law.
   From <a href="https://arxiv.org/abs/1610.09387" target="_blank" rel="noopener">Dębicki, Hashorva, Ji &amp; Rolski</a>, <em>Extremal behaviour of hitting a cone by correlated Brownian motion with drift</em>.</p>
 
   <div class="lay">
     <div>
       <div class="two">
-        <figure><canvas id="cp" width="520" height="520"></canvas><figcaption>the plane (B₁(t)−t, B₂(t)−t); entry points marked, the part of each path inside the quadrant in orange</figcaption></figure>
-        <figure><canvas id="ct" width="520" height="520"></canvas><figcaption>the same paths against time — B₁−t (dark) and B₂−t (blue) — with thresholds; below, the histogram of entry times and the predicted centre</figcaption></figure>
+        <figure><canvas id="cp" width="520" height="520"></canvas><figcaption>the plane (B₁(t)−t, B₂(t)−t); first detected grid exceedances marked; grid segments with both endpoints inside the quadrant in orange</figcaption></figure>
+        <figure><canvas id="ct" width="520" height="520"></canvas><figcaption>the same paths against time — B₁−t (dark) and B₂−t (blue) — with thresholds; below, the histogram of entry times and the asymptotic location</figcaption></figure>
       </div>
       <div class="status" id="st"></div>
     </div>
@@ -59,37 +69,48 @@
       <input type="range" id="u" min="1" max="4" step="0.25" value="2.5">
       <div class="row"><button id="run">Find new paths</button><button id="pp">Pause</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">Paths are found by brute force (up to 60 000 attempts, Euler step 0.01), so large <span class="m">u</span> with weak correlation may return only a few. The theory predicts <span class="m">P(u) ≈ C u<sup>κ</sup> e<sup>−ĝu/2</sup></span> with <span class="m">ĝ = 2(α₁+α₂+2t₀)/(1+ρ)</span> in regime 1 and <span class="m">ĝ = 4α₁</span> in regime 2, and Gaussian fluctuations of the entry time around its centre.</div>
+      <div class="note">Exact Brownian increments on a grid with dt = 0.01, observed up to T = 2.5u + 3. Crossings between grid points and after T are missed. The search stops after 24 hits or 60 000 attempts; large u with weak correlation may yield none. The continuous, infinite-horizon theory is a high-level limit: P(u) ∼ C u<sup>κ</sup> e<sup>−ĝu/2</sup>, where ĝ = 2(α₁+α₂+2t₀)/(1+ρ), κ = −½ below ρ*, and ĝ = 4α₁, κ = 0 at or above it. Entry-time fluctuations have scale √u and are asymptotically Gaussian away from ρ*; at ρ* the limit is non-Gaussian. The dashed line is the asymptotic location, not necessarily the finite-level mean.</div>
     </div>
   </div>
 </div>
 <script>
-let rho=0.5,a2=0.5,u=2.5,paths=[],attempts=0,frame=0,facc=0,playing=true,taus=[];
-const SPEED=0.45; // frames per animation tick
-const a1=1,dt=0.01,SUB=3;
+let rho=0.5,a2=0.5,u=2.5,paths=[],attempts=0,frame=0,facc=0,playing=true,taus=[],runId=0;
+const SPEED=1.35; // frames per animation tick
+const a1=1,dt=0.01,SUB=1;
 function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
 const dark=()=>true;
 function theory(){const rs=(a1+a2)/(2*a1);
-  if(rho<rs){const t0=Math.sqrt((a1*a1+a2*a2-2*a1*a2*rho)/(2*(1-rho)));return{regime:1,rs,t0,g:2*(a1+a2+2*t0)/(1+rho),center:t0*u}}
-  return{regime:2,rs,t0:a1,g:4*a1,center:a1*u}}
+  if(rho<rs-1e-10){const t0=Math.sqrt((a1*a1+a2*a2-2*a1*a2*rho)/(2*(1-rho)));return{regime:1,rs,t0,g:2*(a1+a2+2*t0)/(1+rho),center:t0*u}}
+  return{regime:Math.abs(rho-rs)<1e-10?3:2,rs,t0:a1,g:4*a1,center:a1*u}}
 function horizon(){return 2.5*u+3}
+function clearSearch(){
+  runId++;paths=[];taus=[];attempts=0;frame=0;facc=0;
+  document.getElementById('run').disabled=false;
+  document.getElementById('st').textContent='Release the slider to find paths for these parameters.';
+}
 async function find(){
-  const b=document.getElementById('run');b.disabled=true;paths=[];taus=[];attempts=0;frame=0;
-  const T=horizon(),steps=Math.round(T/dt),sd=Math.sqrt(dt),c=Math.sqrt(1-rho*rho),want=24,cap=60000;
+  const token=++runId,b=document.getElementById('run');b.disabled=true;paths=[];taus=[];attempts=0;frame=0;facc=0;
+  const R=rho,A=a2,U=u,T=2.5*U+3,steps=Math.round(T/dt),sd=Math.sqrt(dt),c=Math.sqrt(1-R*R),want=24,cap=60000;
   const t1=performance.now();
-  while(paths.length<want&&attempts<cap){
-    for(let k=0;k<400&&paths.length<want&&attempts<cap;k++){attempts++;
-      let x=0,y=0;const px=[0],py=[0];let hitAt=-1;
-      for(let s=1;s<=steps;s++){const z1=randn(),z2=rho*z1+c*randn();x+=sd*z1-dt;y+=sd*z2-dt;
-        if(s%SUB===0){px.push(x);py.push(y)}
-        if(hitAt<0&&x>=a1*u&&y>=a2*u){hitAt=s*dt}
-        if(hitAt>=0&&s*dt>hitAt+0.6)break; // keep a short tail after entry
-        if(hitAt<0&&x<-2*u-3&&y<-2*u-3)break;} // hopeless, abandon
-      if(hitAt>=0){paths.push({px,py,tau:hitAt,idx:Math.round(hitAt/dt/SUB)});taus.push(hitAt)}}
-    status();await new Promise(r=>setTimeout(r,0))}
-  status(true,performance.now()-t1);b.disabled=false}
+  try{
+    while(token===runId&&paths.length<want&&attempts<cap){
+      for(let k=0;k<400&&paths.length<want&&attempts<cap;k++){attempts++;
+        let x=0,y=0;const px=[0],py=[0];let hitAt=-1,idx=-1;
+        for(let n=1;n<=steps;n++){const z1=randn(),z2=R*z1+c*randn();x+=sd*z1-dt;y+=sd*z2-dt;
+          px.push(x);py.push(y);
+          if(hitAt<0&&x>=a1*U&&y>=A*U){hitAt=n*dt;idx=n}
+          if(hitAt>=0&&n*dt>hitAt+0.6)break;
+        }
+        if(hitAt>=0){paths.push({px,py,tau:hitAt,idx});taus.push(hitAt)}
+      }
+      status();await new Promise(r=>setTimeout(r,0));
+    }
+    if(token===runId)status(true,performance.now()-t1);
+  }catch(error){if(token===runId)document.getElementById('st').textContent='The search could not finish. Please try again.';console.error(error)}
+  finally{if(token===runId)b.disabled=false}
+}
 function status(done,ms){const s=document.getElementById('st');
-  s.textContent=`${paths.length} hitting paths found in ${attempts.toLocaleString()} attempts`+(paths.length?` (empirical frequency ${(paths.length/attempts).toExponential(2)})`:'')+(done?` · ${(ms/1000).toFixed(1)} s`:' …')}
+  s.textContent=`${paths.length} hitting paths found in ${attempts.toLocaleString()} attempts`+(paths.length?` (observed hit ratio ${(paths.length/attempts).toExponential(2)})`:'')+(done?` · ${(ms/1000).toFixed(1)} s`:' …')}
 function drawPlane(){
   const cv=document.getElementById('cp'),ctx=cv.getContext('2d'),d=dark(),W=cv.width;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,W);
   const L=a1*u*1.35,lo=-Math.max(1.2,0.6*u);const X=x=>W*(x-lo)/(L-lo),Y=y=>W-W*(y-lo)/(L-lo);
@@ -113,7 +134,7 @@ function drawTime(){
     ctx.strokeStyle=d?'rgba(27,42,74,.45)':'rgba(27,42,74,.4)';ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<=n;i++){const x=X(i*dt*SUB),y=Y(P.px[i]);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();
     ctx.strokeStyle=d?'rgba(31,95,168,.55)':'rgba(31,95,168,.5)';ctx.beginPath();for(let i=0;i<=n;i++){const x=X(i*dt*SUB),y=Y(P.py[i]);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();
     if(n>P.idx){ctx.strokeStyle=d?'rgba(224,114,42,.9)':'rgba(224,114,42,.85)';ctx.lineWidth=1.6;for(const arr of [P.px,P.py]){ctx.beginPath();let pen=false;for(let i=P.idx;i<=n;i++){const inq=(P.px[i]>=a1*u&&P.py[i]>=a2*u);const x=X(i*dt*SUB),y=Y(arr[i]);if(inq){pen?ctx.lineTo(x,y):ctx.moveTo(x,y);pen=true}else pen=false}ctx.stroke()}ctx.lineWidth=1}
-    if(frame>=P.idx){ctx.fillStyle=d?'#e0722a':'#e0722a';ctx.beginPath();ctx.arc(X(P.tau),Y(a2*u),3.5,0,7);ctx.fill()}}
+    if(frame>=P.idx){ctx.fillStyle=d?'#e0722a':'#e0722a';ctx.beginPath();ctx.arc(X(P.tau),Y(P.py[P.idx]),3.5,0,7);ctx.fill()}}
   ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('α₁u',6,Y(a1*u)+4);ctx.fillText('α₂u',6,Y(a2*u)+4);
   // histogram of entry times revealed so far
   const y0=Hp+8,hh=H-y0-22;const nb=36,h=new Array(nb).fill(0);let m=1;
@@ -123,13 +144,15 @@ function drawTime(){
   ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.fillText((th.regime===1?'t₀u = ':'α₁u = ')+th.center.toFixed(2),X(th.center)+5,y0+10);ctx.fillText('entry times',36,y0+10);ctx.fillText('t →',W-28,H-8);
   const cur=X(Math.min(frame*dt*SUB,T));ctx.strokeStyle=d?'rgba(27,42,74,.35)':'rgba(27,42,74,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cur,10);ctx.lineTo(cur,Hp);ctx.stroke()}
 function regime(){const th=theory(),reg=document.getElementById('reg');
-  reg.innerHTML=th.regime===1?`<b>Regime 1 — both coordinates essential</b>ρ = ${rho.toFixed(2)} &lt; ρ* = ${th.rs.toFixed(3)}. Entry near the corner, at time ≈ t₀u = ${th.center.toFixed(2)} (t₀ = ${th.t0.toFixed(3)}). Exponent ĝ/2 = ${(th.g/2).toFixed(3)}.`
-    :`<b>Regime 2 — dimension reduction</b>ρ = ${rho.toFixed(2)} ≥ ρ* = ${th.rs.toFixed(3)}. Only B₁ matters: entry on the vertical edge, at time ≈ α₁u = ${th.center.toFixed(2)}. Exponent ĝ/2 = 2α₁ = ${(2*a1).toFixed(2)}, as for one Brownian motion.`}
+  reg.innerHTML=th.regime===1?`<b>Both coordinates essential</b>ρ = ${rho.toFixed(2)} &lt; ρ* = ${th.rs.toFixed(3)}. High-level entry concentrates near the corner, at t₀u = ${th.center.toFixed(2)} (t₀ = ${th.t0.toFixed(3)}). Exponent ĝ/2 = ${(th.g/2).toFixed(3)}.`
+    :th.regime===3?`<b>Critical correlation</b>ρ = ρ* = ${th.rs.toFixed(3)}. Location α₁u = ${th.center.toFixed(2)}; exponent ĝ/2 = ${(th.g/2).toFixed(2)}. The second coordinate is weakly essential: it changes the leading constant and gives a non-Gaussian entry-time limit.`
+    :`<b>Dimension reduction</b>ρ = ${rho.toFixed(2)} &gt; ρ* = ${th.rs.toFixed(3)}. At high levels only B₁ controls the leading probability: entry concentrates near the vertical edge at α₁u = ${th.center.toFixed(2)}. Exponent ĝ/2 = 2α₁ = ${(2*a1).toFixed(2)}.`}
+
 function loop(){if(playing){const maxLen=paths.reduce((m,P)=>Math.max(m,P.px.length),0);facc+=SPEED;if(facc>=1){frame=maxLen?(frame+Math.floor(facc))%(maxLen+60):0;facc-=Math.floor(facc)}}drawPlane();drawTime();requestAnimationFrame(loop)}
 const $=id=>document.getElementById(id);
-$('r').oninput=e=>{rho=+e.target.value;$('rv').textContent=rho.toFixed(2);regime()};
-$('a').oninput=e=>{a2=+e.target.value;$('av').textContent=a2.toFixed(2);regime()};
-$('u').oninput=e=>{u=+e.target.value;$('uv').textContent=u.toFixed(2);regime()};
+$('r').oninput=e=>{rho=+e.target.value;$('rv').textContent=rho.toFixed(2);clearSearch();regime()};
+$('a').oninput=e=>{a2=+e.target.value;$('av').textContent=a2.toFixed(2);clearSearch();regime()};
+$('u').oninput=e=>{u=+e.target.value;$('uv').textContent=u.toFixed(2);clearSearch();regime()};
 for(const id of ['r','a','u'])$(id).onchange=find;
 $('run').onclick=find;$('pp').onclick=()=>{playing=!playing;$('pp').textContent=playing?'Pause':'Play'};
 regime();find();loop();

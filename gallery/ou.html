@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Simultaneous exceedance of a bivariate Ornstein–Uhlenbeck process</title>
+<title>Simultaneous exceedance of a bivariate Ornstein–Uhlenbeck process — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Simultaneous exceedance of a bivariate Ornstein–Uhlenbeck process: asymptotically uniform entry times and dimension reduction in the stationary case. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/ou.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Simultaneous exceedance of a bivariate Ornstein–Uhlenbeck process">
+<meta property="og:description" content="Simultaneous exceedance of a bivariate Ornstein–Uhlenbeck process: asymptotically uniform entry times and dimension reduction in the stationary case. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/ou.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/ou.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -39,14 +49,14 @@
 <div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
 <div class="wrap">
   <h1>Simultaneous exceedance of a bivariate Ornstein–Uhlenbeck process</h1>
-  <p class="lead">The stationary companion of <a href="quadrant.html">the quadrant animation</a>. Two Ornstein–Uhlenbeck processes with covariance <span class="m">e<sup>−|t|</sup></span> and cross-correlation <span class="m">ρ</span> run over <span class="m">[0, T]</span>; the rare event is that at some time both exceed their levels, <span class="m">X₁(t) &gt; u</span> and <span class="m">X₂(t) &gt; b₂u</span>. Which coordinates are “essential” is decided by the quadratic programme <span class="m">min x<sup>⊤</sup>Σ<sup>−1</sup>x</span> over <span class="m">x ≥ (1, b₂)</span>: for <span class="m">ρ &lt; b₂</span> both are, and at the moment of entry <span class="m">X₂</span> sits right on its threshold; for <span class="m">ρ ≥ b₂</span> only <span class="m">X₁</span> is, and <span class="m">X₂</span> enters with slack ≈ <span class="m">(ρ − b₂)u</span> to spare. Unlike the Brownian case, the entry time is uniform on <span class="m">[0,T]</span> — stationarity — so the dimension reduction shows in <em>where</em> the path enters, not <em>when</em>. The exceedance probability is asymptotically <span class="m">T ℋ u<sup>2</sup> P(X(0) &gt; u b)</span> with a multidimensional Pickands constant <span class="m">ℋ</span>.
-  From <a href="https://arxiv.org/abs/1911.06350" target="_blank" rel="noopener">Dębicki, Hashorva &amp; Wang</a>, <em>Extremes of vector-valued Gaussian processes</em>.</p>
+  <p class="lead">The stationary companion of <a href="quadrant.html">the quadrant animation</a>. Two Ornstein–Uhlenbeck processes with covariance matrix <span class="m">R(t) = e<sup>−|t|</sup>Σ</span>, where Σ has unit diagonal and off-diagonal entries ρ, run over <span class="m">[0, T]</span>. The rare event is a simultaneous exceedance of <span class="m">u</span> and <span class="m">b₂u</span>. The quadratic programme <span class="m">min x<sup>⊤</sup>Σ<sup>−1</sup>x</span> over <span class="m">x ≥ (1, b₂)</span> identifies three cases. For <span class="m">ρ &lt; b₂</span>, both coordinates are essential and high-level entry concentrates near the corner. For <span class="m">ρ &gt; b₂</span>, only the first is essential, with second-coordinate slack <span class="m">(ρ − b₂)u + O<sub>P</sub>(1)</span>. At <span class="m">ρ = b₂</span>, that slack is of order one and the second constraint still affects the leading constant. Conditional on an exceedance, the first entry time becomes uniform on <span class="m">[0,T]</span> as <span class="m">u → ∞</span>; it is not exactly uniform at finite levels. The high-level exceedance probability is asymptotically <span class="m">T ℋ u<sup>2</sup> P(X(0) &gt; u b)</span> with the appropriate multidimensional Pickands constant <span class="m">ℋ</span>.
+  From <a href="https://arxiv.org/abs/1911.06350" target="_blank" rel="noopener">Dębicki, Hashorva &amp; Wang</a>, <em>Extremes of vector-valued Gaussian processes</em>, Theorem 2.1. The uniform-time limit follows by applying the theorem to each initial subinterval.</p>
 
   <div class="lay">
     <div>
       <div class="two">
-        <figure><canvas id="cp" width="520" height="520"></canvas><figcaption>the plane (X₁(t), X₂(t)); entry points marked, the part inside the quadrant in orange; paths are cut 0.8 time units after entry</figcaption></figure>
-        <figure><canvas id="ct" width="520" height="520"></canvas><figcaption>the same paths against time — X₁ (dark), X₂ (blue) — with thresholds; below, the histogram of the slack X₂(τ) − b₂u at entry and its predicted value</figcaption></figure>
+        <figure><canvas id="cp" width="520" height="520"></canvas><figcaption>the plane (X₁(t), X₂(t)); first detected grid exceedances marked; grid segments with both endpoints inside in orange; each path ends at T or about 0.8 time units after detection</figcaption></figure>
+        <figure><canvas id="ct" width="520" height="520"></canvas><figcaption>the same paths against time — X₁ (dark), X₂ (blue) — with thresholds; below, the histogram of the slack X₂(τ) − b₂u at detection and its leading order-u term</figcaption></figure>
       </div>
       <div class="status" id="st"></div>
     </div>
@@ -59,30 +69,42 @@
       <input type="range" id="u" min="1.5" max="3.5" step="0.25" value="2.5">
       <div class="row"><button id="run">Find new paths</button><button id="pp">Pause</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">Exact simulation of the stationary process (AR(1) step with e<sup>−dt</sup>, dt = 0.01, T = 6, stationary start). Paths are found by brute force, up to 60 000 attempts.</div>
+      <div class="note">Exact stationary OU samples on a grid (AR(1) coefficient e<sup>−dt</sup>, dt = 0.01, T = 6). A stationary start already above both levels counts as time-0 entry. Crossings between samples are missed, and detected entries can overshoot. The continuous-time theory describes the high-level limit; at these moderate levels the dashed slack line is a scale guide, not an exact mean. Search stops after 24 hits or 60 000 attempts.</div>
     </div>
   </div>
 </div>
 <script>
-let rho=0.3,b2=0.5,u=2.5,paths=[],attempts=0,frame=0,facc=0,playing=true;
-const T=6,dt=0.01,SUB=3,SPEED=0.45;
+let rho=0.3,b2=0.5,u=2.5,paths=[],attempts=0,frame=0,facc=0,playing=true,runId=0;
+const T=6,dt=0.01,SUB=1,SPEED=1.35;
 function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
 const dark=()=>true;
-function theory(){return rho<b2?{regime:1,slack:0}:{regime:2,slack:(rho-b2)*u}}
+function theory(){return rho<b2-1e-10?{regime:1,slack:0}:Math.abs(rho-b2)<1e-10?{regime:3,slack:0}:{regime:2,slack:(rho-b2)*u}}
+function clearSearch(){
+  runId++;paths=[];attempts=0;frame=0;facc=0;
+  document.getElementById('run').disabled=false;
+  document.getElementById('st').textContent='Release the slider to find paths for these parameters.';
+}
 async function find(){
-  const b=document.getElementById('run');b.disabled=true;paths=[];attempts=0;frame=0;
-  const steps=Math.round(T/dt),e=Math.exp(-dt),s=Math.sqrt(1-e*e),c=Math.sqrt(1-rho*rho),want=24,cap=60000;const t1=performance.now();
-  while(paths.length<want&&attempts<cap){
-    for(let k=0;k<300&&paths.length<want&&attempts<cap;k++){attempts++;
-      let z1=randn(),x=z1,y=rho*z1+c*randn();const px=[x],py=[y];let hitAt=-1,idx=-1;
-      for(let n=1;n<=steps;n++){z1=randn();const z2=rho*z1+c*randn();x=e*x+s*z1;y=e*y+s*z2;
-        if(n%SUB===0){px.push(x);py.push(y)}
-        if(hitAt<0&&x>=u&&y>=b2*u){hitAt=n*dt;idx=Math.round(n/SUB)}
-        if(hitAt>=0&&n*dt>hitAt+0.8)break}
-      if(hitAt>=0){paths.push({px,py,tau:hitAt,idx,slack:py[idx]-b2*u})}}
-    status();await new Promise(r=>setTimeout(r,0))}
-  status(true,performance.now()-t1);b.disabled=false}
-function status(done,ms){document.getElementById('st').textContent=`${paths.length} exceeding paths found in ${attempts.toLocaleString()} attempts`+(paths.length?` (empirical frequency ${(paths.length/attempts).toExponential(2)})`:'')+(done?` · ${(ms/1000).toFixed(1)} s`:' …')}
+  const token=++runId,b=document.getElementById('run');b.disabled=true;paths=[];attempts=0;frame=0;facc=0;
+  const R=rho,B=b2,U=u,steps=Math.round(T/dt),e=Math.exp(-dt),s=Math.sqrt(-Math.expm1(-2*dt)),c=Math.sqrt(1-R*R),want=24,cap=60000,t1=performance.now();
+  try{
+    while(token===runId&&paths.length<want&&attempts<cap){
+      for(let k=0;k<300&&paths.length<want&&attempts<cap;k++){attempts++;
+        let z1=randn(),x=z1,y=R*z1+c*randn();const px=[x],py=[y];let hitAt=x>=U&&y>=B*U?0:-1,idx=hitAt===0?0:-1;
+        for(let n=1;n<=steps;n++){z1=randn();const z2=R*z1+c*randn();x=e*x+s*z1;y=e*y+s*z2;
+          px.push(x);py.push(y);
+          if(hitAt<0&&x>=U&&y>=B*U){hitAt=n*dt;idx=n}
+          if(hitAt>=0&&n*dt>hitAt+0.8)break;
+        }
+        if(hitAt>=0)paths.push({px,py,tau:hitAt,idx,slack:py[idx]-B*U});
+      }
+      status();await new Promise(r=>setTimeout(r,0));
+    }
+    if(token===runId)status(true,performance.now()-t1);
+  }catch(error){if(token===runId)document.getElementById('st').textContent='The search could not finish. Please try again.';console.error(error)}
+  finally{if(token===runId)b.disabled=false}
+}
+function status(done,ms){document.getElementById('st').textContent=`${paths.length} exceeding paths found in ${attempts.toLocaleString()} attempts`+(paths.length?` (observed hit ratio ${(paths.length/attempts).toExponential(2)})`:'')+(done?` · ${(ms/1000).toFixed(1)} s`:' …')}
 function drawPlane(){
   const cv=document.getElementById('cp'),ctx=cv.getContext('2d'),d=dark(),W=cv.width;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,W);
   const L=u*1.35,lo=-3;const X=x=>W*(x-lo)/(L-lo),Y=y=>W-W*(y-lo)/(L-lo);
@@ -110,20 +132,22 @@ function drawTime(){
     if(frame>=P.idx){ctx.fillStyle=d?'#e0722a':'#e0722a';ctx.beginPath();ctx.arc(X(P.tau),Y(P.py[P.idx]),3.5,0,7);ctx.fill()}}
   ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('u',10,Y(u)+4);ctx.fillText('b₂u',6,Y(b2*u)+4);
   // slack histogram
-  const y0=Hp+10,hh=H-y0-24,smax=Math.max(1.5,u*0.9),X2=v=>36+(W-52)*v/smax;const nb=30,h=new Array(nb).fill(0);let m=1;
+  const y0=Hp+10,hh=H-y0-24,smax=Math.max(1.5,u*0.9,...paths.map(P=>P.slack*1.05)),X2=v=>36+(W-52)*v/smax;const nb=30,h=new Array(nb).fill(0);let m=1;
   for(const P of paths)if(frame>=P.idx){const k=Math.max(0,Math.min(nb-1,Math.floor(nb*P.slack/smax)));h[k]++;m=Math.max(m,h[k])}
   ctx.fillStyle=d?'rgba(224,114,42,.7)':'rgba(224,114,42,.6)';for(let i=0;i<nb;i++){if(!h[i])continue;const x=X2(i*smax/nb),w=(W-52)/nb-1,b=hh*h[i]/m;ctx.fillRect(x,y0+hh-b,w,b)}
   ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(X2(th.slack),y0-4);ctx.lineTo(X2(th.slack),y0+hh+2);ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.fillText(`slack of X₂ at entry; predicted ${th.regime===1?'0':'(ρ−b₂)u = '+th.slack.toFixed(2)}`,36,y0+10);ctx.fillText('0',34,H-8);ctx.fillText(smax.toFixed(1),W-30,H-8);
+  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.fillText(`slack of X₂; leading u-term = ${th.slack.toFixed(2)}`,36,y0+10);ctx.fillText('0',34,H-8);ctx.fillText(smax.toFixed(1),W-30,H-8);
   const cur=X(Math.min(frame*dt*SUB,T));ctx.strokeStyle=d?'rgba(27,42,74,.35)':'rgba(27,42,74,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cur,10);ctx.lineTo(cur,Hp);ctx.stroke()}
 function regime(){const th=theory(),reg=document.getElementById('reg');
-  reg.innerHTML=th.regime===1?`<b>Both coordinates essential</b>ρ = ${rho.toFixed(2)} &lt; b₂ = ${b2.toFixed(2)}. Entry at the corner: X₂ crosses b₂u exactly when needed. Weights w = Σ<sup>−1</sup>b̃ both positive.`
-    :`<b>Dimension reduction</b>ρ = ${rho.toFixed(2)} ≥ b₂ = ${b2.toFixed(2)}. Only X₁ is essential; given X₁ = u, X₂ ≈ ρu &gt; b₂u already. Entry on the vertical edge with slack ≈ ${th.slack.toFixed(2)}; asymptotically P(u) behaves like the one-dimensional exceedance of X₁.`}
+  reg.innerHTML=th.regime===1?`<b>Both coordinates essential</b>ρ = ${rho.toFixed(2)} &lt; b₂ = ${b2.toFixed(2)}. At high levels entry concentrates near the corner; continuous-time slack vanishes. Both weights w = Σ<sup>−1</sup>b are positive. Grid overshoots remain visible here.`
+    :th.regime===3?`<b>Critical correlation</b>ρ = b₂ = ${b2.toFixed(2)}. The second constraint has zero quadratic-programme weight but still changes the leading constant. Its slack has order-one fluctuations; zero is only the leading order-u term. The continuous exceedance probability is asymptotically half its one-dimensional counterpart.`
+    :`<b>Dimension reduction</b>ρ = ${rho.toFixed(2)} &gt; b₂ = ${b2.toFixed(2)}. At high levels only X₁ controls the leading probability. X₂ has slack (ρ−b₂)u + O<sub>P</sub>(1), with leading term ${th.slack.toFixed(2)}. The continuous exceedance probability is asymptotically equivalent to that for X₁ alone.`}
+
 function loop(){if(playing){const maxLen=paths.reduce((m,P)=>Math.max(m,P.px.length),0);facc+=SPEED;if(facc>=1){frame=maxLen?(frame+Math.floor(facc))%(maxLen+60):0;facc-=Math.floor(facc)}}drawPlane();drawTime();requestAnimationFrame(loop)}
 const $=id=>document.getElementById(id);
-$('r').oninput=e=>{rho=+e.target.value;$('rv').textContent=rho.toFixed(2);regime()};
-$('a').oninput=e=>{b2=+e.target.value;$('av').textContent=b2.toFixed(2);regime()};
-$('u').oninput=e=>{u=+e.target.value;$('uv').textContent=u.toFixed(2);regime()};
+$('r').oninput=e=>{rho=+e.target.value;$('rv').textContent=rho.toFixed(2);clearSearch();regime()};
+$('a').oninput=e=>{b2=+e.target.value;$('av').textContent=b2.toFixed(2);clearSearch();regime()};
+$('u').oninput=e=>{u=+e.target.value;$('uv').textContent=u.toFixed(2);clearSearch();regime()};
 for(const id of ['r','a','u'])$(id).onchange=find;
 $('run').onclick=find;$('pp').onclick=()=>{playing=!playing;$('pp').textContent=playing?'Pause':'Play'};
 regime();find();loop();

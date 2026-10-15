@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A particle system with no clock of its own</title>
+<title>A particle system with no clock of its own — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="A stationary Poisson particle system in which every curve is anchored at its own origin, built from Poisson-rescaled copies of a single mark. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/particles.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A particle system with no clock of its own">
+<meta property="og:description" content="A stationary Poisson particle system in which every curve is anchored at its own origin, built from Poisson-rescaled copies of a single mark. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/particles.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/particles.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -40,13 +50,13 @@
 <div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
 <div class="wrap">
   <h1>A particle system with no clock of its own</h1>
-  <p class="lead">Countably many particles follow <span class="m">F<sub>j</sub>(t) = R<sub>j</sub> ⊙ Z<sup>(j)</sup>(t)</span>: independent copies of a single <em>mark</em> process <span class="m">Z</span>, each rescaled componentwise by an atom <span class="m">R<sub>j</sub></span> of a Poisson measure with the scale-invariant intensity <span class="m">∏ r<sub>i</sub><sup>−2</sup>dr<sub>i</sub></span>. Taking logarithms turns scaling into shifting, so the picture is a cloud of copies of <span class="m">log Z</span> displaced by Poisson points of intensity <span class="m">e<sup>−x</sup>dx</span>. The paper's point: the <em>system</em> can be stationary although the mark is not, and stationarity is a property of the intensity <span class="m">ν<sub>Z</sub></span>, not of <span class="m">Z</span>. Every curve below carries a visible origin — its own shape is anchored at one instant — yet slide the window and the cloud never ages.
+  <p class="lead">Countably many particles follow <span class="m">F<sub>j</sub>(t) = R<sub>j</sub> ⊙ Z<sup>(j)</sup>(t)</span>: independent copies of a single <em>mark</em> process <span class="m">Z</span>, each rescaled componentwise by an atom <span class="m">R<sub>j</sub></span> of a Poisson measure with the homogeneous intensity <span class="m">∏ r<sub>i</sub><sup>−2</sup>dr<sub>i</sub></span>. Taking logarithms turns scaling into shifting, and the scalar case shown here is a cloud of copies of <span class="m">log Z</span> displaced by Poisson points of intensity <span class="m">e<sup>−x</sup>dx</span>. The paper's point: the <em>system</em> can be stationary although the mark is not, and stationarity is a property of the intensity <span class="m">ν<sub>Z</sub></span>, not of <span class="m">Z</span>. Every curve below carries a visible origin — its own shape is anchored at one instant — and for a stationary choice the cloud has the same law after a time shift.
   From <a href="../papers/SPParticles.pdf" target="_blank" rel="noopener">E. Hashorva</a>, <em>Stationary multihomogeneous Poisson particle systems</em>.</p>
 
   <div class="lay">
     <div>
       <figure><canvas id="cs" width="1060" height="400"></canvas><figcaption>the system on a log scale in a window that slides with time: each curve is log F<sub>j</sub>(t) = log R<sub>j</sub> + log Z<sup>(j)</sup>(t), the upper envelope is dark, particles above the level u are orange</figcaption></figure>
-      <figure><canvas id="cn" width="1060" height="230"></canvas><figcaption>particles above u at each time (bars) against the exact mean <span class="m">e<sup>−u</sup> E Z(t)</span> (orange). Flat exactly when the intensity is shift-invariant — that is the definition, made visible.</figcaption></figure>
+      <figure><canvas id="cn" width="1060" height="230"></canvas><figcaption>particles above u at each time (bars) against the exact mean <span class="m">e<sup>−u</sup> E Z(t)</span> (orange). A stationary system has a flat mean; a flat mean alone does not establish stationarity of the whole path intensity.</figcaption></figure>
       <div class="status" id="st"></div>
     </div>
     <div class="panel">
@@ -62,18 +72,18 @@
       <input type="range" id="h" min="0.3" max="0.9" step="0.05" value="0.7">
       <div class="row"><button id="re">Resample</button><button id="pp">Pause</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">1200 Poisson atoms <span class="m">log R<sub>j</sub> = −log Γ<sub>j</sub></span>, complete down to about <span class="m">log R = −7</span>; only the curves that come near the top are drawn, all of them are counted. The cosine marks are bounded, so the truncation is harmless there and every count below is exact in law.</div>
+      <div class="note">At least 1200 Poisson atoms <span class="m">log R<sub>j</sub> = −log Γ<sub>j</sub></span>; only the top curves are drawn, all retained curves are counted. For cosine marks, sampling continues until Γ exceeds 3e<sup>4.5</sup>. Since Z ≤ 3, no omitted atom can exceed any selectable level: these grid-point counts have the exact law. The Brown–Resnick cloud uses 1200 atoms and is a truncated approximation; its envelope and counts can be too low.</div>
     </div>
   </div>
 
   <h2>The mixture surprise</h2>
-  <p class="lead">A finite mixture of marks with shift-invariant intensities has a shift-invariant intensity. The converse is the paper's question, and for log-Gaussian marks on a <em>connected</em> time set the answer is yes: every component must itself be stationary. Drop connectedness and it fails. Example 4.2 takes <span class="m">T = ℤ/2ℤ</span>, so a trajectory is just a pair <span class="m">(F(0), F(1))</span>, and stationarity means this cloud is <em>symmetric about the diagonal</em>. With <span class="m">log Z<sub>k</sub>(1) ∼ N(0,2)</span> and <span class="m">N(−2,2)</span> neither component is — their two level counts differ by a factor <span class="m">e</span> — and yet the mixture <span class="m">{ℒ(Z<sub>1</sub>) + e ℒ(Z<sub>2</sub>)}/(1+e)</span> is exactly symmetric.</p>
+  <p class="lead">A finite mixture of marks with shift-invariant intensities has a shift-invariant intensity. The converse is the paper's question, and for continuous log-Gaussian marks on a <em>connected</em> index group the answer is yes: every component particle system must itself be stationary. Drop connectedness and it fails. Example 4.2 takes <span class="m">T = ℤ/2ℤ</span>, so a trajectory is just a pair <span class="m">(F(0), F(1))</span>, and stationarity means the cloud’s <em>distribution is invariant under reflection about the diagonal</em>. With <span class="m">log Z<sub>k</sub>(1) ∼ N(0,2)</span> and <span class="m">N(−2,2)</span> neither component is — their two expected level counts differ by a factor <span class="m">e</span> — and yet the mixture <span class="m">{ℒ(Z<sub>1</sub>) + e ℒ(Z<sub>2</sub>)}/(1+e)</span> is invariant in law under that reflection.</p>
   <div class="three">
     <figure><canvas id="m0" width="420" height="420"></canvas><figcaption id="f0"></figcaption></figure>
     <figure><canvas id="m1" width="420" height="420"></canvas><figcaption id="f1"></figcaption></figure>
     <figure><canvas id="m2" width="420" height="420"></canvas><figcaption id="f2"></figcaption></figure>
   </div>
-  <p class="lead" style="margin-top:10px">Colour is the particle density on a log scale; a stationary system gives a map symmetric about the diagonal. Counted are the particles above the level <span class="m">v</span> at time 0 (right of the vertical line) and at time 1 (above the horizontal line); orange are above at both times. The two means are <span class="m">e<sup>−v</sup></span> and <span class="m">e<sup>−v</sup>E Z(1)</span>, in ratio <span class="m">e</span>, <span class="m">e<sup>−1</sup></span>, and exactly <span class="m">1</span>. <button id="mre" style="margin-left:6px">Resample clouds</button></p>
+  <p class="lead" style="margin-top:10px">Colour shows the logarithm of the bin count. The stationary mixture has a symmetric intensity, while each sampled cloud fluctuates around it. Counted are the particles above the level <span class="m">v</span> at time 0 (right of the vertical line) and at time 1 (above the horizontal line); the upper-right region contains particles above at both times. The two means are <span class="m">e<sup>−v</sup></span> and <span class="m">e<sup>−v</sup>E Z(1)</span>, in ratio <span class="m">e</span>, <span class="m">e<sup>−1</sup></span>, and exactly <span class="m">1</span>. <button id="mre" style="margin-left:6px">Resample clouds</button> The finite display and both level counts are sampled without a lower-tail truncation, using Gaussian exponential tilting.</p>
 </div>
 <script>
 const NP=1200;
@@ -96,7 +106,7 @@ function markPath(z){
 function build(){grid();
   if(mark==='C'&&(!L||Lh!==H||L.length!==NG)){L=chol();Lh=H}
   const z=new Float64Array(NG),P=[];let G=0;
-  for(let j=0;j<NP;j++){G+=-Math.log(Math.random());P.push({x:-Math.log(G),X:markPath(z)})}
+  for(let j=0;j<NP||(mark!=='C'&&G<=3*Math.exp(4.5));j++){G+=-Math.log(Math.max(Number.MIN_VALUE,Math.random()));P.push({x:-Math.log(G),X:markPath(z)})}
   sys=P;pos=0}
 function EZ(t){ // exact E Z(t)
   if(mark==='A')return 1;
@@ -120,12 +130,12 @@ function drawSys(){
     ctx.strokeStyle=above?'rgba(224,114,42,.85)':'rgba(31,95,168,.32)';ctx.lineWidth=above?1.7:1;
     ctx.beginPath();for(let i=i0;i<=i1;i++){const y=Y(p.x+p.X[i]);i===i0?ctx.moveTo(X(i),y):ctx.lineTo(X(i),y)}ctx.stroke()}
   ctx.strokeStyle='#1b2a4a';ctx.lineWidth=2.2;ctx.beginPath();for(let i=i0;i<=i1;i++){const y=Y(env[i-i0]);i===i0?ctx.moveTo(X(i),y):ctx.lineTo(X(i),y)}ctx.stroke();
-  const iz=Math.round(TLof()/dtg);
+  const iz=(NG-1)/2;
   if(iz>=i0&&iz<=i1){ctx.strokeStyle='rgba(93,107,133,.5)';ctx.lineWidth=1;ctx.setLineDash([2,4]);ctx.beginPath();ctx.moveTo(X(iz),12);ctx.lineTo(X(iz),Hh-26);ctx.stroke();ctx.setLineDash([]);
     ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText("the marks' own origin",X(iz)+6,26)}
   ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';
   ctx.fillText('log F(t)',38,Hh-10);ctx.fillText(`t ∈ [${tg[i0].toFixed(1)}, ${tg[i1].toFixed(1)}]`,W-160,Hh-10);ctx.fillText('u',20,Y(u)+4);
-  document.getElementById('st').textContent=`${countAt(i0+(SPAN>>1))} particles above u at the centre of the window · top ${drawn} of ${NP} curves drawn`}
+  document.getElementById('st').textContent=`${countAt(i0+(SPAN>>1))} particles above u at the centre of the window · top ${drawn} of ${sys.length} retained curves drawn`}
 function drawCounts(){
   const cv=document.getElementById('cn'),ctx=cv.getContext('2d'),W=cv.width,Hh=cv.height;
   ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,Hh);
@@ -148,15 +158,24 @@ function drawCounts(){
 function regime(){const r=document.getElementById('reg');
   if(mark==='A')r.innerHTML=`<b>Stationary</b>The bounded mark <span class="m">z<sub>φ</sub>(t) = (2+cos(t+φ))/(2+cos φ)</span> with phase density <span class="m">(2+cos φ)/4π</span>. It satisfies <span class="m">B<sup>h</sup>z<sub>φ</sub>/z<sub>φ</sub>(−h) = z<sub>φ−h</sub></span>, and the tilt in the density absorbs the factor <span class="m">z<sub>φ</sub>(−h)</span> exactly, so <span class="m">E Z(t) ≡ 1</span> and the intensity is shift-invariant. Example 4.3.`;
   else if(mark==='B')r.innerHTML=`<b>Not stationary</b>The same curves with a <em>uniform</em> phase. Now <span class="m">E Z(t) = 2/√3 + (1 − 2/√3)cos t</span>, between 1 and 1.31, so the intensity breathes with period 2π and the system has a clock after all — the orange curve waves and the bars follow it.`;
-  else r.innerHTML=`<b>Stationary, but hard to draw</b>The log-Gaussian Brown–Resnick mark <span class="m">Z(t) = exp(√2 B<sub>H</sub>(t) − |t|<sup>2H</sup>)</span> has <span class="m">E Z(t) ≡ 1</span>, so the system is stationary. Unbounded marks, though, need Poisson atoms far below <span class="m">log R = −7</span> to keep the count up away from the origin, so the bars fall short of the exact orange line near the edges — a truncation artifact, not a failure of stationarity.`}
+  else r.innerHTML=`<b>Stationary, but hard to draw</b>The log-Gaussian Brown–Resnick mark <span class="m">Z(t) = exp(√2 B<sub>H</sub>(t) − |t|<sup>2H</sup>)</span> has a shift-invariant path intensity because B<sub>H</sub> has stationary increments and the drift is minus half the log-variance. It also has <span class="m">E Z(t) ≡ 1</span>. Unbounded marks, though, need Poisson atoms far below <span class="m">log R = −7</span> to keep the count up away from the origin, so the bars tend to fall short of the exact orange mean near the edges — a truncation artifact, not a failure of stationarity.`}
 function loop(){if(playing&&sys){facc+=0.32;if(facc>=1){pos+=Math.floor(facc);facc-=Math.floor(facc);if(pos>NG-SPAN-1)pos=0}}if(sys){drawSys();drawCounts()}requestAnimationFrame(loop)}
 // ---------- mixture ----------
 const VLEV=-4.5, LO=VLEV-4.2, HI=VLEV+4.2, NB=46;
-function mixCloud(kind){const pts=[];let G=0;const thr=VLEV-8;
-  for(;;){G+=-Math.log(Math.random());const x=-Math.log(G);if(x<thr)break;
-    let m=0;if(kind===1)m=-2;else if(kind===2)m=(Math.random()<1/(1+Math.E))?0:-2;
-    pts.push([x,x+m+Math.SQRT2*randn()]);if(pts.length>400000)break}
-  return pts}
+function mixCloud(kind){
+  // Exact restriction to {log F(0) >= LO} union {log F(1) > VLEV}.
+  // Split into disjoint sets; the second uses the Z(1)-tilted Gaussian law.
+  const pts=[],weights=kind===2?[1/(1+Math.E),Math.E/(1+Math.E)]:[kind===0?1:0,kind===1?1:0];
+  const means=[0,-2],mass=weights[0]*Math.E+weights[1]/Math.E;
+  const choose=w=>Math.random()<w?0:1;
+  let G=0;
+  for(;;){G+=-Math.log(Math.max(Number.MIN_VALUE,Math.random()));const x=-Math.log(G);if(x<LO)break;
+    const k=choose(weights[0]);pts.push([x,x+means[k]+Math.SQRT2*randn()])}
+  G=0;
+  for(;;){G+=-Math.log(Math.max(Number.MIN_VALUE,Math.random()));const y=Math.log(mass)-Math.log(G);if(y<=VLEV)break;
+    const k=choose(weights[0]*Math.E/mass),x=y-(means[k]+2+Math.SQRT2*randn());if(x<LO)pts.push([x,y])}
+  return pts
+}
 function ramp(t){t=Math.max(0,Math.min(1,t));const a=[255,255,255],b=[31,95,168],c=[224,114,42];
   const f=(p,q,r)=>Math.round(p+(q-p)*r);
   if(t<0.72){const r=t/0.72;return `rgb(${f(a[0],b[0],r)},${f(a[1],b[1],r)},${f(a[2],b[2],r)})`}
@@ -182,7 +201,7 @@ function drawMix(id,pts,title,fid,ratio){
   ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('log F(0) →',W-84,W-9);
   ctx.save();ctx.translate(13,76);ctx.rotate(-Math.PI/2);ctx.fillText('log F(1) →',0,0);ctx.restore();
   ctx.fillStyle='#1b2a4a';ctx.font='13px Inter,sans-serif';ctx.fillText(title,30,18);
-  document.getElementById(fid).innerHTML=`above v at time 0: <b>${n0}</b>, at time 1: <b>${n1}</b> — ratio ${(n1/Math.max(n0,1)).toFixed(2)}, mean ${ratio}`}
+  document.getElementById(fid).innerHTML=`above v at time 0: <b>${n0}</b>, at time 1: <b>${n1}</b> — observed ratio ${(n1/Math.max(n0,1)).toFixed(2)}; ratio of means ${ratio}`}
 function mixAll(){
   drawMix('m0',mixCloud(0),'component 1:  log Z(1) ~ N(0, 2)','f0','e ≈ 2.72');
   drawMix('m1',mixCloud(1),'component 2:  log Z(1) ~ N(−2, 2)','f1','1/e ≈ 0.37');

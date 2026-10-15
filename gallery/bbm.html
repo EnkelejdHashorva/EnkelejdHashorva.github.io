@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Parisian ruin of branching Brownian motion</title>
+<title>Parisian ruin of branching Brownian motion — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Parisian ruin of branching Brownian motion: every particle alive stays above a moving line for a whole window, with exponentially small probability. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/bbm.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Parisian ruin of branching Brownian motion">
+<meta property="og:description" content="Parisian ruin of branching Brownian motion: every particle alive stays above a moving line for a whole window, with exponentially small probability. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/bbm.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/bbm.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -39,15 +49,15 @@
 <div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
 <div class="wrap">
   <h1>Parisian ruin of branching Brownian motion</h1>
-  <p class="lead">One Brownian particle starts at the origin; at rate <span class="m">β</span> a particle splits into <span class="m">k</span> children whose motions may be correlated. Against the rising line <span class="m">u + ct</span>, <em>simultaneous Parisian ruin</em> means: at some moment, every particle alive stays above the line for a whole window of length <span class="m">h</span> — the lower envelope <span class="m">Y(t) = min<sub>v</sub> X<sub>v</sub>(t) − ct</span> exceeds <span class="m">u</span> throughout the window. The probability is <span class="m">C e<sup>−κu</sup></span> with <span class="m">κ = c + √(c² + 2β)</span>: the rate depends only on the slope and the splitting rate, while the offspring numbers, correlations, window and observation grid all sit in the constant. Conditional on ruin, the window starts around time <span class="m">u/a</span>, <span class="m">a = √(c² + 2β)</span>, with Gaussian spread <span class="m">√(u/a³)</span>. The animation replays trees found by brute force that achieve ruin.
+  <p class="lead">One Brownian particle starts at the origin; at rate <span class="m">β</span> a particle splits into <span class="m">k</span> children whose motions may be correlated. Against the rising line <span class="m">u + ct</span>, <em>simultaneous Parisian ruin</em> means: at some moment, every particle alive stays above the line for a whole window of length <span class="m">h</span> — the lower envelope <span class="m">Y(t) = min<sub>v</sub> X<sub>v</sub>(t) − ct</span> exceeds <span class="m">u</span> throughout the window. For fixed model parameters and window, as <span class="m">u → ∞</span>, the infinite-horizon probability is asymptotic to <span class="m">C e<sup>−κu</sup></span> with <span class="m">κ = c + √(c² + 2β)</span>: the rate depends only on the slope and the splitting rate, while the offspring numbers, correlations, window and observation grid all sit in the constant. In that high-level limit, conditional on ruin, the first successful window starts around time <span class="m">u/a</span>, <span class="m">a = √(c² + 2β)</span>, with Gaussian spread <span class="m">√(u/a³)</span>. The animation shows successful sampled trees in a finite-horizon approximation; it does not compute the constant <span class="m">C</span> or certify the continuous-time event.
   From <a href="../papers/Simultaneous_BBM.pdf" target="_blank" rel="noopener">Hashorva, Novikov &amp; Shashkov</a>, <em>Parisian ruin of branching Brownian motion</em>.</p>
 
   <div class="lay">
     <div>
-      <figure><canvas id="ct" width="1060" height="440"></canvas><figcaption>the genealogical tree of positions X<sub>v</sub>(t); boundary u + ct dashed; the lower envelope in blue; the successful Parisian window in orange (grid observations as dots when enabled)</figcaption></figure>
+      <figure><canvas id="ct" width="1060" height="440"></canvas><figcaption>the genealogical tree of positions X<sub>v</sub>(t); boundary u + ct dashed; the lower envelope in blue; the successful sampled window in orange (coarse-grid observations as dots when enabled)</figcaption></figure>
       <div class="two">
         <figure><canvas id="ce" width="700" height="220"></canvas><figcaption>the envelope Y(t) = min<sub>v</sub>X<sub>v</sub>(t) − ct against the level u; shaded where Y &gt; u</figcaption></figure>
-        <figure><canvas id="ch" width="340" height="220"></canvas><figcaption>window starts S<sub>u</sub> over all trees found, with the predicted centre u/a</figcaption></figure>
+        <figure><canvas id="ch" width="340" height="220"></canvas><figcaption>first sampled-window starts over all successes in this search, with the infinite-horizon asymptotic centre u/a; truncation and the small threshold range can affect the distribution</figcaption></figure>
       </div>
       <div class="status" id="st"></div>
     </div>
@@ -62,52 +72,66 @@
       <input type="range" id="r" min="-0.45" max="0.95" step="0.05" value="0">
       <label>Parisian window h = <span id="hv">0.3</span></label>
       <input type="range" id="h" min="0" max="1" step="0.05" value="0.3">
-      <div class="row"><button id="cont" class="on">continuous</button><button id="grid">grid δ = 0.1</button></div>
+      <div class="row"><button id="cont" class="on">fine grid δ = 0.01</button><button id="grid">grid δ = 0.1</button></div>
       <div class="row"><button id="run">Find trees</button><button id="next">Next tree</button><button id="pp">Pause</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">Euler step 0.01, horizon 3u/a + 3, population capped at 300; up to 4 000 attempts per search. The theorem holds for prescribed offspring and covariance sequences; here every split uses the same k and the same equicorrelation ρ (valid for ρ ≥ −1/(k−1)).</div>
+      <div class="note">Each search uses 4 000 attempts over a horizon rounded up from 3u/a + 3. Brownian motion is sampled every 0.01; splits are rounded to this mesh, with one-step split probability 1 − e<sup>−β·0.01</sup>. Even the fine-grid mode can miss recoveries between observations. Unfinished paths reaching 300 living particles are reported as unresolved, never as failures; no early rejection based on low positions is used. The displayed hit range accounts for these unresolved attempts only; it is not a confidence interval or an estimate of the infinite-horizon probability. It does not cover time-discretization error or later events. The animation stores the first 12 successes. The theorem permits prescribed offspring and covariance sequences; here k and the equicorrelation ρ are fixed, with −1/(k−1) ≤ ρ ≤ 1.</div>
     </div>
   </div>
 </div>
 <script>
 let u=1.5,c=1,beta=1,k=2,rho=0,h=0.3,gridMode=false,delta=0.1;
-let trees=[],attempts=0,cur=0,frame=0,facc=0,playing=true,searching=false;
+let trees=[],starts=[],attempts=0,hits=0,unresolved=0,cur=0,frame=0,facc=0,playing=true,searching=false,runId=0;
 const dt=0.01;
 function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
 const dark=()=>true;
 const aa=()=>Math.sqrt(c*c+2*beta),kappa=()=>c+aa();
+const horizon=()=>Math.ceil((3*u/aa()+3)/dt)*dt;
+const duration=()=>gridMode?Math.round(h/delta+1e-9)*delta:Math.round(h/dt+1e-9)*dt;
 function cholEqui(){const R=[];for(let i=0;i<k;i++){R.push([]);for(let j=0;j<k;j++)R[i].push(i===j?1:rho)}const L=[];for(let i=0;i<k;i++){L.push(new Array(k).fill(0));for(let j=0;j<=i;j++){let s=R[i][j];for(let q=0;q<j;q++)s-=L[i][q]*L[j][q];L[i][j]=i===j?Math.sqrt(Math.max(s,0)):(L[j][j]>0?s/L[j][j]:0)}}return L}
-function simulate(){const T=3*u/aa()+3,steps=Math.round(T/dt),sd=Math.sqrt(dt),L=cholEqui();
-  const parts=[{birth:0,x:[0],alive:true,cohort:null,coord:0,parent:-1}];const cohorts=[];let Y=[0];let win=-1,run=0,need=Math.max(0,Math.round(h/dt));
-  const gstep=Math.round(delta/dt),m=Math.round(h/delta);let gridStart=-1,gridRun=0;
+function simulate(){const T=horizon(),steps=Math.round(T/dt),sd=Math.sqrt(dt),L=cholEqui(),splitProb=-Math.expm1(-beta*dt);
+  const parts=[{birth:0,x:[0],alive:true,cohort:null,coord:0,parent:-1}];let cohorts=[],Y=[0];
+  const stride=gridMode?Math.round(delta/dt):1,intervals=Math.round(duration()/(stride*dt)+1e-9);let run=0;
   for(let s=1;s<=steps;s++){
-    // draw cohort noise
-    for(const co of cohorts){const g=[];for(let j=0;j<k;j++)g.push(randn());co.z=[];for(let i=0;i<k;i++){let v=0;for(let j=0;j<=i;j++)v+=L[i][j]*g[j];co.z.push(v)}}
-    const nAlive=parts.reduce((n,p)=>n+(p.alive?1:0),0);if(nAlive>300)return null;
+    const alive=parts.filter(p=>p.alive);if(alive.length>=300)return {outcome:'unresolved'};
+    // Surviving siblings retain their original coordinate; later cohorts are independent.
+    cohorts=[...new Set(alive.filter(p=>p.cohort!==null).map(p=>p.cohort))];
+    for(const co of cohorts){const g=Array.from({length:k},randn);co.z=L.map(row=>row.reduce((v,a,j)=>v+a*g[j],0))}
     let ymin=Infinity;const born=[];
-    for(let pi=0;pi<parts.length;pi++){const p=parts[pi];if(!p.alive)continue;const x=p.x[p.x.length-1];const z=p.cohort===null?randn():p.cohort.z[p.coord];const nx=x+sd*z;p.x.push(nx);
-      if(Math.random()<beta*dt){p.alive=false;p.death=s;const co={z:null};cohorts.push(co);for(let j=0;j<k;j++)born.push({birth:s,x:[nx],alive:true,cohort:co,coord:j,parent:pi})}
-      else ymin=Math.min(ymin,nx-c*s*dt)}
-    for(const b of born){parts.push(b);ymin=Math.min(ymin,b.x[0]-c*s*dt)}
-    Y.push(ymin);
-    if(win<0&&gridStart<0&&ymin<-(u+1.2))return null;
-    if(win<0){if(ymin>u){run++;if(run>=need+1){win=s-need}}else run=0}
-    if(gridStart<0&&s%gstep===0){if(ymin>u){gridRun++;if(gridRun>=m+1)gridStart=s-m*gstep}else gridRun=0}
-    if((gridMode?gridStart:win)>=0&&s*dt>(gridMode?gridStart:win)*dt+h+0.4)break}
-  const ok=gridMode?gridStart>=0:win>=0;if(!ok)return null;
-  return{parts,Y,start:gridMode?gridStart:win,len:Y.length}}
-async function find(){if(searching)return;searching=true;document.getElementById('run').disabled=true;trees=[];attempts=0;cur=0;frame=0;
-  const want=12,cap=4000,t1=performance.now();
-  while(trees.length<want&&attempts<cap){for(let q=0;q<25&&trees.length<want&&attempts<cap;q++){attempts++;const t=simulate();if(t)trees.push(t)}
-    status();await new Promise(r=>setTimeout(r,0))}
-  status(true,performance.now()-t1);searching=false;document.getElementById('run').disabled=false}
-function status(done,ms){document.getElementById('st').textContent=`${trees.length} ruined trees found in ${attempts.toLocaleString()} attempts`+(trees.length?` (frequency ${(trees.length/attempts).toExponential(2)}; e^(−κu) = ${Math.exp(-kappa()*u).toExponential(2)})`:'')+(done?` · ${(ms/1000).toFixed(1)} s`:' …')}
+    for(let pi=0;pi<parts.length;pi++){const p=parts[pi];if(!p.alive)continue;
+      const z=p.cohort===null?randn():p.cohort.z[p.coord],nx=p.x[p.x.length-1]+sd*z;p.x.push(nx);
+      if(Math.random()<splitProb){p.alive=false;p.death=s;const co={z:null};for(let j=0;j<k;j++)born.push({birth:s,x:[nx],alive:true,cohort:co,coord:j,parent:pi})}
+      ymin=Math.min(ymin,nx-c*s*dt);
+    }
+    for(const child of born)parts.push(child);Y.push(ymin);
+    if(s%stride===0){run=ymin>u?run+1:0;
+      if(run>=intervals+1)return {outcome:'hit',tree:{parts,Y,start:s-intervals*stride,len:Y.length}};}
+  }
+  return {outcome:'miss'};
+}
+function invalidate(){runId++;searching=false;trees=[];starts=[];attempts=0;hits=0;unresolved=0;cur=0;frame=0;facc=0;$('run').disabled=false;$('st').textContent='Parameters changed — release the slider or press Find trees.';}
+async function find(){const id=++runId;searching=true;$('run').disabled=true;trees=[];starts=[];attempts=0;hits=0;unresolved=0;cur=0;frame=0;facc=0;
+  const cap=4000,t1=performance.now();
+  try{while(attempts<cap){if(id!==runId)return;const batch=performance.now();
+      do{const result=simulate();attempts++;
+        if(result.outcome==='hit'){hits++;starts.push(result.tree.start*dt);if(trees.length<12)trees.push(result.tree)}
+        else if(result.outcome==='unresolved')unresolved++;
+      }while(attempts<cap&&performance.now()-batch<12);
+      status();await new Promise(r=>setTimeout(r,0));
+    }
+    if(id!==runId)return;status(true,performance.now()-t1);
+  }catch(error){if(id===runId)$('st').textContent='Calculation stopped: '+error.message;}
+  finally{if(id===runId){searching=false;$('run').disabled=false}}
+}
+function status(done,ms){const range=attempts?` · observed hit range ${(hits/attempts).toExponential(2)}–${((hits+unresolved)/attempts).toExponential(2)}`:'';
+  $('st').textContent=`${hits} sampled successes, ${unresolved} unresolved, ${attempts.toLocaleString()} attempts${range}`+(done?` · ${(ms/1000).toFixed(1)} s`:' …');}
+
 function drawTree(){const cv=document.getElementById('ct'),ctx=cv.getContext('2d'),d=dark(),W=cv.width,Hh=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,Hh);
   const tr=trees[cur];if(!tr){ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='13px Inter,sans-serif';ctx.fillText(searching?'searching…':'no tree found — lower u or h',20,30);return}
   const n=tr.len,T=(n-1)*dt,f=Math.min(frame,n-1);let lo=Infinity,hi=-Infinity;for(const p of tr.parts){for(let i=0;i<p.x.length;i++){lo=Math.min(lo,p.x[i]);hi=Math.max(hi,p.x[i])}}hi=Math.max(hi,u+c*T);lo=Math.min(lo,0);const pad=(hi-lo)*0.08;lo-=pad;hi+=pad;
   const X=i=>30+(W-40)*i/(n-1),Y=v=>12+(Hh-36)*(hi-v)/(hi-lo);
   // ruin window shading
-  const s0=tr.start,s1=s0+Math.round(h/dt);if(f>=s0){ctx.fillStyle=d?'rgba(224,114,42,.15)':'rgba(224,114,42,.12)';ctx.fillRect(X(s0),0,Math.max(2,X(Math.min(f,s1))-X(s0)),Hh)}
+  const s0=tr.start,s1=s0+Math.round(duration()/dt);if(f>=s0){ctx.fillStyle=d?'rgba(224,114,42,.15)':'rgba(224,114,42,.12)';ctx.fillRect(X(s0),0,Math.max(2,X(Math.min(f,s1))-X(s0)),Hh)}
   // boundary
   ctx.setLineDash([6,4]);ctx.strokeStyle=d?'rgba(27,42,74,.6)':'rgba(27,42,74,.5)';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(X(0),Y(u));ctx.lineTo(X(f),Y(u+c*f*dt));ctx.stroke();ctx.setLineDash([]);
   // paths
@@ -125,23 +149,27 @@ function drawEnv(){const cv=document.getElementById('ce'),ctx=cv.getContext('2d'
   ctx.fillStyle=d?'rgba(31,95,168,.3)':'rgba(31,95,168,.22)';for(let i=1;i<=f;i++)if(tr.Y[i]>u){ctx.fillRect(X(i-1),Y(tr.Y[i]),X(i)-X(i-1)+0.5,Y(u)-Y(tr.Y[i]))}
   ctx.setLineDash([5,4]);ctx.strokeStyle=d?'rgba(27,42,74,.6)':'rgba(27,42,74,.5)';ctx.beginPath();ctx.moveTo(X(0),Y(u));ctx.lineTo(X(n-1),Y(u));ctx.stroke();ctx.setLineDash([]);
   ctx.strokeStyle=d?'#1f5fa8':'#1f5fa8';ctx.lineWidth=1.8;ctx.beginPath();for(let i=0;i<=f;i++){i?ctx.lineTo(X(i),Y(tr.Y[i])):ctx.moveTo(X(i),Y(tr.Y[i]))}ctx.stroke();
-  const s0=tr.start,s1=s0+Math.round(h/dt);if(f>=s0){ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=3;ctx.beginPath();for(let i=s0;i<=Math.min(f,s1);i++){i===s0?ctx.moveTo(X(i),Y(tr.Y[i])):ctx.lineTo(X(i),Y(tr.Y[i]))}ctx.stroke()}
+  const s0=tr.start,s1=s0+Math.round(duration()/dt);if(f>=s0){ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=3;ctx.beginPath();for(let i=s0;i<=Math.min(f,s1);i++){i===s0?ctx.moveTo(X(i),Y(tr.Y[i])):ctx.lineTo(X(i),Y(tr.Y[i]))}ctx.stroke()}
   ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('u',12,Y(u)+4);ctx.fillText('Y(t)',34,18)}
 function drawHist(){const cv=document.getElementById('ch'),ctx=cv.getContext('2d'),d=dark(),W=cv.width,Hh=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,Hh);
-  const T=3*u/aa()+3,X=t=>24+(W-36)*t/T;const nb=24,hh=new Array(nb).fill(0);let m=1;for(const tr of trees){const s=tr.start*dt;const b=Math.min(nb-1,Math.floor(nb*s/T));hh[b]++;m=Math.max(m,hh[b])}
+  const T=horizon(),X=t=>24+(W-36)*t/T;const nb=24,hh=new Array(nb).fill(0);let m=1;for(const s of starts){const b=Math.min(nb-1,Math.floor(nb*s/T));hh[b]++;m=Math.max(m,hh[b])}
   ctx.fillStyle=d?'rgba(224,114,42,.7)':'rgba(224,114,42,.6)';for(let i=0;i<nb;i++){if(!hh[i])continue;const x=X(i*T/nb),w=(W-36)/nb-1,b=(Hh-50)*hh[i]/m;ctx.fillRect(x,Hh-26-b,w,b)}
   const ctr=u/aa(),sc=Math.sqrt(u/Math.pow(aa(),3));ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(X(ctr),14);ctx.lineTo(X(ctr),Hh-24);ctx.stroke();ctx.setLineDash([]);
   ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText(`u/a = ${ctr.toFixed(2)} ± ${sc.toFixed(2)}`,X(ctr)+5,24);ctx.fillText('S_u',24,Hh-8);ctx.fillText('t →',W-28,Hh-8)}
-function regime(){const a=aa(),kp=kappa();document.getElementById('reg').innerHTML=`<b>κ = c + √(c²+2β) = ${kp.toFixed(3)}</b>e<sup>−κu</sup> = ${Math.exp(-kp*u).toExponential(2)}. Predicted window start: u/a = ${(u/a).toFixed(2)}, spread √(u/a³) = ${Math.sqrt(u/Math.pow(a,3)).toFixed(2)}. ${gridMode?`Grid observation, δ = ${delta}, m = ${Math.round(h/delta)} consecutive observations.`:h>0?'Continuous window.':'Ordinary simultaneous ruin (h = 0).'}`}
+function regime(){const a=aa(),kp=kappa(),steps=Math.round(duration()/(gridMode?delta:dt)+1e-9);
+  $('reg').innerHTML=`<b>Asymptotic rate κ = ${kp.toFixed(3)}</b>e<sup>−κu</sup> = ${Math.exp(-kp*u).toExponential(2)} is the exponential factor only; C is not estimated here. Asymptotic centre u/a = ${(u/a).toFixed(2)}, spread √(u/a³) = ${Math.sqrt(u/Math.pow(a,3)).toFixed(2)}. ${steps+1} consecutive observations at spacing ${gridMode?delta:dt}, spanning ${duration().toFixed(2)}. Horizon ${horizon().toFixed(2)}. Grid and continuous windows of the same duration need not be nested.`;}
+
 function loop(){if(playing&&trees[cur]){facc+=0.9;if(facc>=1){frame+=Math.floor(facc);facc-=Math.floor(facc);if(frame>trees[cur].len+80){frame=0;cur=(cur+1)%trees.length}}}drawTree();drawEnv();drawHist();requestAnimationFrame(loop)}
 const $=id=>document.getElementById(id);
-const bind=(id,fn)=>{$(id).oninput=e=>{fn(+e.target.value);regime()};$(id).onchange=find};
+const bind=(id,fn)=>{$(id).oninput=e=>{invalidate();fn(+e.target.value);regime()};$(id).onchange=find};
 bind('u',v=>{u=v;$('uv').textContent=u.toFixed(1)});bind('c',v=>{c=v;$('cv').textContent=c.toFixed(1)});bind('b',v=>{beta=v;$('bv').textContent=beta.toFixed(1)});
-bind('k',v=>{k=v;$('kv').textContent=k;if(rho<-1/(k-1)+0.05){rho=-1/(k-1)+0.05;$('r').value=rho;$('rv').textContent=rho.toFixed(2)}});
-bind('r',v=>{rho=Math.max(v,-1/(k-1)+0.05);$('rv').textContent=rho.toFixed(2)});bind('h',v=>{h=v;$('hv').textContent=h.toFixed(2)});
-$('cont').onclick=()=>{gridMode=false;$('cont').classList.add('on');$('grid').classList.remove('on');regime();find()};
-$('grid').onclick=()=>{gridMode=true;$('grid').classList.add('on');$('cont').classList.remove('on');regime();find()};
-$('run').onclick=find;$('next').onclick=()=>{if(trees.length){cur=(cur+1)%trees.length;frame=0}};$('pp').onclick=()=>{playing=!playing;$('pp').textContent=playing?'Pause':'Play'};
+bind('k',v=>{k=v;if(rho<-1/(k-1)+0.05)rho=-1/(k-1)+0.05;$('kv').textContent=k;$('r').value=rho;$('rv').textContent=rho.toFixed(2)});
+bind('r',v=>{rho=Math.max(v,-1/(k-1)+0.05);$('r').value=rho;$('rv').textContent=rho.toFixed(2)});
+bind('h',v=>{h=gridMode?Math.round(v/delta+1e-9)*delta:v;$('h').value=h;$('hv').textContent=h.toFixed(2)});
+function setMode(coarse){invalidate();gridMode=coarse;if(coarse)h=Math.round(h/delta+1e-9)*delta;$('h').step=coarse?'0.1':'0.05';$('h').value=h;$('hv').textContent=h.toFixed(2);$('cont').classList.toggle('on',!coarse);$('grid').classList.toggle('on',coarse);regime();find()}
+$('cont').onclick=()=>setMode(false);$('grid').onclick=()=>setMode(true);
+$('run').onclick=find;$('next').onclick=()=>{if(trees.length){cur=(cur+1)%trees.length;frame=0;facc=0}};$('pp').onclick=()=>{playing=!playing;$('pp').textContent=playing?'Pause':'Play'};
+
 regime();find();loop();
 </script>
 </body>

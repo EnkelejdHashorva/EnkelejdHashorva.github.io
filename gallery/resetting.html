@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brownian motion with exponential resetting</title>
+<title>Brownian motion with exponential resetting — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Brownian motion with exponential resetting: the best reset rate for reaching a level, the asymmetric Laplace steady state, and the tail of the supremum. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/resetting.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Brownian motion with exponential resetting">
+<meta property="og:description" content="Brownian motion with exponential resetting: the best reset rate for reaching a level, the asymmetric Laplace steady state, and the tail of the supremum. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/resetting.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/resetting.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a;--ok:#2e8b57}
@@ -45,7 +55,7 @@
 <div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
 <div class="wrap">
   <h1>Back to square one</h1>
-  <p class="lead">Between resets the process is a Brownian motion with drift <span class="m">−c</span>; at the epochs of an independent Poisson process of rate <span class="m">λ</span> it is sent back to the reset point <span class="m">x<sub>R</sub></span>, so <span class="m">X<sub>t</sub> = x<sub>R</sub> + (W<sub>t</sub> − ct) − (W<sub>τ(t)</sub> − cτ(t))</span> after the last reset <span class="m">τ(t)</span>. Three things to watch. <em>Search:</em> resetting makes the time <span class="m">τ</span> to reach a level <span class="m">u</span> integrable, <span class="m">E τ = (e<sup>αu</sup> − 1) e<sup>−αx<sub>R</sub></sup>/λ</span> with <span class="m">α = √(c²+2λ) + c</span>, and there is a best rate <span class="m">λ*</span> — too few resets and the walker drifts off, too many and it never gets far. <em>Steady state:</em> <span class="m">X<sub>t</sub></span> converges to an asymmetric Laplace law centred at <span class="m">x<sub>R</sub></span>, and for the stationary version the pair <span class="m">(Y<sub>t</sub>, Y<sub>t+δ</sub>)</span> splits into a no-reset part that remembers <span class="m">Y<sub>t</sub></span> and a reset part that forgets it. <em>High levels:</em> the law of <span class="m">sup<sub>[0,T]</sub> X<sub>t</sub></span> is a renewal series, and its tail depends on the sign of <span class="m">x<sub>R</sub></span>: for <span class="m">x<sub>R</sub> ≤ 0</span> the cheapest way up is never to reset, <span class="m">P ∼ 2e<sup>−λT</sup>Ψ((u+cT)/√T)</span>, while for <span class="m">x<sub>R</sub> &gt; 0</span> it pays to reset exactly once, immediately, <span class="m">P ∼ 4λT²e<sup>−λT</sup>u<sup>−2</sup>Ψ((u+cT−x<sub>R</sub>)/√T)</span>; for the stationary process with <span class="m">c = 0</span> the tail is exponential, <span class="m">e<sup>αx<sub>R</sub></sup>[Φ(α√T) + λ∫<sub>0</sub><sup>T</sup>Φ(α√s)ds] e<sup>−αu</sup></span>.
+  <p class="lead">Between resets the process is a Brownian motion with drift <span class="m">−c</span>; at the epochs of an independent Poisson process of rate <span class="m">λ</span> it is sent back to the reset point <span class="m">x<sub>R</sub></span>, so <span class="m">X<sub>t</sub> = x<sub>R</sub> + (W<sub>t</sub> − ct) − (W<sub>τ(t)</sub> − cτ(t))</span> after the last reset <span class="m">τ(t)</span>; before the first reset it starts at 0 and follows <span class="m">W<sub>t</sub> − ct</span>. Three things to watch. <em>Search:</em> resetting makes the time <span class="m">τ</span> to reach a level <span class="m">u</span> integrable. For <span class="m">x<sub>R</sub> &lt; u</span>, <span class="m">E τ = (e<sup>αu</sup> − 1) e<sup>−αx<sub>R</sub></sup>/λ</span> with <span class="m">α = √(c²+2λ) + c</span>, and often there is a finite best rate <span class="m">λ*</span>. With drift towards the target the optimum may be no resetting; when <span class="m">x<sub>R</sub> ≥ u</span>, faster resets are always better and <span class="m">E τ = (1 − e<sup>−αu</sup>)/λ</span>. <em>Steady state:</em> <span class="m">X<sub>t</sub></span> converges to an asymmetric Laplace law with its peak at <span class="m">x<sub>R</sub></span>, and for the stationary version the pair <span class="m">(Y<sub>t</sub>, Y<sub>t+δ</sub>)</span> splits into a no-reset part that remembers <span class="m">Y<sub>t</sub></span> and a reset part that forgets it. <em>High levels:</em> the law of <span class="m">sup<sub>[0,T]</sub> X<sub>t</sub></span> is a renewal series, and its tail depends on the sign of <span class="m">x<sub>R</sub></span>: for <span class="m">x<sub>R</sub> ≤ 0</span> the cheapest way up is never to reset, <span class="m">P ∼ 2e<sup>−λT</sup>Ψ((u+cT)/√T)</span>, while for <span class="m">x<sub>R</sub> &gt; 0</span> it pays to reset exactly once, immediately, <span class="m">P ∼ 4λT²e<sup>−λT</sup>u<sup>−2</sup>Ψ((u+cT−x<sub>R</sub>)/√T)</span>; for the stationary process with <span class="m">c = 0</span> the tail is exponential, <span class="m">e<sup>αx<sub>R</sub></sup>[Φ(α√T) + λ∫<sub>0</sub><sup>T</sup>Φ(α√s)ds] e<sup>−αu</sup></span>.
   From <a href="https://arxiv.org/abs/2603.03050" target="_blank" rel="noopener">Dębicki, Hashorva &amp; Michna</a>, <em>Distributional and extremal behaviour of Brownian motion with exponential resetting</em>.</p>
 
   <div class="lay">
@@ -83,40 +93,60 @@ const rexp=()=>-Math.log(1-Math.random())/lam;
 function erfc(x){const z=Math.abs(x),t=1/(1+0.5*z);const r=t*Math.exp(-z*z-1.26551223+t*(1.00002368+t*(0.37409196+t*(0.09678418+t*(-0.18628806+t*(0.27886807+t*(-1.13520398+t*(1.48851587+t*(-0.82215223+t*0.17087277)))))))));return x>=0?r:2-r}
 const Psi=x=>0.5*erfc(x/Math.SQRT2),Phi=x=>0.5*erfc(-x/Math.SQRT2);
 const beta=()=>Math.sqrt(c*c+2*lam),alpha=()=>beta()+c;
-function F(y,T){if(y<=0)return 0;if(T<=1e-12)return 1;const s=Math.sqrt(T);return Math.max(0,Math.min(1,Phi((y+c*T)/s)-Math.exp(-2*y*c)*Psi((y-c*T)/s)))}
-function Etau(l){const a=Math.sqrt(c*c+2*l)+c;return xR>=u?(1-Math.exp(-a*u))/l:(Math.exp(a*u)-1)*Math.exp(-a*xR)/l}
-function lamStar(){let best=Infinity,bl=1,bk=0;for(let k=0;k<=300;k++){const l=Math.exp(Math.log(0.02)+k/300*Math.log(1000));const e=Etau(l);if(e<best){best=e;bl=l;bk=k}}
-  if(bk===0)return {l:0,e:Etau(1e-4),boundary:'lo'};if(bk===300)return {l:Infinity,e:0,boundary:'hi'};
-  let lo=Math.log(bl)-0.03,hi=Math.log(bl)+0.03;const gr=(Math.sqrt(5)-1)/2;for(let k=0;k<40;k++){const m1=hi-gr*(hi-lo),m2=lo+gr*(hi-lo);if(Etau(Math.exp(m1))<Etau(Math.exp(m2)))hi=m2;else lo=m1}
-  const l=Math.exp((lo+hi)/2);return {l,e:Etau(l),boundary:null}}
+// Free-motion crossing tail, evaluated directly to retain rare probabilities.
+function H(y,T){if(y<=0)return 1;if(T<=0)return 0;const z=Math.sqrt(T);return Math.min(1,Psi((y+c*T)/z)+Math.exp(-2*y*c)*Psi((y-c*T)/z))}
+const F=(y,T)=>1-H(y,T);
+function Etau(l){if(l===0)return c<0?u/(-c):Infinity;const b=Math.sqrt(c*c+2*l),a=c<0?2*l/(b-c):b+c;return xR>=u?-Math.expm1(-a*u)/l:Math.expm1(a*u)*Math.exp(-a*xR)/l}
+function lamStar(){if(xR>=u)return {l:Infinity,e:0,boundary:'hi'};
+  // The logarithmic derivative in alpha is strictly increasing; its zero is unique.
+  if(c<0&&u/2-xR+1/(2*c)>=0)return {l:0,e:u/(-c),boundary:'lo'};
+  const D=a=>{const z=a*u;return (z<1e-3?u*(0.5+z/12-z*z*z/720):u/(-Math.expm1(-z))-1/a)-xR-1/(a-2*c)};
+  let lo=Math.max(0,2*c),hi=Math.max(1,lo+1);while(D(hi)<0)hi*=2;
+  for(let k=0;k<80;k++){const m=(lo+hi)/2;if(D(m)<0)lo=m;else hi=m}
+  const a=(lo+hi)/2,l=a*(a-2*c)/2;return {l,e:Etau(l),boundary:null}}
 function fmt(x){if(!isFinite(x))return '∞';if(x===0)return '0';if(x>=0.01)return x.toFixed(4);return x.toExponential(2)}
 function fmtT(x){return x>=100?x.toExponential(2):x>=10?x.toFixed(1):x.toFixed(2)}
-/* renewal equation for P(sup_{[0,t_j]} X <= level): first from the reset point (self-consistent), then from any start */
-function solveR(level,T,n){const h=T/n,P=new Float64Array(n+1);if(xR>=level){P[0]=xR<=level?1:0;return P}
-  const Fs=new Float64Array(n+1),ker=new Float64Array(n+1);for(let j=0;j<=n;j++){Fs[j]=F(level-xR,j*h);ker[j]=lam*Math.exp(-lam*j*h)*Fs[j]}
-  P[0]=1;for(let j=1;j<=n;j++){let s=0;for(let i=1;i<=j;i++)s+=(i===j?h/2:h)*ker[i]*P[j-i];P[j]=(Math.exp(-lam*j*h)*Fs[j]+s)/(1-h/2*ker[0])}return P}
-function solveFrom(Fs,PR,T,n){const h=T/n,P=new Float64Array(n+1),ker=new Float64Array(n+1);for(let j=0;j<=n;j++)ker[j]=lam*Math.exp(-lam*j*h)*Fs[j];
-  P[0]=Fs[0];for(let j=1;j<=n;j++){let s=0;for(let i=0;i<=j;i++)s+=((i===0||i===j)?h/2:h)*ker[i]*PR[j-i];P[j]=Math.exp(-lam*j*h)*Fs[j]+s}return P}
-/* quantile nodes of the stationary law X_inf - x_R: Exp(beta+c) above with prob (beta-c)/2beta, -Exp(beta-c) below */
-function lapNodes(q){const b=beta(),pp=(b-c)/(2*b),pm=(b+c)/(2*b),h=q/2,ys=[],ws=[];
-  for(let k=0;k<h;k++){const v=(k+0.5)/h;ys.push(-Math.log(1-v)/(b+c));ws.push(pp/h);ys.push(Math.log(1-v)/(b-c));ws.push(pm/h)}return {ys,ws}}
-function startF(level,T,n,useStat){const Fs=new Float64Array(n+1);if(!useStat){for(let j=0;j<=n;j++)Fs[j]=F(level,j*T/n);return Fs}
-  const {ys,ws}=lapNodes(96);for(let j=0;j<=n;j++){let s=0;for(let k=0;k<ys.length;k++)s+=ws[k]*F(level-xR-ys[k],j*T/n);Fs[j]=s}return Fs}
+function gauss(n){const xs=[],ws=[];for(let i=0;i<n;i++){let z=Math.cos(Math.PI*(i+0.75)/(n+0.5)),pp=0;for(let it=0;it<20;it++){let p=1,q=0;for(let k=1;k<=n;k++){const r=q;q=p;p=((2*k-1)*z*q-(k-1)*r)/k}pp=n*(z*p-q)/(z*z-1);const dz=p/pp;z-=dz;if(Math.abs(dz)<1e-15)break}xs.push(z);ws.push(2/((1-z*z)*pp*pp))}return {xs,ws}}
+const GL=gauss(40),GW=gauss(12);
+function integrate(fn,a,b){if(b<=a)return 0;let s=0;for(let k=0;k<GL.xs.length;k++)s+=GL.ws[k]*fn((a+b)/2+(b-a)/2*GL.xs[k]);return s*(b-a)/2}
+function stationaryTail(level,T){const b=beta(),ap=b+c,am=b-c,y=level-xR,pp=am/(2*b);
+  const tail=y>=0?pp*Math.exp(-ap*y):1-(1-pp)*Math.exp(am*y);if(T<=0)return tail;
+  // Integrate over distance below the level, with the entire initial upper tail exact.
+  const z=Math.sqrt(T),end=12+Math.abs(c)*z,cut=Math.max(0,Math.min(end,y/z));
+  const fn=v=>{const d=z*v,q=y-d;return z*lam/b*Math.exp(-c*q-b*Math.abs(q))*H(d,T)};
+  return Math.min(1,tail+integrate(fn,0,cut)+integrate(fn,cut,end))}
+function startH(level,T,n,useStat){const hs=new Float64Array(n+1);for(let j=0;j<=n;j++)hs[j]=useStat?stationaryTail(level,j*T/n):H(level,j*T/n);return hs}
+/* Product integration of the first-reset renewal equation, directly for the tail.
+   Nonnegative exponential cell weights preserve total mass, unlike CDF subtraction. */
+function renewalWeights(T,n){const h=T/n,z=lam*h;let aa=0,bb=0,dd=0;for(let k=0;k<GW.xs.length;k++){const v=(GW.xs[k]+1)/2,w=GW.ws[k]/2*z*Math.exp(-z*v);aa+=w*(1-v)*(1-v);bb+=w*v*(1-v);dd+=w*v*v}
+  const scale=-Math.expm1(-z)/(aa+2*bb+dd);const decay=Float64Array.from({length:n},(_,i)=>Math.exp(-lam*i*h));return {h,aa:aa*scale,bb:bb*scale,dd:dd*scale,decay}}
+function beforeReset(hs,T,n){const w=renewalWeights(T,n),q=new Float64Array(n+1);q[0]=hs[0];let acc=0;for(let j=1;j<=n;j++){acc+=Math.exp(-lam*(j-1)*w.h)*((w.aa+w.bb)*hs[j-1]+(w.bb+w.dd)*hs[j]);q[j]=Math.exp(-lam*j*w.h)*hs[j]+acc}return q}
+function convolution(hs,p,T,n,j,w){let s=0;for(let i=0;i<j;i++){const e=w.decay[i],f0=1-hs[i],f1=1-hs[i+1];s+=e*((w.aa*f0+w.bb*f1)*p[j-i]+(w.bb*f0+w.dd*f1)*p[j-i-1])}return s}
+function solveTail(level,T,n,useStat=false,wantRoutes=false){const hr=new Float64Array(n+1);for(let j=0;j<=n;j++)hr[j]=H(level-xR,j*T/n);
+  const h0=startH(level,T,n,useStat),qr=beforeReset(hr,T,n),q0=beforeReset(h0,T,n),r=new Float64Array(n+1),p=new Float64Array(n+1),w=renewalWeights(T,n);
+  r[0]=hr[0];const implicit=w.aa*(1-hr[0])+w.bb*(1-hr[1]);for(let j=1;j<=n;j++)r[j]=(qr[j]+convolution(hr,r,T,n,j,w))/(1-implicit);
+  p[0]=h0[0];for(let j=1;j<=n;j++)p[j]=q0[j]+convolution(h0,r,T,n,j,w);
+  return wantRoutes?{tail:p,p0:q0[n],p1:convolution(h0,qr,T,n,n,w)}:p}
+// Exact Brownian increments on each interval between actual Poisson epochs.
+// Crossing detection is exact; the reported hitting time is the interval's right end.
+function simSearch(T,N,useStat=false){const dt=T/N,x=new Float64Array(N+1),resets=[],resetFrom=[];let a=0,t=0,nxt=rexp();if(useStat){const S=rexp();a=xR+Math.sqrt(S)*randn()-c*S}x[0]=a;
+  const done=(tau,tauTime)=>({x,tau,tauTime,resets,resetFrom,len:tau>=0?tau:N,counted:false});if(a>=u)return done(0,0);
+  for(let i=1;i<=N;i++){const end=i*dt;while(t<end){const stop=Math.min(end,nxt),ds=stop-t,b=a+Math.sqrt(ds)*randn()-c*ds;
+      if(b>=u||(ds>0&&Math.random()<Math.exp(-2*(u-a)*(u-b)/ds))){x[i]=u;return done(i,stop)}a=b;t=stop;
+      if(nxt<=end){resets.push(t/dt);resetFrom.push(a);a=xR;nxt=t+rexp();if(a>=u){x[i]=u;return done(i,t)}}}x[i]=a}
+  return done(-1,-1)}
 
 /* ---------- mode A: search ---------- */
 const KA=24;let A={};
 function resetA(){const e=Etau(lam);A={T:Math.min(60,Math.max(3,5*e)),N:2000,paths:[],frame:0,facc:0,hold:0,n:0,hits:0,cens:0,sum:0,sumsq:0,taus:[],surv:null,ls:lamStar()};
-  const n=240;A.surv=solveFrom(startF(u,A.T,n,false),solveR(u,A.T,n),A.T,n);newBatchA()}
-function simA(){const T=A.T,N=A.N,dt=T/N,sd=Math.sqrt(dt),x=new Float32Array(N+1);let a=0,tau=-1,nxt=rexp();const resets=[];
-  for(let i=1;i<=N;i++){let b;if(i*dt>=nxt){b=xR;resets.push(i);while(i*dt>=nxt)nxt+=rexp();x[i]=b;a=b;if(b>u){tau=i;break}continue}
-    b=a+sd*randn()-c*dt;if(b>u){x[i]=b;tau=i;break}if(Math.random()<Math.exp(-2*(u-a)*(u-b)/dt)){x[i]=u;tau=i;break}x[i]=b;a=b}
-  return {x,tau,resets,len:tau>=0?tau:N,counted:false}}
+  const n=Math.max(240,Math.ceil(A.T/0.02));A.surv=solveTail(u,A.T,n).map(p=>1-p);newBatchA()}
+function simA(){return simSearch(A.T,A.N)}
 function newBatchA(){A.paths=[];for(let k=0;k<KA;k++)A.paths.push(simA());A.frame=0;A.facc=0;A.hold=0;
   let lo=xR-0.5,hi=u+0.4;for(const p of A.paths){for(let i=0;i<=p.len;i+=4){const v=p.x[i];if(v<lo)lo=v;if(v>hi)hi=v}}A.ylo=Math.max(lo-0.2,xR-3);A.yhi=hi+0.2}
 function byLamRecord(tau){const k=lam.toFixed(1);const m=A.byLam||(A.byLam=new Map());const r=m.get(k)||{n:0,s:0,ss:0,cens:0};if(tau>=0){r.n++;r.s+=tau;r.ss+=tau*tau}else r.cens++;m.set(k,r)}
 function stepA(dtms){if(!playing)return;const N=A.N;
   if(A.frame<N){A.facc+=dtms*N*speed/9000;A.frame=Math.min(N,Math.floor(A.facc))}
-  for(const p of A.paths){if(!p.counted&&(p.tau>=0?A.frame>=p.tau:A.frame>=N)){p.counted=true;A.n++;if(p.tau>=0){const t=p.tau*A.T/N;A.hits++;A.sum+=t;A.sumsq+=t*t;A.taus.push(t);byLamRecord(t)}else{A.cens++;byLamRecord(-1)}}}
+  if(A.paths.every(p=>p.tau>=0?A.frame>=p.tau:A.frame>=N))for(const p of A.paths){if(!p.counted){p.counted=true;A.n++;if(p.tau>=0){const t=p.tauTime;A.hits++;A.sum+=t;A.sumsq+=t*t;A.taus.push(t);byLamRecord(t)}else{A.cens++;byLamRecord(-1)}}}
   const done=A.paths.every(p=>p.counted);if(done){if(!A.hold)A.hold=performance.now()+1500;else if(performance.now()>A.hold)newBatchA()}}
 function drawA(){const W=ct.width,H=ct.height,T=A.T,N=A.N;g.clearRect(0,0,W,H);const ml=46,mr=16,mt=18,mb=34,pw=W-ml-mr,ph=H-mt-mb;
   const X=t=>ml+pw*t/T,Y=y=>mt+ph*(A.yhi-y)/(A.yhi-A.ylo),f=A.frame;
@@ -126,7 +156,7 @@ function drawA(){const W=ct.width,H=ct.height,T=A.T,N=A.N;g.clearRect(0,0,W,H);c
     g.strokeStyle=hit?'rgba(31,95,168,.35)':'rgba(27,42,74,.75)';g.lineWidth=hit?1:1.3;g.beginPath();
     let prevReset=false;for(let i=0;i<=L;i++){const yy=Y(Math.max(A.ylo,p.x[i]));if(i===0)g.moveTo(X(0),yy);else g.lineTo(X(i*T/N),yy)}g.stroke();
     // resets as dashed drops
-    g.strokeStyle='rgba(224,114,42,.55)';g.setLineDash([2,3]);for(const i of p.resets){if(i>L)break;g.beginPath();g.moveTo(X(i*T/N),Y(Math.max(A.ylo,p.x[i-1])));g.lineTo(X(i*T/N),Y(xR));g.stroke()}g.setLineDash([]);
+    g.strokeStyle='rgba(224,114,42,.55)';g.setLineDash([2,3]);for(let k=0;k<p.resets.length;k++){const i=p.resets[k];if(i>L)break;g.beginPath();g.moveTo(X(i*T/N),Y(Math.max(A.ylo,p.resetFrom[k])));g.lineTo(X(i*T/N),Y(xR));g.stroke()}g.setLineDash([]);
     if(hit){g.fillStyle='#e0722a';g.beginPath();g.arc(X(p.tau*T/N),Y(u),3.5,0,7);g.fill()}
     else if(f<N){g.fillStyle='#1b2a4a';g.beginPath();g.arc(X(L*T/N),Y(Math.max(A.ylo,p.x[L])),2.5,0,7);g.fill()}});
   if(f<N){const tt=f*T/N;g.strokeStyle='rgba(224,114,42,.5)';g.beginPath();g.moveTo(X(tt),mt);g.lineTo(X(tt),mt+ph);g.stroke();g.fillStyle='#e0722a';g.font='12px Inter,sans-serif';g.textAlign='left';g.fillText('t = '+tt.toFixed(1),X(tt)+5,mt+ph-8)}
@@ -136,9 +166,9 @@ function drawA(){const W=ct.width,H=ct.height,T=A.T,N=A.N;g.clearRect(0,0,W,H);c
   g.textAlign='left';g.font='italic 13px Newsreader,serif';g.fillStyle='#1b2a4a';g.fillText(hitsNow+' of '+KA+' searchers have reached u',ml+8,mt+14)}
 function drawEA(){const W=ce.width,H=ce.height;ge.clearRect(0,0,W,H);const ml=50,mr=14,mt=16,mb=34,pw=W-ml-mr,ph=H-mt-mb;
   const lmin=0.05,lmax=10;let emin=Infinity,emax=0;for(let k=0;k<=40;k++){const e=Etau(lmin*Math.pow(lmax/lmin,k/40));if(e<emin)emin=e;if(e>emax)emax=e}if(A.byLam)for(const r of A.byLam.values())if(r.n>1){const m=r.s/r.n;if(m>emax)emax=m;if(m<emin)emin=m}
-  const ymin=Math.max(0.05,emin/1.6),ymax=Math.min(1e6,Math.max(emax*1.6,ymin*8));const X=l=>ml+pw*Math.log(l/lmin)/Math.log(lmax/lmin),Y=e=>mt+ph*(1-Math.log(Math.min(ymax,Math.max(ymin,e))/ymin)/Math.log(ymax/ymin));
+  const ymin=Math.max(0.05,emin/1.6),ymax=Math.max(emax*1.6,ymin*8);const X=l=>ml+pw*Math.log(l/lmin)/Math.log(lmax/lmin),Y=e=>mt+ph*(1-Math.log(Math.min(ymax,Math.max(ymin,e))/ymin)/Math.log(ymax/ymin));
   ge.strokeStyle='rgba(27,42,74,.12)';ge.lineWidth=1;ge.font='11px Inter,sans-serif';ge.fillStyle='#5d6b85';ge.textAlign='right';
-  for(const e of [0.1,0.3,1,3,10,30,100,300,1000,3000,1e4,1e5]){if(e<ymin||e>ymax)continue;ge.beginPath();ge.moveTo(ml,Y(e));ge.lineTo(ml+pw,Y(e));ge.stroke();ge.fillText(e>=1e4?e.toExponential(0):e,ml-5,Y(e)+4)}
+  for(let j=Math.floor(Math.log10(ymin));j<=Math.ceil(Math.log10(ymax));j++)for(const m of [1,3]){const e=m*Math.pow(10,j);if(e<ymin||e>ymax)continue;ge.beginPath();ge.moveTo(ml,Y(e));ge.lineTo(ml+pw,Y(e));ge.stroke();ge.fillText(e>=1e4?e.toExponential(0):e,ml-5,Y(e)+4)}
   ge.textAlign='center';for(const l of [0.1,0.3,1,3,10]){ge.beginPath();ge.moveTo(X(l),mt);ge.lineTo(X(l),mt+ph);ge.stroke();ge.fillText(l,X(l),H-14)}
   ge.fillText('λ',ml+pw-4,H-2);ge.save();ge.translate(12,mt+ph/2);ge.rotate(-Math.PI/2);ge.fillText('E τ',0,0);ge.restore();
   ge.strokeStyle='#1b2a4a';ge.lineWidth=1.6;ge.beginPath();for(let k=0;k<=160;k++){const l=lmin*Math.pow(lmax/lmin,k/160);const y=Y(Etau(l));k?ge.lineTo(X(l),y):ge.moveTo(X(l),y)}ge.stroke();
@@ -147,7 +177,7 @@ function drawEA(){const W=ce.width,H=ce.height;ge.clearRect(0,0,W,H);const ml=50
   ge.strokeStyle='rgba(224,114,42,.6)';ge.beginPath();ge.moveTo(X(lam),mt);ge.lineTo(X(lam),mt+ph);ge.stroke();
   if(A.byLam)for(const [k,r] of A.byLam){if(r.n<2)continue;const l=+k,m=r.s/r.n,sd=Math.sqrt(Math.max(0,r.ss/r.n-m*m)),h=1.96*sd/Math.sqrt(r.n);
     ge.strokeStyle='#1f5fa8';ge.lineWidth=1.5;ge.beginPath();ge.moveTo(X(l),Y(m+h));ge.lineTo(X(l),Y(Math.max(ymin,m-h)));ge.stroke();
-    ge.beginPath();ge.arc(X(l),Y(m),4,0,7);if(r.cens>0.02*(r.n+r.cens)){ge.fillStyle='#fff';ge.fill();ge.stroke()}else{ge.fillStyle='#1f5fa8';ge.fill()}}}
+    ge.beginPath();ge.arc(X(l),Y(m),4,0,7);if(r.cens>0){ge.fillStyle='#fff';ge.fill();ge.stroke()}else{ge.fillStyle='#1f5fa8';ge.fill()}}}
 function drawHA(){const W=ch.width,H=ch.height;gh.clearRect(0,0,W,H);const ml=30,mr=12,mt=20,mb=30,pw=W-ml-mr,ph=H-mt-mb,T=A.T;
   const X=t=>ml+pw*t/T,Y=p=>mt+ph*(1-p);gh.strokeStyle='rgba(27,42,74,.12)';gh.lineWidth=1;for(const p of [0,0.5,1]){gh.beginPath();gh.moveTo(ml,Y(p));gh.lineTo(ml+pw,Y(p));gh.stroke()}
   const S=A.surv,n=S.length-1;gh.strokeStyle='rgba(27,42,74,.6)';gh.lineWidth=1.6;gh.beginPath();for(let j=0;j<=n;j++){const x=X(j*T/n),y=Y(S[j]);j?gh.lineTo(x,y):gh.moveTo(x,y)}gh.stroke();
@@ -157,14 +187,15 @@ function drawHA(){const W=ch.width,H=ch.height;gh.clearRect(0,0,W,H);const ml=30
 
 /* ---------- mode B: steady state ---------- */
 let B={};
-function resetB(){const b=beta();B={T:20,N:2400,x:0,t:0,tot:0,nr:0,nxt:rexp(),pts:[],resets:[],facc:0,ylo:xR-4.5/(b-c),yhi:xR+4.5/(b+c),bins:new Float64Array(60),nb:0,pairs:[],lastSample:0,lastX:0,resetSince:false,sx:0,sn:0,above:0,burn:Math.min(10,1/lam)};B.pts.push([0,0])}
-function stepB(dtms){if(!playing)return;const dt=B.T/B.N;let steps=Math.min(400,Math.floor(dtms*B.N*speed/12000));const sd=Math.sqrt(dt);
-  for(let k=0;k<steps;k++){let x=B.x+sd*randn()-c*dt;B.t+=dt;B.tot+=dt;
-    if(B.tot>=B.nxt){B.resets.push([B.t,B.x]);x=xR;while(B.tot>=B.nxt)B.nxt+=rexp();B.resetSince=true;B.nr++}
-    B.x=x;B.pts.push([B.t,x]);
+function resetB(){const b=beta();B={T:20,N:2400,x:0,t:0,tot:0,nr:0,nxt:rexp(),pts:[],resets:[],facc:0,ylo:xR-4.5/(b-c),yhi:xR+4.5/(b+c),bins:new Float64Array(60),nb:0,pairs:[],lastSample:0,lastX:0,resetSince:false,sx:0,sn:0,above:0,burn:5/lam,steps:0};B.pts.push([0,0])}
+function stepB(dtms){if(!playing)return;const dt=B.T/B.N;B.facc+=dtms*B.N*speed/12000;const steps=Math.min(400,Math.floor(B.facc));B.facc-=steps;
+  for(let k=0;k<steps;k++){const end=(B.steps+1)*dt;let x=B.x,t=B.tot;
+    while(t<end){const stop=Math.min(end,B.nxt),ds=stop-t;x+=Math.sqrt(ds)*randn()-c*ds;t=stop;
+      if(B.nxt<=end){B.resets.push([B.t+(t-B.tot),x]);x=xR;B.nxt=t+rexp();B.resetSince=true;B.nr++}}
+    B.steps++;B.t+=dt;B.tot=end;B.x=x;B.pts.push([B.t,x]);
     if(B.tot>B.burn){const i=Math.floor((x-B.ylo)/(B.yhi-B.ylo)*60);if(i>=0&&i<60)B.bins[i]++;B.nb++;B.sx+=x;B.sn++;if(x>xR)B.above++;
-      if(B.tot-B.lastSample>=0.5){if(B.lastSample>B.burn){B.pairs.push([B.lastX,x,B.resetSince]);if(B.pairs.length>700)B.pairs.shift()}B.lastSample=B.tot;B.lastX=x;B.resetSince=false}}
-    if(B.t>=B.T){B.t=0;B.pts=[[0,x]];B.resets=[]}}}
+      if(B.steps%60===0){if(B.lastSample>B.burn){B.pairs.push([B.lastX,x,B.resetSince]);if(B.pairs.length>700)B.pairs.shift()}B.lastSample=B.tot;B.lastX=x;B.resetSince=false}}
+    if(B.steps%B.N===0){B.t=0;B.pts=[[0,x]];B.resets=[]}}}
 function drawB(){const W=ct.width,H=ct.height;g.clearRect(0,0,W,H);const ml=46,mr=16,mt=18,mb=34,pw=W-ml-mr,ph=H-mt-mb;
   const X=t=>ml+pw*t/B.T,Y=y=>mt+ph*(B.yhi-y)/(B.yhi-B.ylo),cl=y=>Math.min(B.yhi,Math.max(B.ylo,y));
   g.strokeStyle='rgba(27,42,74,.2)';g.lineWidth=1;g.beginPath();g.moveTo(ml,Y(xR));g.lineTo(ml+pw,Y(xR));g.stroke();
@@ -192,26 +223,14 @@ const UG=[];for(let k=0;k<=80;k++)UG.push(0.5+0.05*k);
 let C={};
 function resetC(){C={att:0,hits:0,found:[],faint:[],nres:[0,0,0,0],firstR:[],mcCnt:new Float64Array(UG.length+1),mcN:0,exact:null,routes:null};
   computeExactC()}
-function computeExactC(){const n=120,T=1;const ex=new Float64Array(UG.length);
-  for(let k=0;k<UG.length;k++){const L=UG[k];ex[k]=1-solveFrom(startF(L,T,n,stat),solveR(L,T,n),T,n)[n]}
-  C.exact=ex;
-  // routes at the current level u, by the number of resets BEFORE the exceedance: none / exactly one / more.
-  // Q[m] = P(the free motion from the given start crosses u before the first reset and before time m h)
-  //      = e^{-λ m h}(1 - F(m h)) + λ ∫_0^{m h} e^{-λ t}(1 - F(t)) dt, with F the no-crossing probability from that start.
-  const n2=200,h=T/n2,Fs=startF(u,T,n2,stat),PR=solveR(u,T,n2),tot=1-solveFrom(Fs,PR,T,n2)[n2];
-  const Qof=Fx=>{const Q=new Float64Array(n2+1);let acc=0;Q[0]=1-Fx[0];for(let m=1;m<=n2;m++){acc+=h/2*(Math.exp(-lam*(m-1)*h)*(1-Fx[m-1])+Math.exp(-lam*m*h)*(1-Fx[m]));Q[m]=Math.exp(-lam*m*h)*(1-Fx[m])+lam*acc}return Q};
-  const FsR=new Float64Array(n2+1);for(let j=0;j<=n2;j++)FsR[j]=F(u-xR,j*h);
-  const Q0=Qof(Fs),Q0R=Qof(FsR),p0=Q0[n2];let s=0;for(let i=0;i<=n2;i++)s+=((i===0||i===n2)?h/2:h)*lam*Math.exp(-lam*i*h)*Fs[i]*Q0R[n2-i];const p1=s;
-  C.routes={tot,p0,p1,p2:Math.max(0,tot-p0-p1),lower:Math.exp(-lam*T)*(1-Fs[n2])}}
+function computeExactC(){const n=320,T=1,ex=new Float64Array(UG.length);for(let k=0;k<UG.length;k++)ex[k]=solveTail(UG[k],T,n,stat)[n];C.exact=ex;
+  const r=solveTail(u,T,640,stat,true),tot=r.tail[640];C.routes={tot,p0:r.p0,p1:r.p1,p2:Math.max(0,tot-r.p0-r.p1),lower:Math.exp(-lam)*H(u,1)}}
 function supExact(){let t=0,a=0;if(stat){const S=rexp();a=xR+Math.sqrt(S)*randn()-c*S}let M=a;
   for(;;){const gp=rexp(),s=Math.min(gp,1-t);if(s>0){const b=a+Math.sqrt(s)*randn()-c*s;const m=0.5*(a+b+Math.sqrt((a-b)*(a-b)-2*s*Math.log(1-Math.random())));if(m>M)M=m}
     if(gp>=1-t)return M;t+=gp;a=xR;if(xR>M)M=xR}}
 function mcBatchC(){if(C.mcN>=300000)return;for(let r=0;r<15000;r++){const M=supExact();let idx=Math.floor((M-0.5)/0.05)+1;if(idx<0)idx=0;if(idx>UG.length)idx=UG.length;C.mcCnt[idx]++}C.mcN+=15000}
 function mcTail(k){let s=0;for(let i=k+1;i<=UG.length;i++)s+=C.mcCnt[i];return s/C.mcN}
-function simC(){const N=400,dt=1/N,sd=Math.sqrt(dt),x=new Float32Array(N+1);let a=0;if(stat){const S=rexp();a=xR+Math.sqrt(S)*randn()-c*S}x[0]=a;let tau=a>u?0:-1,nxt=rexp();const resets=[];
-  if(tau<0)for(let i=1;i<=N;i++){let b;if(i*dt>=nxt){b=xR;resets.push(i);while(i*dt>=nxt)nxt+=rexp();x[i]=b;a=b;if(b>u){tau=i;break}continue}
-    b=a+sd*randn()-c*dt;if(b>u){x[i]=b;tau=i;break}if(Math.random()<Math.exp(-2*(u-a)*(u-b)/dt)){x[i]=u;tau=i;break}x[i]=b;a=b}
-  return {x,tau,resets,len:tau>=0?tau:N}}
+function simC(){return simSearch(1,400,stat)}
 function searchBatchC(){const t0=performance.now();while(performance.now()-t0<10){const p=simC();C.att++;
   if(p.tau>=0){C.hits++;const r=p.resets.filter(i=>i<=p.tau).length;C.nres[Math.min(3,r)]++;if(r>0)C.firstR.push(p.resets[0]/400);C.found.push(p);if(C.found.length>30)C.found.shift()}
   else if(C.faint.length<30&&Math.random()<0.2)C.faint.push(p)}}
@@ -223,7 +242,7 @@ function drawC(){const W=ct.width,H=ct.height;g.clearRect(0,0,W,H);const ml=46,m
   g.strokeStyle='rgba(27,42,74,.09)';g.lineWidth=1;for(const p of C.faint){g.beginPath();for(let i=0;i<=p.len;i+=2){const yy=Y(cl(p.x[i]));i?g.lineTo(X(i/N),yy):g.moveTo(X(0),yy)}g.stroke()}
   C.found.forEach((p,k)=>{const last=k===C.found.length-1;g.strokeStyle=last?'#1b2a4a':'rgba(31,95,168,'+(0.15+0.5*k/C.found.length)+')';g.lineWidth=last?1.8:1.1;g.beginPath();
     for(let i=0;i<=p.len;i++){const yy=Y(cl(p.x[i]));i?g.lineTo(X(i/N),yy):g.moveTo(X(0),yy)}g.stroke();
-    g.strokeStyle=last?'#e0722a':'rgba(224,114,42,.5)';g.setLineDash([2,3]);for(const i of p.resets){if(i>p.len)break;g.beginPath();g.moveTo(X(i/N),Y(cl(p.x[i-1])));g.lineTo(X(i/N),Y(xR));g.stroke()}g.setLineDash([]);
+    g.strokeStyle=last?'#e0722a':'rgba(224,114,42,.5)';g.setLineDash([2,3]);for(let j=0;j<p.resets.length;j++){const i=p.resets[j];if(i>p.len)break;g.beginPath();g.moveTo(X(i/N),Y(cl(p.resetFrom[j])));g.lineTo(X(i/N),Y(xR));g.stroke()}g.setLineDash([]);
     // reset epochs of every found path as ticks above the axis
     g.strokeStyle='rgba(224,114,42,.8)';g.lineWidth=1.5;for(const i of p.resets){if(i>p.len)break;g.beginPath();g.moveTo(X(i/N),mt+ph-1);g.lineTo(X(i/N),mt+ph-9);g.stroke()}
     g.fillStyle='#e0722a';g.beginPath();g.arc(X(p.tau/N),Y(u),last?4.5:3,0,7);g.fill()});
@@ -237,21 +256,22 @@ function drawEC(){const W=ce.width,H=ce.height;ge.clearRect(0,0,W,H);const ml=50
   ge.strokeStyle='rgba(27,42,74,.12)';ge.lineWidth=1;ge.font='11px Inter,sans-serif';ge.fillStyle='#5d6b85';ge.textAlign='right';
   for(let e=0;e>=-5;e--){const p=Math.pow(10,e);ge.beginPath();ge.moveTo(ml,Y(p));ge.lineTo(ml+pw,Y(p));ge.stroke();ge.fillText(e===0?'1':'10'+String(e).replace('-','⁻').replace(/\d/g,d=>'⁰¹²³⁴⁵⁶⁷⁸⁹'[d]),ml-5,Y(p)+4)}
   ge.textAlign='center';for(let L=0.5;L<=4.5;L+=0.5){ge.fillText(L.toFixed(1),X(L),H-14)}ge.fillText('u',ml+pw-2,H-2);
+  const plot=values=>{ge.beginPath();let connected=false;UG.forEach((L,k)=>{const p=values[k];if(!Number.isFinite(p)||p<ymin||p>ymax){connected=false;return}connected?ge.lineTo(X(L),Y(p)):ge.moveTo(X(L),Y(p));connected=true});ge.stroke()};
   if(!stat){ge.setLineDash([3,4]);ge.strokeStyle='rgba(27,42,74,.35)';ge.lineWidth=1;
-    for(const fn of [L=>Math.exp(-lam)*(1-F(L,1)),L=>1-F(L,1)*Math.exp(-lam*(1-F(L-xR,1)))]){ge.beginPath();UG.forEach((L,k)=>{const y=Y(fn(L));k?ge.lineTo(X(L),y):ge.moveTo(X(L),y)});ge.stroke()}ge.setLineDash([])}
-  const as=UG.map(asymC);if(!isNaN(as[0])){ge.setLineDash([2,3]);ge.strokeStyle='#e0722a';ge.lineWidth=1.6;ge.beginPath();UG.forEach((L,k)=>{const y=Y(as[k]);k?ge.lineTo(X(L),y):ge.moveTo(X(L),y)});ge.stroke();ge.setLineDash([])}
-  if(C.exact){ge.strokeStyle='#1b2a4a';ge.lineWidth=1.8;ge.beginPath();UG.forEach((L,k)=>{const y=Y(C.exact[k]);k?ge.lineTo(X(L),y):ge.moveTo(X(L),y)});ge.stroke()}
+    for(const fn of [L=>Math.exp(-lam)*(1-F(L,1)),L=>1-F(L,1)*Math.exp(-lam*(1-F(L-xR,1)))]){plot(UG.map(fn))}ge.setLineDash([])}
+  const as=UG.map(asymC);if(!isNaN(as[0])){ge.setLineDash([2,3]);ge.strokeStyle='#e0722a';ge.lineWidth=1.6;plot(as);ge.setLineDash([])}
+  if(C.exact){ge.strokeStyle='#1b2a4a';ge.lineWidth=1.8;plot(C.exact)}
   if(C.mcN){ge.fillStyle='#1f5fa8';for(let k=0;k<UG.length;k+=2){const p=mcTail(k);if(p*C.mcN<5)continue;ge.beginPath();ge.arc(X(UG[k]),Y(p),2.8,0,7);ge.fill()}}
   ge.strokeStyle='rgba(224,114,42,.6)';ge.lineWidth=1;ge.beginPath();ge.moveTo(X(u),mt);ge.lineTo(X(u),mt+ph);ge.stroke();
-  if(C.hits>=3){const p=C.hits/C.att,se=Math.sqrt(p*(1-p)/C.att);ge.strokeStyle='#e0722a';ge.lineWidth=1.8;ge.beginPath();ge.moveTo(X(u),Y(p+1.96*se));ge.lineTo(X(u),Y(Math.max(ymin,p-1.96*se)));ge.stroke();ge.fillStyle='#e0722a';ge.beginPath();ge.arc(X(u),Y(p),4.5,0,7);ge.fill()}
+  if(C.hits>=3&&C.hits/C.att>=ymin){const p=C.hits/C.att,se=Math.sqrt(p*(1-p)/C.att);ge.strokeStyle='#e0722a';ge.lineWidth=1.8;ge.beginPath();ge.moveTo(X(u),Y(p+1.96*se));ge.lineTo(X(u),Y(Math.max(ymin,p-1.96*se)));ge.stroke();ge.fillStyle='#e0722a';ge.beginPath();ge.arc(X(u),Y(p),4.5,0,7);ge.fill()}
   ge.fillStyle='#5d6b85';ge.font='11px Inter,sans-serif';ge.textAlign='left';
-  const leg=[['#1b2a4a','exact (Theorem 2, renewal equation)','line'],['#1f5fa8','Monte Carlo, exact bridge maxima, n = '+C.mcN.toLocaleString(),'dot'],['#e0722a',(stat?'Theorem 5':xR<=0?'Theorem 3 (i), no reset':'Theorem 3 (ii), one early reset'),'dash']];if(!stat)leg.push(['rgba(27,42,74,.5)','bounds (ineq. after Theorem 2)','dash']);
+  const leg=[['#1b2a4a','numerical renewal solution (Theorem 2)','line'],['#1f5fa8','Monte Carlo, exact bridge maxima, n = '+C.mcN.toLocaleString(),'dot'],['#e0722a',(stat?'Theorem 5':xR<=0?'Theorem 3 (i), no reset':'Theorem 3 (ii), one early reset'),'dash']];if(!stat)leg.push(['rgba(27,42,74,.5)','bounds (ineq. after Theorem 2)','dash']);
   leg.forEach((l,i)=>{const y=mt+ph-8-(leg.length-1-i)*13,x=ml+8;ge.strokeStyle=l[0];ge.fillStyle=l[0];ge.lineWidth=1.6;ge.setLineDash(l[2]==='dash'?[2,3]:[]);if(l[2]==='dot'){ge.beginPath();ge.arc(x+8,y-3,2.8,0,7);ge.fill()}else{ge.beginPath();ge.moveTo(x,y-3);ge.lineTo(x+16,y-3);ge.stroke()}ge.setLineDash([]);ge.fillStyle='#5d6b85';ge.fillText(l[1],x+22,y)});
   if(stat&&isNaN(as[0])){ge.fillStyle='#e0722a';ge.fillText('Theorem 5 needs c = 0 — set the drift to 0 to see it',ml+pw-262,mt+12)}}
 function drawHC(){const W=ch.width,H=ch.height;gh.clearRect(0,0,W,H);const ml=14,mr=14,mt=22,mb=30,pw=W-ml-mr,ph=H-mt-mb;
-  const labels=['0','1','2','3+'],tot=C.hits||1,r=C.routes,pred=r?[r.p0/r.tot,r.p1/r.tot,r.p2/r.tot,null]:null,bw=pw/4;
+  const labels=['0','1','2+'],counts=[C.nres[0],C.nres[1],C.nres[2]+C.nres[3]],tot=C.hits||1,r=C.routes,pred=r&&r.tot>0?[r.p0/r.tot,r.p1/r.tot,r.p2/r.tot]:null,bw=pw/3;
   gh.strokeStyle='rgba(27,42,74,.2)';gh.beginPath();gh.moveTo(ml,mt+ph);gh.lineTo(ml+pw,mt+ph);gh.stroke();gh.font='11px Inter,sans-serif';gh.textAlign='center';
-  for(let i=0;i<4;i++){const f=C.nres[i]/tot,x=ml+bw*i+bw*0.2,w=bw*0.6;gh.fillStyle=i===(!stat&&xR>0?1:0)?'#e0722a':'#1f5fa8';gh.fillRect(x,mt+ph*(1-f),w,ph*f);
+  for(let i=0;i<3;i++){const f=counts[i]/tot,x=ml+bw*i+bw*0.2,w=bw*0.6;gh.fillStyle=i===(!stat&&xR>0?1:0)?'#e0722a':'#1f5fa8';gh.fillRect(x,mt+ph*(1-f),w,ph*f);
     if(pred&&pred[i]!==null){gh.strokeStyle='#1b2a4a';gh.lineWidth=2;gh.beginPath();gh.moveTo(x-3,mt+ph*(1-pred[i]));gh.lineTo(x+w+3,mt+ph*(1-pred[i]));gh.stroke()}
     gh.fillStyle='#1b2a4a';if(C.hits)gh.fillText((100*f).toFixed(0)+'%',x+w/2,mt+ph*(1-f)-4);gh.fillStyle='#5d6b85';gh.fillText(labels[i],x+w/2,H-16)}
   gh.fillText('resets before reaching u, among the '+C.hits+' successful paths',ml+pw/2,12)}
@@ -261,12 +281,12 @@ function regime(){const a=alpha(),b=beta();
   if(mode==='A'){const e=Etau(lam),ls=A.ls,m=A.hits?A.sum/A.hits:NaN,sd=A.hits>1?Math.sqrt(Math.max(0,A.sumsq/A.hits-m*m)):0;
     $('reg').innerHTML=`<b>Mean search time</b><table>
     <tr><td>α = √(c²+2λ) + c</td><td>${a.toFixed(3)}</td></tr>
-    <tr><td>E τ = (e<sup>αu</sup> − 1)e<sup>−αx<sub>R</sub></sup>/λ${xR>=u?' <span class="dim">(x<sub>R</sub> ≥ u: first reset ends the search)</span>':''}</td><td>${fmtT(e)}</td></tr>
-    <tr><td>mean of the simulated τ ${A.hits?`<span class="dim">(n = ${A.hits})</span>`:''}</td><td>${A.hits>1?fmtT(m)+' ± '+fmtT(1.96*sd/Math.sqrt(A.hits)):'–'}</td></tr>
+    <tr><td>${xR>=u?'E τ = (1 − e<sup>−αu</sup>)/λ':'E τ = (e<sup>αu</sup> − 1)e<sup>−αx<sub>R</sub></sup>/λ'}</td><td>${fmtT(e)}</td></tr>
+    <tr><td>mean of hits by T (excludes censored searches) ${A.hits?`<span class="dim">(n = ${A.hits})</span>`:''}</td><td>${A.hits>1?fmtT(m)+' ± '+fmtT(1.96*sd/Math.sqrt(A.hits)):'–'}</td></tr>
     <tr><td>best rate λ*</td><td>${ls.boundary==='lo'?'→ 0':ls.boundary==='hi'?'→ ∞':ls.l.toFixed(3)}</td></tr>
     <tr><td>E τ at λ*</td><td>${ls.boundary==='lo'?fmtT(ls.e)+' (no reset)':ls.boundary==='hi'?'→ 0':fmtT(ls.e)}</td></tr>
-    <tr><td>horizon shown T = 5 E τ (capped at 60)</td><td>${A.T.toFixed(1)}</td></tr></table>
-    ${c===0&&xR===0?'<div style="margin-top:6px">c = 0, x<sub>R</sub> = 0: the Evans–Majumdar formula E τ = (e<sup>u√(2λ)</sup> − 1)/λ, with λ* ≈ 1.5936²/(2u²) = '+(1.59362*1.59362/(2*u*u)).toFixed(3)+'.</div>':ls.boundary==='lo'?'<div style="margin-top:6px">With this drift towards u, resetting only delays the search: E τ decreases to u/|c| as λ → 0.</div>':ls.boundary==='hi'?'<div style="margin-top:6px">x<sub>R</sub> ≥ u: every reset lands on or above the target, so the faster the resets, the shorter the search.</div>':''}`}
+    <tr><td>horizon T = min(60, max(3, 5 E τ))</td><td>${A.T.toFixed(1)}</td></tr></table>
+    ${c===0&&xR===0?'<div style="margin-top:6px">c = 0, x<sub>R</sub> = 0: the Evans–Majumdar formula E τ = (e<sup>u√(2λ)</sup> − 1)/λ, with λ* ≈ 1.5936²/(2u²) = '+(1.59362*1.59362/(2*u*u)).toFixed(3)+'.</div>':ls.boundary==='lo'?'<div style="margin-top:6px">For these parameters the mean is minimized by no resetting, with E τ = u/|c|.</div>':ls.boundary==='hi'?'<div style="margin-top:6px">x<sub>R</sub> ≥ u: every reset lands on or above the target, so the faster the resets, the shorter the search.</div>':''}`}
   else if(mode==='B'){const d=0.5,nb=B.pairs.filter(p=>!p[2]).length;
     $('reg').innerHTML=`<b>Stationary law</b><table>
     <tr><td>β = √(c²+2λ)</td><td>${b.toFixed(3)}</td></tr>
@@ -280,31 +300,31 @@ function regime(){const a=alpha(),b=beta();
     <tr><td>observed, among the plotted pairs</td><td>${B.pairs.length?(nb/B.pairs.length).toFixed(3):'–'}</td></tr></table>`}
   else{const r=C.routes,p=C.att?C.hits/C.att:NaN,se=C.att?Math.sqrt(p*(1-p)/C.att):0,k=Math.round((u-0.5)/0.05),as=asymC(u);
     $('reg').innerHTML=`<b>P(sup<sub>[0,1]</sub> ${stat?'Y':'X'}<sub>t</sub> &gt; u) at u = ${u.toFixed(1)}</b><table>
-    <tr><td>exact, renewal equation (Thm 2${stat?', averaged over the stationary start':''})</td><td>${fmt(r.tot)}</td></tr>
+    <tr><td>numerical renewal solution (Thm 2${stat?', averaged over the stationary start':''})</td><td>${fmt(r.tot)}</td></tr>
     <tr><td>brute force ${C.att?`<span class="dim">(${C.hits} / ${C.att.toLocaleString()})</span>`:''}</td><td>${C.hits>=3?fmt(p)+' ± '+fmt(1.96*se):'–'}</td></tr>
-    <tr><td>Monte Carlo, exact bridge maxima</td><td>${C.mcN&&k>=0&&k<UG.length?fmt(mcTail(k)):'–'}</td></tr>
-    <tr><td>· reached u before any reset, exact</td><td>${fmt(r.p0)}</td></tr>
-    <tr><td>· after exactly one reset, exact</td><td>${fmt(r.p1)}</td></tr>
+    <tr><td>Monte Carlo, exact bridge maxima</td><td>${C.mcN&&k>=0&&k<UG.length?(mcTail(k)*C.mcN>=5?fmt(mcTail(k)):'fewer than 5 hits'):'–'}</td></tr>
+    <tr><td>· before any reset, numerical</td><td>${fmt(r.p0)}</td></tr>
+    <tr><td>· after exactly one reset, numerical</td><td>${fmt(r.p1)}</td></tr>
     <tr><td>· after two or more</td><td>${fmt(r.p2)}</td></tr>
     <tr><td>${stat?'Theorem 5 (c = 0)':xR<=0?'Theorem 3 (i): 2e<sup>−λ</sup>Ψ(u+c)':'Theorem 3 (ii): 4λe<sup>−λ</sup>u<sup>−2</sup>Ψ(u+c−x<sub>R</sub>)'}</td><td>${isNaN(as)?'needs c = 0':fmt(as)}</td></tr>
     ${!stat?`<tr><td>bounds: e<sup>−λ</sup>(1−F(u,1)) … 1 − F(u,1)e<sup>−λ(1−F(u−x<sub>R</sub>,1))</sup></td><td>${fmt(r.lower)} … ${fmt(1-F(u,1)*Math.exp(-lam*(1-F(u-xR,1))))}</td></tr>`:''}</table>
-    <div style="margin-top:6px">${stat?'Stationary start: x<sub>0</sub> drawn from the Laplace law of X<sub>∞</sub>; the tail is exponential with rate α = √(2λ) when c = 0.':xR<=0?'x<sub>R</sub> ≤ 0: a reset can only cost height, so asymptotically the successful paths never reset.':'x<sub>R</sub> &gt; 0: one reset right at the start is a free lift of x<sub>R</sub>; asymptotically the successful paths reset exactly once, immediately — watch the orange ticks crowd against t = 0 as u grows.'}</div>`}}
-function captions(){const cap={A:['the '+KA+' searchers of the current batch, all started at x₀ = 0: Brownian motion with drift −c, dashed drops at the reset epochs; a searcher stops with an orange dot when it first exceeds u (Brownian-bridge crossing correction between steps)',
-    'mean search time E τ against the reset rate λ, both on log scales — the curve (e^{αu} − 1)e^{−αx_R}/λ with its minimum at λ*; blue dots: the running mean, with a 95% band, of the simulated searches at every λ you have tried (hollow when some searches were cut off at T); orange line: the current λ',
+    <div style="margin-top:6px">${stat?'Stationary start: x<sub>0</sub> drawn from the Laplace law of X<sub>∞</sub>; the tail is exponential with rate α = √(2λ) when c = 0.':xR<=0?'x<sub>R</sub> ≤ 0: the high-level tail is asymptotically dominated by paths with no reset. This is an asymptotic statement, not a pathwise ordering.':'x<sub>R</sub> &gt; 0: one reset right at the start is a free lift of x<sub>R</sub>; asymptotically the successful paths reset exactly once, immediately — watch the orange ticks crowd against t = 0 as u grows.'}</div>`}}
+function captions(){const cap={A:['the '+KA+' searchers of the current batch, all started at x₀ = 0: Brownian motion with drift −c, dashed drops at the reset epochs; a searcher stops with an orange dot when it first exceeds u (exact reset times and Brownian-bridge crossing checks; hit times rounded up by at most T/2000)',
+    'mean search time E τ against the reset rate λ, both on log scales — the exact mean formula with its optimum λ* (possibly a boundary limit); blue dots: hit-only means, with approximate 95% bands, at the λ values tried. Hollow dots exclude censored searches and estimate E(τ | τ ≤ T), which can be much smaller than E τ; orange line: the current λ',
     'the fraction of searchers still looking at time t (blue), against P(τ > t) = P(sup_{[0,t]} X ≤ u) from the paper\'s renewal formula, Theorem 2, solved numerically (dark)'],
   B:['one long trajectory, redrawn window after window without restarting; dashed drops at the reset epochs',
     'time spent at each level since the burn-in (blue) against the asymmetric Laplace density (λ/β) exp(−c(x − x_R) − β|x − x_R|), β = √(c²+2λ) (dark) — the non-equilibrium steady state',
     'pairs (Y_t, Y_{t+δ}), δ = ½, sampled from the same run: blue when no reset fell in between (they sit near the line y = x − cδ), orange when one did (they forget Y_t) — the two terms of Corollary 1'],
   C:['Brownian paths with resets on [0, 1] rain down until one exceeds u (dark, latest; earlier successes in blue; a few failures in grey); orange dots mark the first exceedance',
-    'P(sup_{[0,1]} X_t > u) against u on a log scale: exact from Theorem 2 (dark), Monte Carlo with exact Brownian-bridge maxima (blue dots), the asymptotic of Theorem 3 or 5 (orange dotted), and the two bounds (grey dashed); the orange dot with its band is the brute-force frequency at the chosen u',
-    'number of resets before the exceedance among the successful paths; the dark ticks are the exact shares of the three routes, computed from the same renewal structure']}[mode];
+    'P(sup_{[0,1]} X_t > u) against u on a log scale: numerical solution of Theorem 2 (dark), Monte Carlo with exact Brownian-bridge maxima (blue dots), the asymptotic of Theorem 3 or 5 (orange dotted), and the two bounds (grey dashed); the orange dot with its band is the brute-force frequency at the chosen u',
+    'number of resets before the exceedance among the successful paths; the dark ticks are numerical predictions for the same three categories (0, 1, and 2+ resets), computed from the same renewal structure']}[mode];
   $('capt').textContent=cap[0];$('cape').textContent=cap[1];$('caph').textContent=cap[2]}
-function status(){if(mode==='A'){const e=Etau(lam);let s=`searches started ${A.n} · reached u: ${A.hits} · cut off at T: ${A.cens}`;if(e>60)s+=` <span class="warn">— E τ ≈ ${fmtT(e)} exceeds the horizon of 60: most searches will be cut off; lower u or move λ towards λ*</span>`;$('st').innerHTML=s}
-  else if(mode==='B')$('st').innerHTML=`simulated time ${B.tot.toFixed(0)} · Euler step ${(B.T/B.N).toFixed(4)} · the histogram and the pairs ignore the first ${B.burn.toFixed(1)} time units`;
+function status(){if(mode==='A'){const e=Etau(lam);let s=`searches in completed batches ${A.n} · reached u: ${A.hits} · cut off at T: ${A.cens}`;if(A.cens)s+=' <span class="warn">— the displayed hit-only mean estimates E(τ | τ ≤ T), not E τ</span>';if(e>60)s+=` <span class="warn">— E τ ≈ ${fmtT(e)} exceeds the horizon of 60: most searches will be cut off; lower u or move λ towards λ*</span>`;$('st').innerHTML=s}
+  else if(mode==='B')$('st').innerHTML=`simulated time ${B.tot.toFixed(0)} · display/sample step ${(B.T/B.N).toFixed(4)} · the histogram and the pairs ignore the first ${B.burn.toFixed(1)} time units`;
   else{const p=C.routes.tot;let s=`attempts ${C.att.toLocaleString()} · successes ${C.hits}`;if(p<1e-5)s+=` <span class="warn">— P ≈ ${fmt(p)}: one success per ${Math.round(1/p).toLocaleString()} attempts; lower u</span>`;$('st').innerHTML=s}}
-function note(){$('note').innerHTML={A:'Euler step T/2000 with the exact Brownian-bridge crossing probability exp(−2(u−a)(u−b)/dt) between steps, so the discrete search does not miss crossings. The mean-time formula with general c and x<sub>R</sub> follows from the renewal structure and E e<sup>−λτ⁰</sup> = e<sup>−α(u−x)</sup> for the free drifted motion; for c = 0, x<sub>R</sub> = 0 it is the Evans–Majumdar formula quoted in the paper. The survival curve solves the renewal equation of Theorem 2 on a grid of 240 points (trapezoidal rule), first from x<sub>R</sub>, then from x<sub>0</sub> = 0.',
-  B:'Euler step 1/120. The pairs are taken every δ = ½ time units of the same run and coloured by whether a reset fell in between; for the stationary version Y the two colours carry weights e<sup>−λδ</sup> and 1 − e<sup>−λδ</sup> exactly (Corollary 1). The run starts at x<sub>0</sub> = 0 rather than from the stationary law, hence the burn-in of 5/λ.',
-  C:'Brute force: Euler step 1/400 with the bridge crossing correction, T = 1. The exact curve solves the renewal equation of Theorem 2 (120 grid points per level; for the stationary start, F(u − x<sub>0</sub>, ·) is averaged over 96 quantile nodes of the Laplace law). The Monte Carlo curve samples the supremum without discretisation: between resets the maximum of a Brownian bridge with endpoints a, b over a time s is (a + b + √((a−b)² − 2s log U))/2. The asymptotics of Theorems 3 and 5 are first-order; their ratio to the exact value approaches 1 slowly, like 1 + O(1/u), which the graph shows honestly.'}[mode]}
+function note(){$('note').innerHTML={A:'Brownian increments are sampled exactly, splitting each display step at every Poisson reset. Brownian-bridge crossing probabilities detect crossings inside each segment. Reported hit times are segment right endpoints, so their error is at most T/2000. Statistics are added only after a complete batch; censored paths remain in the survival denominator, and hit-only means exclude them. The mean-time formula with general c and x<sub>R</sub> follows from the renewal structure and E e<sup>−λτ⁰</sup> = e<sup>−α(u−x)</sup> for the free drifted motion; for c = 0, x<sub>R</sub> = 0 it is the Evans–Majumdar formula quoted in the paper. The survival curve is a numerical product-integration solution of Theorem 2, first from x<sub>R</sub>, then from 0, with at least 240 time steps and a step no larger than 0.02. Its discretisation error is separate from Monte Carlo uncertainty.',
+  B:'Exact Brownian increments between Poisson reset times, sampled every 1/120 time unit. The pairs are taken every δ = ½ time units of the same run and coloured by whether a reset fell in between; for the stationary version Y the two colours carry weights e<sup>−λδ</sup> and 1 − e<sup>−λδ</sup> exactly (Corollary 1). The run starts at x<sub>0</sub> = 0 rather than from the stationary law, hence the burn-in of 5/λ.',
+  C:'Paths use exact reset times and Brownian-bridge crossing checks; first-hit times are rounded up by at most 1/400. The dark curve is a numerical renewal solution using 320 time steps (640 for the table and route shares), not an exact numerical value. The equation is integrated directly for the tail with nonnegative exponential weights. For stationary starts the entire initial upper tail is included analytically; the remaining integral uses 40-point Gaussian quadrature on each side of the density kink. Blue Monte Carlo points sample the continuous supremum: the bridge maximum over a segment of length s is (a + b + √((a−b)² − 2s log U))/2. Sampling error remains, especially with few hits; points with fewer than five exceedances are omitted. Curves outside the plotted probability range are omitted rather than flattened at the axis edge. Theorems 3 and 5 are first-order high-level asymptotics, not finite-level bounds; no universal convergence rate is asserted.'}[mode]}
 
 /* ---------- loop & controls ---------- */
 const ct=$('ct'),g=ct.getContext('2d'),ce=$('ce'),ge=ce.getContext('2d'),ch=$('ch'),gh=ch.getContext('2d');
@@ -313,7 +333,7 @@ function loop(ts){const dtms=Math.min(50,ts-last);last=ts;tick++;
   if(mode==='A'){stepA(dtms);drawA();drawEA();drawHA()}
   else if(mode==='B'){stepB(dtms);drawB();drawEB();drawHB()}
   else{if(playing){searchBatchC();mcBatchC()}drawC();drawEC();drawHC()}
-  if(tick%15===0){regime();status()}requestAnimationFrame(loop)}
+  if(tick%15===0||mode==='C'){regime();status()}requestAnimationFrame(loop)}
 function resetAll(){if(mode==='A')resetA();else if(mode==='B')resetB();else resetC();regime();status()}
 function setMode(m){mode=m;['A','B','C'].forEach(k=>$('b'+k).classList.toggle('on',k===m));
   document.querySelectorAll('.pA,.pB,.pC').forEach(el=>el.classList.toggle('hideit',!el.classList.contains('p'+m)));

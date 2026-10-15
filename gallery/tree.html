@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Branch-stationary max-stable field on a tree</title>
+<title>Branch-stationary max-stable field on a tree — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="A branch-stationary max-stable field on a binary tree, built by a Brown–Resnick construction driven by a Gaussian branching random walk. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/tree.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Branch-stationary max-stable field on a tree">
+<meta property="og:description" content="A branch-stationary max-stable field on a binary tree, built by a Brown–Resnick construction driven by a Gaussian branching random walk. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/tree.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/tree.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -35,7 +45,7 @@
 <div class="wrap">
   <h1>A branch-stationary max-stable field on a binary tree</h1>
   <p class="lead">Vertices are words over the alphabet {L, R}. Along each edge an independent Gaussian increment with variance <span class="math">Δ</span> is added, giving a branching random walk <span class="math">W</span>. The field is
-  <span class="math">η<sub>v</sub> = max<sub>i</sub> P<sub>i</sub> exp(W<sub>v</sub><sup>(i)</sup> − Δ|v|/2)</span>, with <span class="math">P<sub>i</sub></span> the points of a Poisson process. Every subtree looks, in law, like the whole tree — that is branch-stationarity.
+  <span class="math">η<sub>v</sub> = max<sub>i</sub> P<sub>i</sub> exp(W<sub>v</sub><sup>(i)</sup> − Δ|v|/2)</span>, with <span class="math">P<sub>i</sub></span> the points of a Poisson process with intensity p<sup>−2</sup>dp. In the infinite construction every subtree has the same finite-dimensional laws as the whole tree — that is branch-stationarity. The picture uses a finite truncation of that construction.
   From <a href="https://arxiv.org/abs/2608.12947" target="_blank" rel="noopener">Hashorva &amp; Novikov (2026)</a>.</p>
   <div class="lay">
     <div>
@@ -52,14 +62,14 @@
       <input type="range" id="d" min="0.1" max="3" step="0.1" value="1">
       <label>Depth = <span id="hv">6</span></label>
       <input type="range" id="h" min="3" max="9" step="1" value="6">
-      <label>Poisson points used = <span id="nv">40</span></label>
+      <label>Poisson points retained = <span id="nv">40</span></label>
       <input type="range" id="n" min="5" max="150" step="5" value="40">
       <div class="row">
         <button id="re">Resample</button>
         <button id="zoom">Zoom into a random subtree</button>
         <button id="reset">Whole tree</button>
       </div>
-      <div class="note" id="info">Small Δ: the same Poisson point tends to win everywhere (one colour). Large Δ: the winning point changes from branch to branch — the field fragments into independent-looking patches, as the branching random walk spreads out.</div>
+      <div class="note" id="info">Small Δ: the same Poisson point tends to win everywhere (one colour). Large Δ: the winning point changes from branch to branch — the colours form smaller patches as the branching random walk spreads out. This does not assert independence. With finitely many Poisson points the maxima are underestimated, especially far from the root when Δ is large; this approximation is not itself branch-stationary. Increase the retained count to reduce truncation. Value colours are scaled within the displayed subtree.</div>
     </div>
   </div>
 </div>
@@ -71,7 +81,7 @@ function randn(){let u=1-Math.random(),v=Math.random();return Math.sqrt(-2*Math.
 function build(){ // complete binary tree, nodes indexed 1..2^(H+1)-1 (heap order)
   const M=(1<<(H+1))-1; state={M};
   // Poisson points P_i = 1/Gamma_i
-  let G=0; const P=[]; for(let i=0;i<N;i++){G+=-Math.log(Math.random());P.push(1/G)}
+  let G=0; const P=[]; for(let i=0;i<N;i++){G+=-Math.log(Math.max(Number.MIN_VALUE,Math.random()));P.push(1/G)}
   eta=new Float64Array(M+1).fill(-Infinity); win=new Int16Array(M+1);
   for(let i=0;i<N;i++){
     const W=new Float64Array(M+1); W[1]=0;

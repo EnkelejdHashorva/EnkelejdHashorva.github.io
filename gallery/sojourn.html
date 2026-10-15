@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sojourns of a vector-valued Gaussian field</title>
+<title>Sojourns of a vector-valued Gaussian field — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Sojourns of a bivariate stationary Gaussian random field: the set where both components exceed a level and how its area decays as the level grows. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/sojourn.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sojourns of a vector-valued Gaussian field">
+<meta property="og:description" content="Sojourns of a bivariate stationary Gaussian random field: the set where both components exceed a level and how its area decays as the level grows. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/sojourn.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/sojourn.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -37,8 +47,8 @@
 <div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
 <div class="wrap">
   <h1>Sojourn of a bivariate Gaussian field above a high level</h1>
-  <p class="lead">A stationary Gaussian field <span class="math">X(t) = (X<sub>1</sub>(t), X<sub>2</sub>(t))</span> on the square <span class="math">[0,T]<sup>2</sup></span>, with cross-correlation <span class="math">ρ</span> between the two components. The sojourn set is where <em>both</em> coordinates exceed the level <span class="math">u</span>; its area <span class="math">∫ 1{X(t) &gt; u b} dt</span> is the quantity whose tail is studied in
-  <a href="https://arxiv.org/abs/2510.06930" target="_blank" rel="noopener">Dębicki, Hashorva &amp; Michna (2025)</a>. Raise <span class="math">u</span> and watch the sojourn set collapse into a few small islands.</p>
+  <p class="lead">A centered, unit-variance stationary Gaussian field <span class="math">X(t) = (X<sub>1</sub>(t), X<sub>2</sub>(t))</span> on the unit square <span class="math">[0,1]<sup>2</sup></span>. Each component has covariance <span class="math">r(h) = exp(−(h₁²+h₂²)/(2ℓ²))</span>, and <span class="math">Cov(X<sub>1</sub>(s),X<sub>2</sub>(t)) = ρ r(t−s)</span>. The sojourn set is where <em>both</em> coordinates exceed the level <span class="math">u</span>; its area is <span class="math">L<sub>u</sub> = ∫<sub>[0,1]²</sub> 1{X<sub>1</sub>(t) &gt; u, X<sub>2</sub>(t) &gt; u} dt</span>. Tail probabilities of rescaled sojourn areas are studied in
+  <a href="https://arxiv.org/abs/2510.06930" target="_blank" rel="noopener">Dębicki, Hashorva &amp; Michna (arXiv:2510.06930)</a>. Here the threshold vector is <span class="math">b = (1,1)</span>. Raise <span class="math">u</span> to see the excursion set of this one realisation shrink.</p>
   <div class="lay">
     <div>
       <div class="three">
@@ -56,20 +66,49 @@
       <label>Correlation length ℓ = <span id="lv">0.12</span></label>
       <input type="range" id="l" min="0.04" max="0.3" step="0.01" value="0.12">
       <div class="row"><button id="re">Resample field</button></div>
-      <label>Sojourn area (fraction of the square)</label>
+      <label>Grid estimate of sojourn area</label>
       <div class="stat" id="area">—</div>
-      <div class="note">Both components are built from the same random Fourier features, so the field is exactly stationary. The bottom strip shows how the area decays as the level grows — the log-scale curve is what the asymptotics in the paper describe.</div>
+      <div class="note">The 120×120 grid is sampled from the Gaussian covariance by numerical factorisation. We use X₁ = A and X₂ = ρA + √(1−ρ²)B with independent copies A and B; changing ρ keeps these copies fixed. The displayed area is a grid approximation and can miss small excursions. The bottom strip follows the area of this one realisation as u increases. The paper studies probabilities across random realisations, P{θ(u)Lᵤ &gt; x}, as u → ∞; this curve is not such a probability.</div>
     </div>
   </div>
 </div>
 <script>
-const G=120; // grid
+const G=120; // Equal-area cells, sampled at their centres.
 let u=1.0,rho=0.5,ell=0.12,F1,F2,A,B;
 function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
-function feats(K){const f=[];for(let k=0;k<K;k++){f.push({wx:randn()/ell,wy:randn()/ell,ph:Math.random()*2*Math.PI})}return f}
-function field(f){const X=new Float32Array(G*G);const s=Math.sqrt(2/f.length);
-  for(let i=0;i<G;i++)for(let j=0;j<G;j++){const x=i/G,y=j/G;let v=0;for(const q of f)v+=Math.cos(q.wx*x+q.wy*y+q.ph);X[i*G+j]=s*v}return X}
-function make(){A=feats(160);B=feats(160);F1=field(A);const Y=field(B);F2=new Float32Array(G*G);for(let k=0;k<G*G;k++)F2[k]=rho*F1[k]+Math.sqrt(1-rho*rho)*Y[k];draw()}
+// Pivoted covariance factorisation. Residual variances below 1e-12 are numerical zero.
+function covarianceFactor(n,cov){
+  const cols=[],diag=Float64Array.from({length:n},(_,i)=>cov(i,i)),used=new Uint8Array(n);
+  for(let k=0;k<n;k++){
+    let p=-1,best=1e-12;
+    for(let i=0;i<n;i++)if(!used[i]&&diag[i]>best){p=i;best=diag[i]}
+    if(p<0)break;
+    const col=new Float64Array(n),root=Math.sqrt(best);
+    for(let i=0;i<n;i++)if(!used[i]){
+      let v=cov(i,p);for(const q of cols)v-=q[i]*q[p];
+      col[i]=i===p?root:v/root;
+    }
+    cols.push(col);used[p]=1;
+    for(let i=0;i<n;i++)diag[i]=Math.max(0,diag[i]-col[i]*col[i]);
+  }
+  return cols;
+}
+// X = L Z L^T gives Cov(X_ij,X_kl) = C_ik C_jl for independent N(0,1) entries of Z.
+function gaussianGrid(cols,n){
+  const rank=cols.length,Z=Float64Array.from({length:rank*rank},randn),tmp=new Float64Array(n*rank),out=new Float64Array(n*n);
+  for(let p=0;p<rank;p++)for(let i=0;i<n;i++){
+    const v=cols[p][i];for(let q=0;q<rank;q++)tmp[i*rank+q]+=v*Z[p*rank+q];
+  }
+  for(let i=0;i<n;i++)for(let q=0;q<rank;q++){
+    const v=tmp[i*rank+q];for(let j=0;j<n;j++)out[i*n+j]+=v*cols[q][j];
+  }
+  return out;
+}
+function mix(){F1=A;F2=new Float64Array(G*G);for(let k=0;k<G*G;k++)F2[k]=rho*A[k]+Math.sqrt(1-rho*rho)*B[k];draw()}
+function make(){
+  const factor=covarianceFactor(G,(i,j)=>Math.exp(-.5*Math.pow((i-j)/(G*ell),2)));
+  A=gaussianGrid(factor,G);B=gaussianGrid(factor,G);mix();
+}
 function col(t){t=Math.max(0,Math.min(1,t));const a=[226,233,245],b=[31,95,168],c=[224,114,42];const f=(p,q,s)=>p+(q-p)*s;let r,g,bb;
   if(t<.5){const s=t*2;r=f(a[0],b[0],s);g=f(a[1],b[1],s);bb=f(a[2],b[2],s)}else{const s=(t-.5)*2;r=f(b[0],c[0],s);g=f(b[1],c[1],s);bb=f(b[2],c[2],s)}return [r,g,bb]}
 function heat(id,X){const cv=document.getElementById(id),ctx=cv.getContext('2d'),img=ctx.createImageData(G,G);
@@ -83,7 +122,7 @@ function draw(){
   for(let i=0;i<G;i++)for(let j=0;j<G;j++){const on=F1[i*G+j]>u&&F2[i*G+j]>u;const p=4*(j*G+i);
     const bg=dark?[40,46,31]:[251,250,241];const fg=dark?[167,192,135]:[74,107,52];const c=on?fg:bg;img.data[p]=c[0];img.data[p+1]=c[1];img.data[p+2]=c[2];img.data[p+3]=255}
   const off=new OffscreenCanvas(G,G);off.getContext('2d').putImageData(img,0,0);ctx.imageSmoothingEnabled=false;ctx.drawImage(off,0,0,cv.width,cv.height);
-  const a=areaAt(u);document.getElementById('area').textContent=a===0?'0 (no sojourn)':a.toExponential(2);
+  const a=areaAt(u);document.getElementById('area').textContent=a===0?'0 (no grid exceedance)':a.toExponential(2);
   // strip: log area vs level
   const s=document.getElementById('c4'),sx=s.getContext('2d');sx.fillStyle=dark?'#ffffff':'#ffffff';sx.fillRect(0,0,s.width,s.height);
   sx.strokeStyle=dark?'#1f5fa8':'#1f5fa8';sx.lineWidth=2;sx.beginPath();let first=true;
@@ -94,7 +133,7 @@ function draw(){
 }
 const $=id=>document.getElementById(id);
 $('u').oninput=e=>{u=+e.target.value;$('uv').textContent=u.toFixed(2);draw()};
-$('r').oninput=e=>{rho=+e.target.value;$('rv').textContent=rho.toFixed(2);make()};
+$('r').oninput=e=>{rho=+e.target.value;$('rv').textContent=rho.toFixed(2);mix()};
 $('l').oninput=e=>{ell=+e.target.value;$('lv').textContent=ell.toFixed(2);make()};
 $('re').onclick=make;
 

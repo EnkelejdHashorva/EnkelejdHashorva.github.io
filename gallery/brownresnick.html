@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Persistence of a Brown–Resnick process</title>
+<title>Persistence of a Brown–Resnick process — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Persistence of a Brown–Resnick process: how many of its spectral curves exceed a level somewhere versus throughout an interval. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/brownresnick.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Persistence of a Brown–Resnick process">
+<meta property="og:description" content="Persistence of a Brown–Resnick process: how many of its spectral curves exceed a level somewhere versus throughout an interval. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/brownresnick.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/brownresnick.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -51,13 +61,13 @@
   <div class="lay">
     <div>
       <div class="two">
-        <figure><canvas id="cb" width="520" height="420"></canvas><figcaption>log-scale: spectral curves P<sub>i</sub>Z<sup>(i)</sup>(t) (dim), the envelope X(t) (dark), level u (dashed); curves persisting above u throughout [0,T] in orange, curves exceeding u somewhere marked blue at their maximum</figcaption></figure>
-        <figure><canvas id="cg" width="520" height="420"></canvas><figcaption>𝒢<sub>V</sub>(T) = E inf<sub>[0,T]</sub> Z (dots, Monte Carlo) against T, with the endpoint bound 2Ψ(√γ<sub>V</sub>(T)) (dashed); and ℋ<sub>V</sub>(T) = E sup<sub>[0,T]</sub> Z (blue) for contrast</figcaption></figure>
+        <figure><canvas id="cb" width="520" height="420"></canvas><figcaption>log-scale: spectral curves P<sub>i</sub>Z<sup>(i)</sup>(t) (dim), the envelope of the shown curves (dark), level u (dashed); shown curves above u at every grid point in orange, curves exceeding u at a grid point marked blue at their maximum; crossings between grid points can be missed</figcaption></figure>
+        <figure><canvas id="cg" width="520" height="420"></canvas><figcaption>Grid estimates of 𝒢<sub>V</sub>(T) = E inf<sub>[0,T]</sub> Z (dots, Monte Carlo) against T, with the endpoint bound 2Ψ(√γ<sub>V</sub>(T)) (dashed); and ℋ<sub>V</sub>(T) = E sup<sub>[0,T]</sub> Z (blue) for contrast</figcaption></figure>
       </div>
       <div class="grid3">
-        <div class="stat"><div class="k">Curves above u somewhere</div><div class="v" id="ns">—</div><div class="s" id="nss"></div></div>
-        <div class="stat"><div class="k">Curves above u throughout</div><div class="v" id="nt">—</div><div class="s" id="nts"></div></div>
-        <div class="stat"><div class="k">Envelope above u throughout?</div><div class="v" id="env">—</div><div class="s">inf<sub>[0,T]</sub> X &gt; u</div></div>
+        <div class="stat"><div class="k">Shown curves above u somewhere</div><div class="v" id="ns">—</div><div class="s" id="nss"></div></div>
+        <div class="stat"><div class="k">Shown curves above u throughout</div><div class="v" id="nt">—</div><div class="s" id="nts"></div></div>
+        <div class="stat"><div class="k">Shown envelope above u on grid?</div><div class="v" id="env">—</div><div class="s">grid minimum of the partial envelope &gt; u</div></div>
       </div>
       <div class="status" id="st"></div>
     </div>
@@ -70,29 +80,41 @@
       <input type="range" id="u" min="-1" max="1.5" step="0.05" value="0">
       <div class="row"><button id="re">New realisation</button><button id="pp">Pause</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">Left: 80 Poisson points P<sub>i</sub> = 1/Γ<sub>i</sub>, fBm on a grid of 120 points by Cholesky, curves added in the order of the Poisson points. Right: 𝒢 and ℋ estimated from 20 000 fBm paths on [0, 4], read at each T. For H = 1 the spectral curve is exp(√2 tN − t²) with a single normal N.</div>
+      <div class="note">Left: the first 80 Poisson points P<sub>i</sub> = 1/Γ<sub>i</sub>; omitted curves can change both counts and the envelope. The Poisson laws above describe the complete infinite system. All sampled intervals include 0 and T on a grid of spacing 1/32. Right: 20 000 fBm paths; the grid biases 𝒢 upwards and ℋ downwards, with additional Monte Carlo error (especially large for ℋ at high H and T). These plots do not certify continuous-time persistence or asymptotic convergence. At H = 1 we use exactly B<sub>1</sub>(t) = tN. Here γ<sub>V</sub>(T) = T<sup>2H</sup>/2.</div>
     </div>
   </div>
 </div>
 <script>
-let H=0.75,T=2,logu=0,L=null,curves=[],order=[],shown=0,facc=0,playing=true,mc=null;
-const n=120,TM=4,tg=Array.from({length:n},(_,i)=>(i+1)*TM/n),NP=80;
+let H=0.75,T=2,logu=0,L=null,curves=[],order=[],shown=0,facc=0,playing=true,mc=null,mcRun=0;
+const n=128,TM=4,tg=Array.from({length:n+1},(_,i)=>i*TM/n),NP=80;
 function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
 const dark=()=>true;
 function erfc(x){const z=Math.abs(x),s=1/(1+z/2);const r=s*Math.exp(-z*z-1.26551223+s*(1.00002368+s*(0.37409196+s*(0.09678418+s*(-0.18628806+s*(0.27886807+s*(-1.13520398+s*(1.48851587+s*(-0.82215223+s*0.17087277)))))))));return x>=0?r:2-r}
 const Psi=x=>0.5*erfc(x/Math.SQRT2);
-function chol(){const R=[];for(let i=0;i<n;i++){R.push(new Float64Array(n));for(let j=0;j<n;j++)R[i][j]=0.5*(Math.pow(tg[i],2*H)+Math.pow(tg[j],2*H)-Math.pow(Math.abs(tg[i]-tg[j]),2*H))}
+function chol(){const R=[];for(let i=0;i<n;i++){R.push(new Float64Array(n));for(let j=0;j<n;j++)R[i][j]=0.5*(Math.pow(tg[i+1],2*H)+Math.pow(tg[j+1],2*H)-Math.pow(Math.abs(tg[i+1]-tg[j+1]),2*H))}
   const Lm=[];for(let i=0;i<n;i++){Lm.push(new Float64Array(n));for(let j=0;j<=i;j++){let s=R[i][j];for(let k=0;k<j;k++)s-=Lm[i][k]*Lm[j][k];Lm[i][j]=i===j?Math.sqrt(Math.max(s,1e-14)):s/Lm[j][j]}}return Lm}
-function fbm(){const z=new Float64Array(n),x=new Float64Array(n);for(let i=0;i<n;i++)z[i]=randn();for(let i=0;i<n;i++){let v=0;for(let k=0;k<=i;k++)v+=L[i][k]*z[k];x[i]=v}return x}
-function logZ(x){const y=new Float64Array(n);for(let i=0;i<n;i++)y[i]=Math.SQRT2*x[i]-Math.pow(tg[i],2*H);return y}
-function realise(){let G=0;curves=[];for(let i=0;i<NP;i++){G+=-Math.log(Math.random());const lz=logZ(fbm());const c=new Float64Array(n);for(let k=0;k<n;k++)c[k]=Math.log(1/G)+lz[k];curves.push(c)}shown=0;facc=0}
-async function monte(){const st=document.getElementById('st');st.textContent='estimating 𝒢 and ℋ…';await new Promise(r=>setTimeout(r,0));const N=20000;const Ts=[];for(let v=0.25;v<=TM+1e-9;v+=0.25)Ts.push(v);
+function fbm(basis=L,hurst=H){
+  const x=new Float64Array(n+1);
+  if(hurst===1){const z=randn();for(let i=1;i<=n;i++)x[i]=tg[i]*z;return x}
+  const z=new Float64Array(n);for(let i=0;i<n;i++)z[i]=randn();
+  for(let i=0;i<n;i++){let v=0;for(let k=0;k<=i;k++)v+=basis[i][k]*z[k];x[i+1]=v}return x
+}
+function logZ(x,hurst=H){const y=new Float64Array(n+1);for(let i=0;i<=n;i++)y[i]=Math.SQRT2*x[i]-Math.pow(tg[i],2*hurst);return y}
+function realise(){let G=0;curves=[];for(let i=0;i<NP;i++){G+=-Math.log(Math.max(Number.MIN_VALUE,Math.random()));const lz=logZ(fbm());const c=new Float64Array(n+1);for(let k=0;k<=n;k++)c[k]=-Math.log(G)+lz[k];curves.push(c)}shown=0;facc=0}
+async function monte(run,hurst,basis){
+  const st=document.getElementById('st');st.textContent='estimating 𝒢 and ℋ…';
+  const N=20000,Ts=Array.from({length:16},(_,i)=>(i+1)/4);
   const g=new Float64Array(Ts.length),h=new Float64Array(Ts.length);
-  for(let p=0;p<N;p++){const lz=logZ(fbm());let mn=0,mx=0;let k=0;for(let i=0;i<n;i++){mn=Math.min(mn,lz[i]);mx=Math.max(mx,lz[i]);while(k<Ts.length&&tg[i]>=Ts[k]-1e-9){g[k]+=Math.exp(mn);h[k]+=Math.exp(mx);k++}}
-    if(p%4000===0){await new Promise(r=>setTimeout(r,0))}}
-  mc={Ts,g:Array.from(g,v=>v/N),h:Array.from(h,v=>v/N)};st.textContent=''}
-async function reset(){L=chol();realise();await monte();drawG()}
-function counts(){const u=Math.log(10)*logu,iT=tg.findIndex(v=>v>T+1e-9),m=iT<0?n:iT;let some=0,thru=0,envOK=true;const env=new Float64Array(m).fill(-Infinity);
+  for(let p=0;p<N;p++){
+    if(p%400===0){await new Promise(r=>setTimeout(r,0));if(run!==mcRun)return}
+    const lz=logZ(fbm(basis,hurst),hurst);let mn=0,mx=0,k=0;
+    for(let i=0;i<=n;i++){mn=Math.min(mn,lz[i]);mx=Math.max(mx,lz[i]);if(k<Ts.length&&Math.abs(tg[i]-Ts[k])<1e-9){g[k]+=Math.exp(mn);h[k]+=Math.exp(mx);k++}}
+  }
+  if(run!==mcRun)return;
+  mc={Ts,g:Array.from(g,v=>v/N),h:Array.from(h,v=>v/N)};st.textContent='Finite-grid Monte Carlo estimates; see the sampling note.';drawG()
+}
+function reset(){const run=++mcRun;mc=null;L=H===1?null:chol();realise();drawG();return monte(run,H,L)}
+function counts(){const u=Math.log(10)*logu,iT=tg.findIndex(v=>v>T+1e-9),m=iT<0?n+1:iT;let some=0,thru=0,envOK=true;const env=new Float64Array(m).fill(-Infinity);
   for(let c=0;c<Math.min(shown,NP);c++){let mn=Infinity,mx=-Infinity;for(let i=0;i<m;i++){mn=Math.min(mn,curves[c][i]);mx=Math.max(mx,curves[c][i]);env[i]=Math.max(env[i],curves[c][i])}if(mx>u)some++;if(mn>u)thru++}
   for(let i=0;i<m;i++)if(env[i]<=u)envOK=false;return{some,thru,envOK,m,u}}
 function drawB(){const cv=document.getElementById('cb'),ctx=cv.getContext('2d'),d=dark(),W=cv.width,Hh=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,Hh);if(!curves.length)return;
@@ -104,7 +126,7 @@ function drawB(){const cv=document.getElementById('cb'),ctx=cv.getContext('2d'),
     if(mx>u&&!persist){ctx.fillStyle=d?'#1f5fa8':'#1f5fa8';ctx.beginPath();ctx.arc(X(imx),Y(mx),3,0,7);ctx.fill()}}
   ctx.strokeStyle=d?'#1b2a4a':'#1b2a4a';ctx.lineWidth=2.2;ctx.beginPath();for(let i=0;i<m;i++){i?ctx.lineTo(X(i),Y(env[i])):ctx.moveTo(X(i),Y(env[i]))}ctx.stroke();
   ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText(`${Math.min(shown,NP)} of ${NP} curves placed`,34,Hh-8);ctx.fillText('log X',34,20);ctx.fillText('u',12,Y(u)+4);ctx.fillText('T',W-16,Hh-8);
-  document.getElementById('ns').textContent=some;document.getElementById('nss').textContent=`Poisson with mean ℋ_V(T)/u`;document.getElementById('nt').textContent=thru;document.getElementById('nts').textContent=`Poisson with mean 𝒢_V(T)/u`;
+  document.getElementById('ns').textContent=some;document.getElementById('nss').textContent=`Full system: Poisson mean ℋ_V(T)/u`;document.getElementById('nt').textContent=thru;document.getElementById('nts').textContent=`Full system: Poisson mean 𝒢_V(T)/u`;
   document.getElementById('env').textContent=envOK?'yes':'no';}
 function drawG(){const cv=document.getElementById('cg'),ctx=cv.getContext('2d'),d=dark(),W=cv.width,Hh=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,Hh);if(!mc)return;
   const ylo=-5,yhi=1.2;const X=t=>36+(W-48)*t/TM,Y=v=>14+(Hh-40)*(yhi-Math.max(v,ylo))/(yhi-ylo);
@@ -117,12 +139,12 @@ function drawG(){const cv=document.getElementById('cg'),ctx=cv.getContext('2d'),
   ctx.strokeStyle=d?'rgba(27,42,74,.35)':'rgba(27,42,74,.3)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(X(T),14);ctx.lineTo(X(T),Hh-26);ctx.stroke();ctx.setLineDash([]);
   ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.fillText('T →',W-30,Hh-8);ctx.fillText('ℋ_V(T)',X(TM)-50,Y(Math.log10(mc.h[mc.h.length-1]))-8);ctx.fillText('𝒢_V(T)',X(2.2),Y(Math.log10(Math.max(mc.g[8],1e-5)))+16);ctx.fillText('2Ψ(√γ(T))',X(1.1),Y(Math.log10(2*Psi(Math.pow(1.1,H)/Math.SQRT2)))-8);
   const k=mc.Ts.findIndex(v=>Math.abs(v-T)<1e-9);if(k>=0){const r=mc.g[k]/(2*Psi(Math.pow(T,H)/Math.SQRT2));ctx.fillText(`at T = ${T}: 𝒢/2Ψ(√γ) = ${r.toFixed(2)}`,40,Hh-8)}}
-function regime(){document.getElementById('reg').innerHTML=H>0.5+1e-9?`<b>H &gt; ½: endpoint-dominated</b>𝒢<sub>V</sub>(T) ~ 2Ψ(√γ<sub>V</sub>(T)) = 2Ψ(T<sup>H</sup>/√2): the infimum is decided at the far endpoint, the ratio to the bound tends to 1. Logarithmic rate A = ½.`
+function regime(){document.getElementById('reg').innerHTML=H>0.5+1e-9?`<b>H &gt; ½: endpoint-dominated</b>𝒢<sub>V</sub>(T) ~ 2Ψ(√γ<sub>V</sub>(T)) = 2Ψ(T<sup>H</sup>/√2): the endpoint bound is asymptotically sharp, so the ratio tends to 1 as T → ∞. Logarithmic rate A = ½.`
   :Math.abs(H-0.5)<1e-9?`<b>H = ½: Brownian case</b>Same logarithmic rate A = ½, but an extra factor of order T<sup>−1</sup> relative to 2Ψ(√(T/2)): the ratio to the bound goes to 0.`
   :`<b>H &lt; ½: rough case</b>Logarithmic rate A<sub>B<sub>H</sub></sub> strictly larger than ½ — the infimum decays faster than the endpoint bound on the log scale.`}
 function loop(){if(playing&&curves.length){facc+=0.25;if(facc>=1){shown+=1;facc=0;if(shown>NP+40){shown=0}}}drawB();requestAnimationFrame(loop)}
 const $=id=>document.getElementById(id);
-$('h').oninput=e=>{H=+e.target.value;$('hv').textContent=H.toFixed(2);regime()};$('h').onchange=reset;
+$('h').oninput=e=>{H=+e.target.value;$('hv').textContent=H.toFixed(2);regime();reset()};
 $('t').oninput=e=>{T=+e.target.value;$('tv').textContent=T.toFixed(2);drawG()};
 $('u').oninput=e=>{logu=+e.target.value;$('uv').textContent=logu.toFixed(2)};
 $('re').onclick=()=>{realise()};$('pp').onclick=()=>{playing=!playing;$('pp').textContent=playing?'Pause':'Play'};

@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ruin on a Brownian metric tree</title>
+<title>Ruin on a Brownian metric tree — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Simultaneous ruin on a Brownian metric tree: all leaves cross their barriers at one common time; the exponent is an obstacle problem on an electrical network. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/metrictrees.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ruin on a Brownian metric tree">
+<meta property="og:description" content="Simultaneous ruin on a Brownian metric tree: all leaves cross their barriers at one common time; the exponent is an obstacle problem on an electrical network. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/metrictrees.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/metrictrees.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -44,20 +54,20 @@
 <div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
 <div class="wrap">
   <h1>Ruin on a Brownian metric tree</h1>
-  <p class="lead">A fixed rooted skeleton carries an independent Brownian motion on every edge, so each leaf sees a Brownian path and two leaves share their history up to their most recent common ancestor: <span class="m">Σ<sub>ij</sub> = t(i ∧ j)</span>. Ruin asks that <em>all</em> leaves cross their own barriers <span class="m">u q<sub>j</sub></span> at one common time. Two things decide the answer. The exponent comes from the quadratic programme <span class="m">min{ w<sup>⊤</sup>Σ<sup>−1</sup>w : w ≥ q }</span>, which is an obstacle problem on an electrical network: each edge has resistance equal to its length, and the multipliers are the currents injected at the leaves — an <em>active</em> leaf pays, an inactive one is carried along by its sisters for free. The constant comes from what happens in the last window of length <span class="m">κ/u²</span>, where each leaf sprouts a whole genealogy whose descendants must all be above the barrier at that same instant.
+  <p class="lead">A fixed rooted skeleton carries an independent Brownian motion on every edge, so each leaf sees a Brownian path and two leaves share their history up to their most recent common ancestor: <span class="m">Σ<sub>ij</sub> = t(i ∧ j)</span>. Ruin asks that <em>all</em> leaves cross their own barriers <span class="m">u q<sub>j</sub></span> at one common time. Two things decide the answer. The exponent comes from the quadratic programme <span class="m">min{ w<sup>⊤</sup>Σ<sup>−1</sup>w : w ≥ q }</span>, which is an obstacle problem on an electrical network: each edge has resistance equal to its length, and the multipliers are the currents injected at the leaves — an <em>active</em> leaf pays, a strictly slack leaf is carried above its barrier by the others. A binding leaf with zero multiplier still contributes a Gaussian boundary factor. The ruin constant combines the reversed trunk with what happens in the last window of length <span class="m">κ/u²</span>, where each leaf sprouts a whole genealogy whose descendants must all be above the barrier at that same instant.
   From <a href="../papers/Metrictrees.pdf" target="_blank" rel="noopener">E. Hashorva</a>, <em>Simultaneous ruin on Brownian metric trees with terminal groups</em>.</p>
 
   <div class="lay">
     <div>
       <div class="two">
-        <figure><canvas id="ct" width="660" height="430"></canvas><figcaption>the skeleton, conditioned to reach the terminal targets: sample paths in blue, the least-energy path in orange, barriers <span class="m">u q<sub>j</sub></span> dashed. The dashed marker at T is where the terminal window begins; it is magnified in the panel below.</figcaption></figure>
-        <figure><canvas id="cn" width="480" height="430"></canvas><figcaption>the same skeleton as a network: edge width is the current it carries, a filled leaf injects current (active, positive multiplier), a hollow one injects none (inactive — its constraint is met for free)</figcaption></figure>
+        <figure><canvas id="ct" width="660" height="430"></canvas><figcaption>the skeleton, conditioned to reach the terminal targets: sample paths in blue, the least-energy path in orange, barriers <span class="m">u q<sub>j</sub></span> dashed. The marker is the skeleton horizon T. The separate lower panel illustrates the limiting terminal genealogy; it is not a continuation of these conditioned samples.</figcaption></figure>
+        <figure><canvas id="cn" width="480" height="430"></canvas><figcaption>the same skeleton as a network: edge width is the current it carries, a filled leaf injects current (active, positive multiplier), a hollow one injects none (strictly slack or binding with zero multiplier)</figcaption></figure>
       </div>
-      <figure><canvas id="cw" width="1060" height="430"></canvas><figcaption>inside the window, in local coordinates <span class="m">s = u²(t − r<sub>u</sub>)</span> and <span class="m">u(X − u q<sub>j</sub>)</span>: one lane per group, its descendants against the local barrier 0. The bars below each lane mark the times at which that whole group is above; ruin needs a time common to every active group. The draw shown is a typical one; its expected common length is the terminal coefficient of the theorem.</figcaption></figure>
+      <figure><canvas id="cw" width="1060" height="430"></canvas><figcaption>inside the window, in local coordinates <span class="m">s = u²(t − r<sub>u</sub>), r<sub>u</sub> = T − κ/u²</span> and <span class="m">u(X − u q<sub>j</sub>)</span>: one lane per group, with the active groups’ descendants against the local barrier 0. This illustration conditions all active starting offsets to be positive, with independent Exp(νⱼ) limiting laws. The bars use 160 grid intervals; orange marks common positive times. The displayed draw is chosen near the simulated mean occupation. This conditional occupation statistic is neither a ruin probability nor the theorem’s coefficient. The ruin coefficient C<sub>B</sub> is an expected weighted union-of-boxes volume, also including the reversed trunk before s = 0; the terminal coefficient D<sub>B</sub> concerns only s = κ.</figcaption></figure>
       <div class="grid3">
         <div class="stat"><div class="k">Active leaves</div><div class="v" id="act">—</div><div class="s" id="acts"></div></div>
         <div class="stat"><div class="k">Quadratic cost Π</div><div class="v" id="pi">—</div><div class="s">exponent e^(−u²Π/2)</div></div>
-        <div class="stat"><div class="k">Common share of the window</div><div class="v" id="win">—</div><div class="s" id="wins"></div></div>
+        <div class="stat"><div class="k">Conditional window occupation</div><div class="v" id="win">—</div><div class="s" id="wins"></div></div>
       </div>
     </div>
     <div class="panel">
@@ -75,14 +85,14 @@
       <input type="range" id="k" min="0.4" max="3" step="0.1" value="1.5">
       <div class="row"><button id="re">Resample</button><button id="eq">Equal barriers</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">Skeleton: root splits at r₀ = 0.35 into two branches, which split at r₁ and r₂ into the sister pairs {1,2} and {3,4} — Example 3.3. Each group is a binary genealogy splitting at κ/2. The paths are exact conditional draws given the terminal targets; the offsets of the groups are drawn from exponential laws with rates proportional to the multipliers, which is the asymptotic overshoot law.</div>
+      <div class="note">Skeleton: root splits at r₀ = 0.35 into two branches, which split at r₁ and r₂ into the sister pairs {1,2} and {3,4} — a four-leaf instance of Theorem 2.1 and Proposition 3.4. Each of these four groups has its own binary genealogy splitting at κ/2. The upper paths are Brownian bridge draws on a time grid, conditional on the skeleton leaf targets u q̃. In the lower panel, positive active offsets have rate νⱼ in the displayed u(X − u qⱼ) scale. Strictly slack groups have diverging positive offsets on this scale. A binding constraint with zero multiplier instead contributes the theorem’s conditional Gaussian boundary factor; it must not be treated as automatically cleared.</div>
     </div>
   </div>
 </div>
 <script>
 const T=1, R0=0.35, U=6;
 let q=[1,1,1,0.62], r1=0.7, r2=0.55, KAP=1.5;
-let Sig=null, Ainv=null, wOpt=null, nu=null, act=[], PI=0, cur={}, paths=null, groups=null;
+let Sig=null, Ainv=null, wOpt=null, nu=null, act=[], boundary=[], PI=0, cur={}, paths=null, groups=null;
 function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
 function inv(M){const n=M.length,A=M.map((r,i)=>{const e=new Array(n).fill(0);e[i]=1;return r.concat(e)});
   for(let c=0;c<n;c++){let p=c;for(let r=c+1;r<n;r++)if(Math.abs(A[r][c])>Math.abs(A[p][c]))p=r;[A[c],A[p]]=[A[p],A[c]];
@@ -104,8 +114,11 @@ function qp(){buildSigma();let best=null;
     for(const i of I)if(n2[i]<-1e-9)ok=false;
     if(!ok)continue;let P=0;for(let i=0;i<4;i++)P+=w[i]*n2[i];
     if(!best||P<best.P)best={P,w,nu:n2,I}}
-  wOpt=best.w;nu=best.nu;PI=best.P;act=[];for(let i=0;i<4;i++)if(nu[i]>1e-7)act.push(i);
+  wOpt=best.w;nu=best.nu;PI=best.P;act=[];boundary=[];for(let i=0;i<4;i++){if(nu[i]>1e-9)act.push(i);else if(Math.abs(wOpt[i]-q[i])<1e-9)boundary.push(i)}
   cur={"r-v":nu[0]+nu[1]+nu[2]+nu[3],"v-a":nu[0]+nu[1],"v-b":nu[2]+nu[3],"a-1":nu[0],"a-2":nu[1],"b-3":nu[2],"b-4":nu[3]}}
+// Independent bridge residuals have Cov(B(s),B(t)) = min(s,t)-st/l.
+function bridge(delta,l,steps=26){const raw=[0];for(let k=1;k<=steps;k++)raw.push(raw[k-1]+Math.sqrt(l/steps)*randn());
+  return raw.map((x,k)=>x+(delta-raw[steps])*k/steps)}
 // conditional sample of the edge increments given leaf values = wOpt*U
 function sampleSkeleton(){const L=[[R0,'r-v'],[r1-R0,'v-a'],[r2-R0,'v-b'],[T-r1,'a-1'],[T-r1,'a-2'],[T-r2,'b-3'],[T-r2,'b-4']];
   const idx={}; L.forEach((e,i)=>idx[e[1]]=i);
@@ -119,23 +132,24 @@ function sampleSkeleton(){const L=[[R0,'r-v'],[r1-R0,'v-a'],[r2-R0,'v-b'],[T-r1,
     // y* = y + D L^T z
     const y2=y.slice();
     L.forEach((e,i)=>{let s=0;P.forEach((pp,li)=>{if(pp.includes(e[1]))s+=z[li]});y2[i]=y[i]+e[0]*s});
-    samples.push({y:y2,L,idx,P})}
+    samples.push({y:y2,L,idx,P,bridges:L.map((e,i)=>bridge(y2[i],e[0]))})}
   paths=samples}
 function drawGroups(){const g=[],NS=160,h=KAP/NS;
-  for(let j=0;j<4;j++){const active=nu[j]>1e-7;
-    const off=active?(-Math.log(1-Math.random())/Math.max(nu[j]*U,0.35)):(3+2*Math.random());
+  for(let j=0;j<4;j++){const active=act.includes(j),isBoundary=boundary.includes(j);
+    if(!active){g.push({j,active,isBoundary,off:Infinity,stem:[],s1:[],s2:[],okAll:new Array(NS+1).fill(true),NS,h});continue}
+    const off=-Math.log(1-Math.random())/nu[j];
     const stem=[],s1=[],s2=[];let v=off;
-    for(let k=0;k<=NS/2;k++){stem.push([k*h,v]);v+=Math.sqrt(h)*randn()}
+    for(let k=0;k<=NS/2;k++){stem.push([k*h,v]);if(k<NS/2)v+=Math.sqrt(h)*randn()}
     let v1=v,v2=v;
-    for(let k=NS/2;k<=NS;k++){s1.push([k*h,v1]);s2.push([k*h,v2]);v1+=Math.sqrt(h)*randn();v2+=Math.sqrt(h)*randn()}
+    for(let k=NS/2;k<=NS;k++){s1.push([k*h,v1]);s2.push([k*h,v2]);if(k<NS){v1+=Math.sqrt(h)*randn();v2+=Math.sqrt(h)*randn()}}
     const okAll=[];for(let k=0;k<=NS;k++){let a1,a2;
       if(k<=NS/2){a1=a2=stem[k][1]}else{a1=s1[k-NS/2][1];a2=s2[k-NS/2][1]}
       okAll.push(Math.min(a1,a2)>0)}
-    g.push({j,active,off,stem,s1,s2,okAll,NS,h})}
+    g.push({j,active,isBoundary,off,stem,s1,s2,okAll,NS,h})}
   return g}
 function frac(g){const NS=g[0].NS;let n=0;
-  for(let k=0;k<=NS;k++){let ok=true;for(const x of g)if(x.active&&!x.okAll[k])ok=false;if(ok)n++}
-  return n/(NS+1)}
+  for(let k=0;k<NS;k++){let ok=true;for(const x of g)if(x.active&&!x.okAll[k])ok=false;if(ok)n++}
+  return n/NS}
 let winRate=0;
 function sampleGroups(){const M=400,keep=[];let s=0;
   for(let m=0;m<M;m++){const g=drawGroups();const f=frac(g);s+=f;if(m<60)keep.push({g,f})}
@@ -151,9 +165,9 @@ function drawTree(){const cv=document.getElementById('ct'),ctx=cv.getContext('2d
   const X=t=>xs+(split-xs)*t/T, Y=v=>14+(H-42)*(ymax-v)/(ymax-ymin);
   ctx.setLineDash([4,4]);ctx.lineWidth=1.2;
   const cols=['#1f5fa8','#2f7fb8','#4a5fa0','#6a5fa8'];
-  for(let j=0;j<4;j++){ctx.strokeStyle=nu[j]>1e-7?'rgba(27,42,74,.55)':'rgba(93,107,133,.35)';
+  for(let j=0;j<4;j++){ctx.strokeStyle=nu[j]>1e-9?'rgba(27,42,74,.55)':'rgba(93,107,133,.35)';
     ctx.beginPath();ctx.moveTo(xs,Y(U*q[j]));ctx.lineTo(split,Y(U*q[j]));ctx.stroke();
-    ctx.fillStyle=nu[j]>1e-7?'#1b2a4a':'#5d6b85';ctx.font='11px Inter,sans-serif';ctx.fillText('uq'+(j+1),xs+3,Y(U*q[j])-3)}
+    ctx.fillStyle=nu[j]>1e-9?'#1b2a4a':'#5d6b85';ctx.font='11px Inter,sans-serif';ctx.fillText('uq'+(j+1),xs+3,Y(U*q[j])-3)}
   ctx.setLineDash([]);
   const nodeT={'r':0,'v':R0,'a':r1,'b':r2};
   const seg=[['r-v','r','v'],['v-a','v','a'],['v-b','v','b']];
@@ -161,19 +175,12 @@ function drawTree(){const cv=document.getElementById('ct'),ctx=cv.getContext('2d
   // sample paths
   for(const sm of paths){
     const val={}; val['r']=0;
-    const partial=(e,from,to,steps)=>{const y=sm.y[sm.idx[e]],l=(nodeT[to]!==undefined?nodeT[to]:T)-nodeT[from];
-      const pts=[];let v=val[from];pts.push([nodeT[from],v]);
-      for(let k=1;k<=steps;k++){const s=k/steps;
-        // Brownian bridge from val[from] to val[from]+y over length l
-        const mean=val[from]+y*s, sd=Math.sqrt(Math.max(l*s*(1-s),0));
-        pts.push([nodeT[from]+l*s,k===steps?val[from]+y:mean+sd*randn()])}
-      return pts};
+    const partial=(e,from,to)=>{const l=(nodeT[to]!==undefined?nodeT[to]:T)-nodeT[from],bb=sm.bridges[sm.idx[e]];
+      return bb.map((v,k)=>[nodeT[from]+l*k/(bb.length-1),val[from]+v])};
     ctx.strokeStyle='rgba(31,95,168,.28)';ctx.lineWidth=1;
-    for(const [e,f,t2] of seg){const pts=partial(e,f,t2,26);val[t2]=val[f]+sm.y[sm.idx[e]];
+    for(const [e,f,t2] of seg){const pts=partial(e,f,t2);val[t2]=val[f]+sm.y[sm.idx[e]];
       ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(X(p[0]),Y(p[1])):ctx.moveTo(X(p[0]),Y(p[1])));ctx.stroke()}
-    for(const [e,f,li] of leafEdge){const y=sm.y[sm.idx[e]],l=T-nodeT[f];const pts=[];let v=val[f];pts.push([nodeT[f],v]);
-      for(let k=1;k<=26;k++){const s=k/26,mean=val[f]+y*s,sd=Math.sqrt(Math.max(l*s*(1-s),0));
-        pts.push([nodeT[f]+l*s,k===26?val[f]+y:mean+sd*randn()])}
+    for(const [e,f,li] of leafEdge){const pts=partial(e,f,'leaf');
       ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(X(p[0]),Y(p[1])):ctx.moveTo(X(p[0]),Y(p[1])));ctx.stroke()}}
   // least-energy path
   const val2={'r':0};val2['v']=cur['r-v']*R0;val2['a']=val2['v']+cur['v-a']*(r1-R0);val2['b']=val2['v']+cur['v-b']*(r2-R0);
@@ -184,26 +191,26 @@ function drawTree(){const cv=document.getElementById('ct'),ctx=cv.getContext('2d
   ctx.strokeStyle='#e0722a';ctx.lineWidth=1.4;ctx.setLineDash([3,3]);
   ctx.beginPath();ctx.moveTo(split,10);ctx.lineTo(split,H-26);ctx.stroke();ctx.setLineDash([]);
   ctx.fillStyle='#e0722a';ctx.font='11px Inter,sans-serif';
-  ctx.fillText('window κ/u² ↓',split-88,H-26);
+  ctx.fillText('skeleton horizon',split-94,H-26);
   ctx.fillStyle='#5d6b85';ctx.font='11px Inter,sans-serif';
   ctx.fillText('0',X(0)-4,H-10);ctx.fillText('t',X(T/2),H-10);ctx.fillText('T',split-6,H-10)}
 function drawNet(){const cv=document.getElementById('cn'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
-  const X=t=>40+(W-100)*t/T, Ys=[0.16,0.34,0.66,0.86].map(f=>26+(H-70)*f);
+  const X=t=>40+(W-150)*t/T, Ys=[0.16,0.34,0.66,0.86].map(f=>26+(H-70)*f);
   const yv=(Ys[0]+Ys[1]+Ys[2]+Ys[3])/4, ya=(Ys[0]+Ys[1])/2, yb=(Ys[2]+Ys[3])/2;
   const mx=Math.max(...Object.values(cur),1e-6);
   const wid=c=>1+7*Math.max(c,0)/mx;
   const E=[[X(0),yv,X(R0),yv,'r-v'],[X(R0),yv,X(r1),ya,'v-a'],[X(R0),yv,X(r2),yb,'v-b'],
     [X(r1),ya,X(T),Ys[0],'a-1'],[X(r1),ya,X(T),Ys[1],'a-2'],[X(r2),yb,X(T),Ys[2],'b-3'],[X(r2),yb,X(T),Ys[3],'b-4']];
-  for(const [x1,y1,x2,y2,k] of E){ctx.strokeStyle=cur[k]>1e-7?'rgba(31,95,168,.85)':'rgba(93,107,133,.3)';
+  for(const [x1,y1,x2,y2,k] of E){ctx.strokeStyle=cur[k]>1e-9?'rgba(31,95,168,.85)':'rgba(93,107,133,.3)';
     ctx.lineWidth=wid(cur[k]);ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
   ctx.fillStyle='#1b2a4a';ctx.beginPath();ctx.arc(X(0),yv,5,0,7);ctx.fill();
   ctx.fillStyle='#5d6b85';ctx.font='11px Inter,sans-serif';ctx.fillText('root',X(0)-12,yv+18);
-  for(let j=0;j<4;j++){const a=nu[j]>1e-7;ctx.beginPath();ctx.arc(X(T),Ys[j],7,0,7);
+  for(let j=0;j<4;j++){const a=nu[j]>1e-9;ctx.beginPath();ctx.arc(X(T),Ys[j],7,0,7);
     if(a){ctx.fillStyle='#e0722a';ctx.fill()}else{ctx.strokeStyle='#5d6b85';ctx.lineWidth=1.6;ctx.stroke()}
     ctx.fillStyle=a?'#1b2a4a':'#5d6b85';ctx.font='12px Inter,sans-serif';
     ctx.fillText(`${j+1}`,X(T)+13,Ys[j]+4);
-    ctx.font='11px Inter,sans-serif';ctx.fillText(a?`ν = ${nu[j].toFixed(2)}`:'carried',X(T)+24,Ys[j]+4)}
+    ctx.font='11px Inter,sans-serif';ctx.fillText(a?`ν = ${nu[j].toFixed(2)}`:(boundary.includes(j)?'boundary':'slack'),X(T)+24,Ys[j]+4)}
   ctx.fillStyle='#5d6b85';ctx.font='11px Inter,sans-serif';
   ctx.fillText('edge width = current,  resistance = edge length',40,H-12)}
 function drawWin(){const cv=document.getElementById('cw'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
@@ -211,6 +218,8 @@ function drawWin(){const cv=document.getElementById('cw'),ctx=cv.getContext('2d'
   const laneH=(H-44)/4, X=s=>62+(W-80)*s/KAP;
   const com=commonTimes();
   for(let j=0;j<4;j++){const g=groups[j],y0=16+laneH*j;
+    if(!g.active){ctx.fillStyle='#5d6b85';ctx.font='11px Inter,sans-serif';ctx.fillText(`group ${j+1}`,8,y0+12);
+      ctx.fillText(g.isBoundary?'Zero multiplier, binding: conditional Gaussian boundary factor (not drawn on this scale).':'Strictly slack: its positive offset diverges on this scale.',62,y0+laneH/2);continue}
     let lo=g.off-2.1,hi=g.off+2.1;lo=Math.min(lo,-1.4);
     const Y=v=>y0+(laneH-20)*(hi-Math.max(Math.min(v,hi),lo))/(hi-lo);
     ctx.strokeStyle='rgba(27,42,74,.45)';ctx.setLineDash([4,4]);ctx.lineWidth=1;
@@ -231,18 +240,18 @@ function drawWin(){const cv=document.getElementById('cw'),ctx=cv.getContext('2d'
     ctx.fillRect(X(k*g0.h),12,X((k+1)*g0.h)-X(k*g0.h)+0.6,H-30)}
   ctx.fillStyle='#5d6b85';ctx.font='11px Inter,sans-serif';
   ctx.fillText('s = 0',62,H-6);ctx.fillText('κ',W-24,H-6);
-  ctx.fillStyle='#e0722a';ctx.fillText(any?'orange: a time common to every active group — ruin':'no common time in this sample',W-330,H-6)}
+  ctx.fillStyle='#e0722a';ctx.fillText(any?'orange: joint positivity on the grid':'no common positive grid time',W-330,H-6)}
 function stats(){
   document.getElementById('act').textContent=act.map(i=>i+1).join(', ')||'—';
-  {const sl=[0,1,2,3].filter(i=>!act.includes(i)).map(i=>i+1);document.getElementById('acts').textContent=act.length===4?'all four bind':`lea${sl.length===1?'f':'ves'} ${sl.join(', ')} carried along`;}
+  {const sl=[0,1,2,3].filter(i=>!act.includes(i)&&!boundary.includes(i)).map(i=>i+1);document.getElementById('acts').textContent=[act.length===4?'all four have positive multipliers':'',sl.length?`strictly slack: ${sl.join(', ')}`:'',boundary.length?`zero-multiplier boundary: ${boundary.map(i=>i+1).join(', ')}`:''].filter(Boolean).join('; ');}
   document.getElementById('pi').textContent=PI.toFixed(4);
   document.getElementById('win').textContent=`${(100*winRate).toFixed(0)}%`;
-  document.getElementById('wins').textContent='mean common share, 400 draws';
+  document.getElementById('wins').textContent='mean common grid share, 400 conditional draws';
   document.getElementById('qv').textContent=`q = (${q.map(v=>v.toFixed(2)).join(', ')})`}
 function regime(){const e=document.getElementById('reg');
-  if(act.length===4)e.innerHTML=`<b>All leaves active</b>Every leaf injects current: each barrier is paid for. The terminal coefficient factorises over all four genealogies.`;
-  else{const sl=[0,1,2,3].filter(i=>!act.includes(i)).map(i=>i+1);const one=sl.length===1;
-    e.innerHTML=`<b>Reduced active set</b>Lea${one?'f':'ves'} ${sl.join(', ')} ha${one?'s':'ve'} zero multiplier: ${one?'its':'their'} barrier is already cleared by what ${one?'its sisters have':'their sisters have'} to do, so it injects no current and contributes no radial coordinate. Raise ${one?'its':'their'} q past the shoulder and it switches on — the active-set transition.`}}
+  if(boundary.length){e.innerHTML='<b>Binding with zero multiplier</b>A hollow boundary leaf is at its barrier without paying positive current. It still contributes a conditional Gaussian factor to the absolute asymptotic probability. The lower panel only displays the positive-multiplier groups.';return}
+  if(act.length===4)e.innerHTML='<b>All leaves active</b>Every leaf injects positive current: each barrier is paid for. The terminal coefficient D_B factorises over the four genealogies. The common-time ruin coefficient C_B generally does not.';
+  else{const sl=[0,1,2,3].filter(i=>!act.includes(i)).map(i=>i+1);e.innerHTML=`<b>Reduced active set</b>Strictly slack leaves ${sl.join(', ')} have zero multiplier and an optimal voltage strictly above their barrier. They contribute no active radial coordinate. At the transition itself a binding zero-multiplier leaf has a separate Gaussian boundary factor.`}}
 function recompute(){qp();sampleSkeleton();sampleGroups();drawTree();drawNet();drawWin();stats();regime()}
 const $=id=>document.getElementById(id);
 for(let i=0;i<4;i++)$('q'+i).oninput=e=>{q[i]=+e.target.value;recompute()};

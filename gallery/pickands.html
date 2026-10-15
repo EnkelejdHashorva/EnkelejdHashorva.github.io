@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Where the Euler characteristic ends and Pickands begins</title>
+<title>Where the Euler characteristic ends and Pickands begins — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Excursion sets of a Gaussian random field as its roughness α decreases: from the Euler-characteristic heuristic to Pickands–Piterbarg asymptotics. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/pickands.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Where the Euler characteristic ends and Pickands begins">
+<meta property="og:description" content="Excursion sets of a Gaussian random field as its roughness α decreases: from the Euler-characteristic heuristic to Pickands–Piterbarg asymptotics. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/pickands.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/pickands.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
@@ -46,23 +56,23 @@
 <div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
 <div class="wrap">
   <h1>Where the Euler characteristic ends and Pickands begins</h1>
-  <p class="lead">A stationary Gaussian field on the unit square with covariance
+  <p class="lead">A centered, unit-variance stationary Gaussian field on the unit square with covariance
   <span class="m">r(t) = exp(−(|t₁|<sup>α</sup> + |t₂|<sup>α</sup>)/ℓ<sup>α</sup>)</span>, so that <span class="m">r(t) ≈ 1 − (|t₁|<sup>α</sup>+|t₂|<sup>α</sup>)/ℓ<sup>α</sup></span> near the origin.
   For <span class="m">α = 2</span> the field is smooth and the excursion set above a high level is a few clean islands: the Euler-characteristic heuristic of Adler–Taylor (the one in
   <a href="https://ievlevpn.github.io/viz/pillow.html" target="_blank" rel="noopener">Pavel Ievlev's illustration</a>) gives <span class="m">P(sup X &gt; u) ≈ E χ(A<sub>u</sub>)</span>.
-  For <span class="m">α &lt; 2</span> the field is not differentiable, the excursion set turns to dust, <span class="m">E χ</span> is infinite, and the tail is governed instead by the Pickands–Piterbarg asymptotics
-  <span class="m">P(sup X &gt; u) ~ ℋ<sub>α</sub><sup>2</sup> ℓ<sup>−2</sup> u<sup>4/α</sup> Ψ(u)</span>, with the Pickands constant <span class="m">ℋ<sub>α</sub></span> — known in closed form only for <span class="m">α = 1</span> (ℋ₁ = 1) and <span class="m">α = 2</span> (ℋ₂ = 1/√π).</p>
+  For <span class="m">α &lt; 2</span> the field is not mean-square differentiable, so this smooth-field Euler-characteristic formula does not apply. Excursion boundaries become rougher, while the high-level tail obeys the Pickands–Piterbarg asymptotics
+  <span class="m">P(sup X &gt; u) ~ ℋ<sub>α</sub><sup>2</sup> ℓ<sup>−2</sup> u<sup>4/α</sup> Ψ(u)</span> as <span class="m">u → ∞</span>, where <span class="m">Ψ(u) = P(N(0,1) &gt; u)</span>. The Pickands constant <span class="m">ℋ<sub>α</sub></span> has the classical explicit values for <span class="m">α = 1</span> (ℋ₁ = 1) and <span class="m">α = 2</span> (ℋ₂ = 1/√π).</p>
 
   <div class="lay">
     <div>
       <div class="two">
-        <figure><canvas id="cf" width="480" height="480"></canvas><figcaption>the field X(t)</figcaption></figure>
-        <figure><canvas id="ce" width="480" height="480"></canvas><figcaption>excursion set A<sub>u</sub> = {X &gt; u}, with <span id="ncc">—</span> connected components</figcaption></figure>
+        <figure><canvas id="cf" width="480" height="480"></canvas><figcaption>Gaussian field sampled on a 100×100 grid</figcaption></figure>
+        <figure><canvas id="ce" width="480" height="480"></canvas><figcaption>grid excursion {X &gt; u}: <span id="ncc">—</span> components (side-sharing pixels)</figcaption></figure>
       </div>
       <div class="grid3">
-        <div class="stat"><div class="k">Monte Carlo P(sup X &gt; u)</div><div class="v" id="mc">—</div><div class="s" id="mcs">press “Run Monte Carlo”</div></div>
-        <div class="stat"><div class="k">Euler-characteristic prediction E χ(A<sub>u</sub>)</div><div class="v" id="ec">—</div><div class="s" id="ecs"></div></div>
-        <div class="stat"><div class="k">Implied Pickands constant ℋ<sub>α</sub></div><div class="v" id="pk">—</div><div class="s" id="pks"></div></div>
+        <div class="stat"><div class="k">Monte Carlo P(grid max X &gt; u)</div><div class="v" id="mc">—</div><div class="s" id="mcs">press “Run Monte Carlo”</div></div>
+        <div class="stat"><div class="k">Smooth-field E χ(A<sub>u</sub>)</div><div class="v" id="ec">—</div><div class="s" id="ecs"></div></div>
+        <div class="stat"><div class="k">Finite-level implied ℋ<sub>α</sub></div><div class="v" id="pk">—</div><div class="s" id="pks"></div></div>
       </div>
     </div>
     <div class="panel">
@@ -73,26 +83,49 @@
       <label>Correlation length ℓ = <span id="lv">0.25</span></label>
       <input type="range" id="l" min="0.1" max="0.5" step="0.01" value="0.25">
       <div class="row"><button id="re">New field</button><button id="run">Run Monte Carlo</button></div>
-      <div class="note">Monte Carlo: <span id="nn">0</span> independent fields on a 56×56 grid; the level slider re-reads the stored suprema instantly. The grid supremum underestimates the true one, more so for small α — one reason the “implied” constant drifts. The implied constant is simply
-      <span class="m">√( P<sub>MC</sub> / (ℓ<sup>−2</sup> u<sup>4/α</sup> Ψ(u)) )</span>: what the simulation would need ℋ<sub>α</sub> to be. It is a finite-<span class="m">u</span> caricature, not an estimator.</div>
+      <div class="note">Monte Carlo: <span id="nn">0</span> independent Gaussian fields on a 56×56 grid, sampled from the stated covariance by numerical factorisation. The level slider re-reads their maxima instantly. A grid maximum can miss continuous peaks, especially at small α; Monte Carlo sampling and finite levels add further error. The implied constant is simply
+      <span class="m">√( P<sub>MC</sub> / (ℓ<sup>−2</sup> u<sup>4/α</sup> Ψ(u)) )</span>: what the simulation would need ℋ<sub>α</sub> to be. This is a finite-level illustration, not a consistent estimator of ℋ<sub>α</sub>. The smooth-field expected Euler characteristic can exceed 1 at moderate levels; it is a probability approximation only at high levels.</div>
     </div>
   </div>
 
-  <h2>The shape of the field near a high maximum</h2>
-  <p class="lead">One-dimensional slice. Conditioning on <span class="m">X(0) = u</span> and zooming in by <span class="m">u<sup>−2/α</sup></span> in time and <span class="m">u</span> in height, the paths converge to <span class="m">√2 B<sub>α</sub>(s) − |s|<sup>α</sup></span>, where <span class="m">B<sub>α</sub></span> is fractional Brownian motion. For <span class="m">α = 2</span> this is a parabola with a random tilt; for smaller <span class="m">α</span> it is a rough random cusp. This is the picture behind Pickands' double-sum method.</p>
+  <h2>The field near a conditioned high value</h2>
+  <p class="lead">For a one-dimensional slice, condition on <span class="m">X(0) = u</span> and plot <span class="m">u[X(ℓ u<sup>−2/α</sup>s) − u]</span>. As <span class="m">u → ∞</span>, this converges on compact intervals to <span class="m">√2 B<sub>α</sub>(s) − |s|<sup>α</sup></span>, where <span class="m">B<sub>α</sub></span> has Hurst index <span class="m">α/2</span> and variance <span class="m">|s|<sup>α</sup></span>. At <span class="m">α = 2</span> the limit is a parabola with a Gaussian linear tilt. The plot samples the finite-level conditional Gaussian law at the selected <span class="m">u</span>; the dashed curve is the limiting mean. The origin is a conditioned point, so nearby values can exceed <span class="m">u</span>.</p>
   <canvas id="cs" width="1100" height="300"></canvas>
+  <p class="note">Mathematical background: <a href="https://arxiv.org/abs/math/0507442" target="_blank" rel="noopener">Taylor–Takemura–Adler: the smooth-field EC approximation</a>; <a href="https://arxiv.org/abs/1312.2863" target="_blank" rel="noopener">Dębicki–Hashorva–Soja-Kukieła: homogeneous Gaussian fields</a>; <a href="https://arxiv.org/abs/0904.3832" target="_blank" rel="noopener">Michna: Pickands’ theorem and conditional scaling</a>.</p>
 </div>
 <script>
-const G=100, GM=56, K=140, KM=110;
-let alpha=2,u=1.75,ell=0.25,feat,X,sups=[],msups=null;
+const G=100, GM=56;
+let alpha=2,u=1.75,ell=0.25,X,msups=null,gridFactor=null,mcFactor=null;
 function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
-// symmetric alpha-stable, scale 1 (char. fn exp(-|w|^alpha)), Chambers–Mallows–Stuck
-function sas(al){ if(al>=1.999) return Math.SQRT2*randn();
-  const V=Math.PI*(Math.random()-0.5), W=-Math.log(1-Math.random());
-  return Math.sin(al*V)/Math.pow(Math.cos(V),1/al)*Math.pow(Math.cos(V-al*V)/W,(1-al)/al)}
-function feats(Kn){const f=[];for(let k=0;k<Kn;k++)f.push({wx:sas(alpha)/ell,wy:sas(alpha)/ell,ph:Math.random()*2*Math.PI});return f}
-function field(f,n){const Y=new Float32Array(n*n),s=Math.sqrt(2/f.length);
-  for(let i=0;i<n;i++){const x=i/(n-1);for(let j=0;j<n;j++){const y=j/(n-1);let v=0;for(const q of f)v+=Math.cos(q.wx*x+q.wy*y+q.ph);Y[i*n+j]=s*v}}return Y}
+// Pivoted covariance factorisation. Residual variances below 1e-12 are numerical zero.
+function covarianceFactor(n,cov){
+  const cols=[],diag=Float64Array.from({length:n},(_,i)=>cov(i,i)),used=new Uint8Array(n);
+  for(let k=0;k<n;k++){
+    let p=-1,best=1e-12;
+    for(let i=0;i<n;i++)if(!used[i]&&diag[i]>best){p=i;best=diag[i]}
+    if(p<0)break;
+    const col=new Float64Array(n),root=Math.sqrt(best);
+    for(let i=0;i<n;i++)if(!used[i]){
+      let v=cov(i,p);for(const q of cols)v-=q[i]*q[p];
+      col[i]=i===p?root:v/root;
+    }
+    cols.push(col);used[p]=1;
+    for(let i=0;i<n;i++)diag[i]=Math.max(0,diag[i]-col[i]*col[i]);
+  }
+  return cols;
+}
+// X = L Z L^T gives Cov(X_ij,X_kl) = C_ik C_jl for independent N(0,1) entries of Z.
+function gaussianGrid(cols,n){
+  const rank=cols.length,Z=Float64Array.from({length:rank*rank},randn),tmp=new Float64Array(n*rank),out=new Float64Array(n*n);
+  for(let p=0;p<rank;p++)for(let i=0;i<n;i++){
+    const v=cols[p][i];for(let q=0;q<rank;q++)tmp[i*rank+q]+=v*Z[p*rank+q];
+  }
+  for(let i=0;i<n;i++)for(let q=0;q<rank;q++){
+    const v=tmp[i*rank+q];for(let j=0;j<n;j++)out[i*n+j]+=v*cols[q][j];
+  }
+  return out;
+}
+function fieldFactor(n){return covarianceFactor(n,(i,j)=>Math.exp(-Math.pow(Math.abs(i-j)/((n-1)*ell),alpha)))}
 function col(t){t=Math.max(0,Math.min(1,t));const a=[226,233,245],b=[31,95,168],c=[224,114,42];const f=(p,q,s)=>p+(q-p)*s;let r,g,bb;
   if(t<.5){const s=t*2;r=f(a[0],b[0],s);g=f(a[1],b[1],s);bb=f(a[2],b[2],s)}else{const s=(t-.5)*2;r=f(b[0],c[0],s);g=f(b[1],c[1],s);bb=f(b[2],c[2],s)}return [r,g,bb]}
 const dark=()=>true;
@@ -117,43 +150,71 @@ function stats(){
   // EC heuristic (alpha=2 only): Lipschitz–Killing with lambda = 2/ell^2 per axis, square of side 1
   const ec=document.getElementById('ec'),ecs=document.getElementById('ecs');
   if(alpha>=1.999){const lam=2/(ell*ell),e=Math.exp(-u*u/2);const v=Psi(u)+2*Math.sqrt(lam)*e/(2*Math.PI)+lam*u*e/Math.pow(2*Math.PI,1.5);
-    ec.textContent=v.toPrecision(3);ec.classList.remove('warn');ecs.textContent='Adler–Taylor: Ψ(u) + 2√λ φ-term + λ u φ-term, λ = 2/ℓ²'}
-  else{ec.textContent='∞';ec.classList.add('warn');ecs.textContent='second spectral moment infinite for α < 2 — the heuristic does not apply'}
+    ec.textContent=v.toPrecision(3);ec.classList.remove('warn');ecs.textContent='Ψ(u) + 2√λ e^(−u²/2)/(2π) + λu e^(−u²/2)/(2π)^(3/2), λ = 2/ℓ²'}
+  else{ec.textContent='—';ec.classList.add('warn');ecs.textContent='α < 2: the smooth-field EC formula is not applicable'}
   const mc=document.getElementById('mc'),mcs=document.getElementById('mcs'),pk=document.getElementById('pk'),pks=document.getElementById('pks');
   if(msups&&msups.length){let c=0;for(const s of msups)if(s>u)c++;const p=c/msups.length;mc.textContent=p===0?'0':p.toPrecision(3);
-    mcs.textContent=`${c} of ${msups.length} fields exceed u`;
+    mcs.textContent=`${c} of ${msups.length} grid maxima exceed u`;
     const base=Math.pow(ell,-2)*Math.pow(u,4/alpha)*Psi(u);const h=p>0?Math.sqrt(p/base):NaN;
     pk.textContent=isNaN(h)?'—':h.toFixed(3);
-    const known=alpha>=1.999?'exact: ℋ₂ = 1/√π = 0.564':Math.abs(alpha-1)<0.026?'exact: ℋ₁ = 1':'no closed form known';
+    const known=alpha>=1.999?'exact: ℋ₂ = 1/√π = 0.564':Math.abs(alpha-1)<0.026?'exact: ℋ₁ = 1':'finite-level diagnostic';
     pks.textContent=known}
-  else{mc.textContent='—';pk.textContent='—';pks.textContent=''}
+  else{mc.textContent='—';mcs.textContent='press “Run Monte Carlo”';pk.textContent='—';pks.textContent=''}
 }
-let running=false;
-async function runMC(){ if(running)return;running=true;const btn=document.getElementById('run');btn.disabled=true;
-  const N=300;msups=[];for(let n=0;n<N;n++){const f=feats(KM);const Y=field(f,GM);let m=-Infinity;for(let k=0;k<Y.length;k++)if(Y[k]>m)m=Y[k];msups.push(m);
-    if(n%20===0){document.getElementById('nn').textContent=n+1;stats();await new Promise(r=>setTimeout(r,0))}}
-  document.getElementById('nn').textContent=N;stats();btn.disabled=false;running=false}
-// conditioned shape, 1D
+let running=false,mcRunId=0;
+function resetMC(){
+  // Invalidate any batch waiting to resume after a parameter change.
+  mcRunId++;running=false;msups=null;gridFactor=null;mcFactor=null;
+  document.getElementById('run').disabled=false;document.getElementById('nn').textContent=0;
+}
+async function runMC(){
+  if(running)return;
+  running=true;const runId=++mcRunId,btn=document.getElementById('run'),samples=[];
+  btn.disabled=true;msups=samples;
+  try{
+    const N=300,factor=mcFactor||(mcFactor=fieldFactor(GM));
+    for(let n=0;n<N;n++){
+      if(runId!==mcRunId)return;
+      const Y=gaussianGrid(factor,GM);let m=-Infinity;
+      for(let k=0;k<Y.length;k++)if(Y[k]>m)m=Y[k];samples.push(m);
+      if(n%20===0){document.getElementById('nn').textContent=n+1;stats();await new Promise(r=>setTimeout(r,0))}
+    }
+    document.getElementById('nn').textContent=N;stats();
+  }finally{
+    if(runId===mcRunId){btn.disabled=false;running=false}
+  }
+}
+// Conditional mean u²(r(t)-1), covariance u²(r(t-s)-r(t)r(s)), with t=ell*u^(-2/alpha)*s.
+function conditionedShape(ns=241,S=3){
+  const points=Float64Array.from({length:ns},(_,i)=>-S+2*S*i/(ns-1));
+  const r=s=>Math.exp(-Math.pow(Math.abs(s),alpha)/(u*u));
+  const mean=Float64Array.from(points,s=>u*u*Math.expm1(-Math.pow(Math.abs(s),alpha)/(u*u)));
+  const factor=covarianceFactor(ns,(i,j)=>u*u*(r(points[i]-points[j])-r(points[i])*r(points[j])));
+  return {points,mean,factor};
+}
 function drawShape(){
-  const cv=document.getElementById('cs'),ctx=cv.getContext('2d'),d=dark();ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,cv.width,cv.height);
-  const S=3,ns=241,uu=Math.max(u,2.5),sc=Math.pow(uu,-2/alpha);// s in [-S,S]; t = sc*s
-  const xs=s=>cv.width/2+(cv.width/2-30)*s/S, ys=y=>40+(cv.height-70)*(-y)/(Math.pow(S,alpha)+1.5);
-  const r=t=>Math.exp(-Math.pow(Math.abs(t),alpha));// ell=1 in local units
-  ctx.lineWidth=1;
+  const cv=document.getElementById('cs'),ctx=cv.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,cv.width,cv.height);
+  const S=3,ns=241,{points,mean,factor}=conditionedShape(ns,S),paths=[];
+  let low=-Math.pow(S,alpha),high=0;
   for(let path=0;path<40;path++){
-    const f=[];for(let k=0;k<160;k++)f.push({w:sas(alpha),ph:Math.random()*2*Math.PI});
-    const s0=Math.sqrt(2/f.length),Xt=t=>{let v=0;for(const q of f)v+=Math.cos(q.w*t+q.ph);return s0*v};
-    const X0=Xt(0);ctx.strokeStyle=d?'rgba(31,95,168,.28)':'rgba(31,95,168,.22)';ctx.beginPath();
-    for(let i=0;i<ns;i++){const s=-S+2*S*i/(ns-1),t=sc*s;const cond=uu*r(t)+(Xt(t)-r(t)*X0);// X | X(0)=uu
-      const y=uu*(cond-uu);const px=xs(s),py=ys(Math.max(y,-Math.pow(S,alpha)-1.5));i?ctx.lineTo(px,py):ctx.moveTo(px,py)}
-    ctx.stroke()}
-  ctx.strokeStyle=d?'#1b2a4a':'#1b2a4a';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();
-  for(let i=0;i<ns;i++){const s=-S+2*S*i/(ns-1);const px=xs(s),py=ys(-Math.pow(Math.abs(s),alpha));i?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText(`u·(X(u^(−2/α) s) − u) given X(0)=u,  40 paths, α = ${alpha.toFixed(2)};  dashed: −|s|^α`,16,cv.height-10)}
-function newField(){feat=feats(K);X=field(feat,G);drawField();drawExc();stats();drawShape()}
+    const y=Float64Array.from(mean);
+    for(const col of factor){const z=randn();for(let i=0;i<ns;i++)y[i]+=col[i]*z}
+    for(const v of y){low=Math.min(low,v);high=Math.max(high,v)}paths.push(y);
+  }
+  const pad=.07*Math.max(1,high-low);low-=pad;high+=pad;
+  const xs=s=>40+(cv.width-60)*(s+S)/(2*S),ys=y=>15+(cv.height-60)*(high-y)/(high-low);
+  ctx.strokeStyle='#d8dbe3';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(xs(-S),ys(0));ctx.lineTo(xs(S),ys(0));ctx.moveTo(xs(0),15);ctx.lineTo(xs(0),cv.height-45);ctx.stroke();
+  ctx.strokeStyle='rgba(31,95,168,.28)';
+  for(const y of paths){ctx.beginPath();for(let i=0;i<ns;i++)i?ctx.lineTo(xs(points[i]),ys(y[i])):ctx.moveTo(xs(points[i]),ys(y[i]));ctx.stroke()}
+  ctx.strokeStyle='#1b2a4a';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();
+  for(let i=0;i<ns;i++){const x=xs(points[i]),y=ys(-Math.pow(Math.abs(points[i]),alpha));i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('0',22,ys(0)+4);ctx.fillText('s = −3',xs(-S),cv.height-28);ctx.fillText('0',xs(0)-3,cv.height-28);ctx.fillText('3',xs(S)-6,cv.height-28);
+  ctx.fillText(`40 conditional Gaussian paths; u = ${u.toFixed(2)}, α = ${alpha.toFixed(2)}; time = ℓ u^(−2/α)s; dashed: −|s|^α`,16,cv.height-8);
+}
+function newField(){gridFactor=gridFactor||fieldFactor(G);X=gaussianGrid(gridFactor,G);drawField();drawExc();stats();drawShape()}
 const $=id=>document.getElementById(id);
-$('a').oninput=e=>{alpha=+e.target.value;$('av').textContent=alpha.toFixed(2);msups=null;$('nn').textContent=0;newField()};
-$('l').oninput=e=>{ell=+e.target.value;$('lv').textContent=ell.toFixed(2);msups=null;$('nn').textContent=0;newField()};
+$('a').oninput=e=>{alpha=+e.target.value;$('av').textContent=alpha.toFixed(2);resetMC();newField()};
+$('l').oninput=e=>{ell=+e.target.value;$('lv').textContent=ell.toFixed(2);resetMC();newField()};
 $('u').oninput=e=>{u=+e.target.value;$('uv').textContent=u.toFixed(2);drawExc();stats();drawShape()};
 $('re').onclick=newField;$('run').onclick=runMC;
 newField();
