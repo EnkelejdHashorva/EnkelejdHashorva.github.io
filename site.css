@@ -30,10 +30,16 @@ nav ul a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-de
   nav ul{justify-content:space-between;gap:0;flex-wrap:wrap}
   nav ul a{font-size:13px;padding:0 8px}
 }
-@media(max-width:420px){
-  nav ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 8px;margin-top:5px}
-  nav ul a{justify-content:flex-start}
+@media(max-width:560px){
+  nav ul{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;gap:0 4px;margin-top:5px}
+  nav ul a{justify-content:flex-start;padding:0 6px}
   nav{position:relative}
+}
+@media(max-width:350px){nav ul a{padding:0 3px;font-size:12.5px}}
+@media(min-width:721px) and (max-width:860px){
+  nav .wrap{gap:16px}
+  nav ul{gap:2px}
+  nav ul a{padding:0 7px}
 }
 
 /* hero */
@@ -176,3 +182,17 @@ header.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-even
 .card{box-shadow:0 4px 20px rgba(38,54,47,.035)}
 nav{background:rgba(252,252,248,.91)}
 @media(max-width:640px){header.hero::before{opacity:.55}}
+
+/* Announcement above the name in the hero (open PhD positions). */
+.notice{display:flex;align-items:center;gap:10px;width:fit-content;max-width:100%;margin:0 0 24px;padding:8px 16px 8px 13px;border:1px solid #c3d9bb;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:14px;font-weight:500;line-height:1.4}
+.notice:hover{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.notice .dot{flex:none;width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px rgba(65,108,66,.16)}
+.notice:hover .dot{box-shadow:0 0 0 3px rgba(252,252,248,.25)}
+.notice .when{font-weight:400}
+@media(max-width:640px){.notice{font-size:13.5px;margin-bottom:20px}}
+@media(max-width:460px){
+  .notice{border-radius:18px;padding:9px 18px 9px 14px;gap:12px}
+  .notice .sep{display:none}
+  .notice .when{display:block}
+  .notice .when::first-letter{text-transform:uppercase}
+}
