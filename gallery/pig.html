@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Similar claim counts, different premiums — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Poisson–inverse Gaussian and negative binomial claim counts with the same mean and variance: almost the same probabilities, yet different experience-rated premiums after claims. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta name="author" content="Enkelejd Hashorva">
+<link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/pig.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Similar claim counts, different premiums">
+<meta property="og:description" content="Poisson–inverse Gaussian and negative binomial claim counts with the same mean and variance: almost the same probabilities, yet different experience-rated premiums after claims. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/pig.html">
+<meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/pig.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234a6b34'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' fill='%23f4f2e7' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f4ee;--ink:#1b2a4a;--muted:#5d6b85;--line:#d8dbe3;--accent:#1f5fa8;--card:#ffffff;--warn:#e0722a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+  a{color:var(--accent);text-decoration:none}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);font-size:14px}
+  .top b{font-family:Newsreader,serif;font-weight:400;font-size:18px}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  h1{font-family:Newsreader,serif;font-weight:400;font-size:30px;margin:6px 0 6px}
+  .lead{color:var(--muted);max-width:74ch;margin:0 0 18px}
+  .lay{display:grid;grid-template-columns:1fr 300px;gap:20px}
+  @media(max-width:820px){.lay{grid-template-columns:1fr}}
+  canvas{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:8px;display:block}
+  .panel{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--card);font-size:14px;align-self:start}
+  .panel label{display:block;margin:14px 0 4px;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .panel label:first-child{margin-top:0}
+  .panel input[type=range]{width:100%;accent-color:var(--accent)}
+  .panel label .m{text-transform:none;letter-spacing:0;font-size:15px;color:var(--ink)}
+  .m{font-family:Newsreader,serif;font-style:italic}
+  figure{margin:0 0 12px} figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.two{grid-template-columns:1fr}}
+  .stat{font-family:Newsreader,serif;font-size:26px;line-height:1.25;margin:2px 0 0}
+  .stat small{font-family:Inter,system-ui,sans-serif;font-size:12px;color:var(--muted)}
+  .pig{color:var(--accent)} .nb{color:var(--warn)}
+  .regime{margin-top:10px;padding:10px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+  .regime b{font-family:Newsreader,serif;font-weight:400;font-size:19px;display:block;margin-bottom:2px}
+  table.kt{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+  table.kt th,table.kt td{padding:3px 0;text-align:center;border-bottom:1px solid var(--line)}
+  table.kt th{font-weight:500;color:var(--muted)}
+  table.kt td.on{background:var(--bg);font-weight:500}
+  .dist{font-size:14px;font-variant-numeric:tabular-nums}
+  .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="wrap">
+  <h1>Similar claim counts, different premiums</h1>
+  <p class="lead">Given a hidden frailty <span class="m">Θ</span> with mean 1 and variance <span class="m">1/τ</span>, a policy's number of claims in one period is Poisson with mean <span class="m">μΘ</span>. A gamma frailty makes the count negative binomial (NB); an inverse Gaussian frailty makes it Poisson–inverse Gaussian (PIG). For the same <span class="m">μ</span> and <span class="m">τ</span> the two counts share their mean and variance, and at low claim frequencies their probabilities are almost identical: both distances below are of third order in <span class="m">μ</span>. But if the frailty persists from one period to the next, the premium after a claim history follows the posterior mean <span class="m">E[Θ | N = k]</span>, the renewal factor. After two claims it involves the third moment of <span class="m">Θ</span>, the first one the two frailties do not share; as <span class="m">μ → 0</span>, the two renewal factors after two claims differ by about 8–27% for <span class="m">τ</span> between ½ and 2. In the paper, each leaf (terminal risk group) of a Bayesian CART tree carries such a law; this page looks at a single leaf.
+  From <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7551801" target="_blank" rel="noopener">Hashorva &amp; Murillo Hernández</a>, <em>Poisson–inverse Gaussian leaves for Bayesian CART claims frequency models</em>.</p>
+
+  <div class="lay">
+    <div>
+      <figure><canvas id="cc" role="img" aria-label="Claim count probabilities"></canvas><figcaption>probabilities of <span class="m">k</span> claims in one period, PIG in blue and NB in orange, on a logarithmic scale; the number above each pair is the ratio PIG / NB</figcaption></figure>
+      <div class="two">
+        <figure><canvas id="cr" role="img" aria-label="Renewal factors"></canvas><figcaption>renewal factor <span class="m">E[Θ | N = k]</span> after <span class="m">k</span> claims; the dashed line is the premium before any claim history</figcaption></figure>
+        <figure><canvas id="cp" role="img" aria-label="Frailty densities"></canvas><figcaption>the frailty <span class="m">Θ</span> before any claim (dashed) and after <span class="m">k</span> claims (solid); the vertical marks are the renewal factors</figcaption></figure>
+      </div>
+    </div>
+    <div class="panel">
+      <label for="mu">Claim frequency <span class="m">μ</span> = <span id="muv">0.05</span></label>
+      <input type="range" id="mu" min="0" max="10" step="1" value="4">
+      <label for="tau">Frailty shape <span class="m">τ</span> = <span id="tauv">1</span> · Var <span class="m">Θ</span> = <span id="varv">1</span></label>
+      <input type="range" id="tau" min="0" max="8" step="1" value="4">
+      <label for="k">Claims in the period <span class="m">k</span> = <span id="kv">2</span></label>
+      <input type="range" id="k" min="0" max="5" step="1" value="2">
+
+      <label>Renewal factor after <span id="kv2">2</span> claims</label>
+      <div class="stat"><span class="pig" id="rp">—</span> <small>PIG</small> &nbsp;·&nbsp; <span class="nb" id="rn">—</span> <small>NB</small></div>
+      <div class="regime"><b id="ratio">—</b><span id="limit">—</span></div>
+
+      <label>PIG / NB renewal factor by number of claims</label>
+      <table class="kt" id="kt"><tr><th>k</th></tr><tr><th>ratio</th></tr></table>
+
+      <label>Distance between the two count laws</label>
+      <div class="dist" id="dist">—</div>
+
+      <div class="note">All numbers are exact for the two fixed laws; nothing is simulated or fitted. Probabilities use the negative binomial recurrence and a three-term recurrence for the PIG law, summed up to 400 claims. The renewal factor is <span class="m">E[Θ | N = k] = (k + 1) p<sub>k+1</sub> / (μ p<sub>k</sub>)</span>; the distances are <span class="m">d<sub>TV</sub> = ½ Σ |p<sub>k</sub> − q<sub>k</sub>|</span> and <span class="m">H² = ½ Σ (√p<sub>k</sub> − √q<sub>k</sub>)²</span>. For <span class="m">μ</span> = 0.01, 0.05, 0.1 and <span class="m">τ</span> = ½, 1, 2, the readouts reproduce the paper's direct comparison table. The paper's expansions are for low claim frequencies; at larger <span class="m">μ</span> the comparison can change, even in sign: try <span class="m">μ</span> = 0.5 with <span class="m">τ</span> = ¼.</div>
+    </div>
+  </div>
+</div>
+<script>
+const MU=[0.005,0.01,0.02,0.03,0.05,0.075,0.1,0.15,0.2,0.3,0.5];
+const TAU=[0.25,1/3,0.5,0.75,1,1.5,2,3,4], TAUL=['¼','⅓','½','¾','1','1.5','2','3','4'];
+const KMAX=400, KS=5;
+const COL={pig:'#1f5fa8',nb:'#e0722a',ink:'#1b2a4a',muted:'#5d6b85',line:'#d8dbe3',band:'rgba(31,95,168,.07)'};
+const FONT='Inter,system-ui,sans-serif';
+const $=id=>document.getElementById(id);
+
+// Lanczos approximation of log Γ(x), x > 0.
+function lgamma(x){
+  const c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+  if(x<0.5)return Math.log(Math.PI/Math.abs(Math.sin(Math.PI*x)))-lgamma(1-x);
+  x-=1;let a=c[0];const t=x+7.5;for(let i=1;i<9;i++)a+=c[i]/(x+i);
+  return 0.5*Math.log(2*Math.PI)+(x+0.5)*Math.log(t)-t+Math.log(a);
+}
+// Negative binomial: gamma frailty with mean 1 and variance 1/τ.
+function nbPmf(tau,mu){const q=new Float64Array(KMAX+3);q[0]=Math.pow(tau/(tau+mu),tau);
+  for(let r=0;r<KMAX+2;r++)q[r+1]=q[r]*mu*(tau+r)/((tau+mu)*(r+1));return q}
+// Poisson–inverse Gaussian: inverse Gaussian frailty with mean 1 and variance φ = 1/τ.
+function pigPmf(tau,mu){const phi=1/tau,s=1+2*phi*mu,rs=Math.sqrt(s),p=new Float64Array(KMAX+3);
+  p[0]=Math.exp(-2*mu/(1+rs));p[1]=mu/rs*p[0];
+  for(let k=2;k<KMAX+3;k++)p[k]=(2*phi*mu/s)*(1-1.5/k)*p[k-1]+(mu*mu/s)*p[k-2]/(k*(k-1));return p}
+const renewal=(p,mu,k)=>(k+1)*p[k+1]/(mu*p[k]);
+const second=(p,mu,k)=>(k+1)*(k+2)*p[k+2]/(mu*mu*p[k]);   // E[Θ² | N = k]
+function distances(p,q){let tv=0,h2=0;for(let k=0;k<=KMAX;k++){const d=p[k]-q[k],s=Math.sqrt(p[k])+Math.sqrt(q[k]);tv+=Math.abs(d);if(s>0)h2+=d*d/(s*s)}return{tv:tv/2,h2:h2/2}}
+// Low-frequency limit of the ratio after two claims: E[Θ³]/E[Θ²] for the two frailties.
+const limit2=tau=>((1+3/tau+3/(tau*tau))/(1+1/tau))*(tau/(tau+2));
+const gammaLog=(x,a,b)=>a*Math.log(b)-lgamma(a)+(a-1)*Math.log(x)-b*x;
+const igLog=(x,tau)=>0.5*Math.log(tau/(2*Math.PI))-1.5*Math.log(x)-tau*(x-1)*(x-1)/(2*x);
+
+const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+const sup=n=>String(n).split('').map(c=>SUP[c]).join('');
+function sci(x){if(x===0)return '0';const e=Math.floor(Math.log10(x));if(e>=-3)return x.toPrecision(3);
+  let m=x/Math.pow(10,e);if(m>=9.995){m/=10;return m.toFixed(2)+' × 10'+sup(e+1)}return m.toFixed(2)+' × 10'+sup(e)}
+const fmtMu=v=>String(v);
+const fmtVar=t=>{const v=1/t;return Math.abs(v-Math.round(v))<1e-9?String(Math.round(v)):v.toFixed(2)};
+function niceStep(range,n){const raw=range/n,p=Math.pow(10,Math.floor(Math.log10(raw)));for(const m of [1,2,2.5,5,10])if(m*p>=raw)return m*p;return 10*p}
+
+function canvas(id,aspect){
+  const cv=$(id),dpr=Math.min(2,window.devicePixelRatio||1),w=cv.clientWidth,h=Math.round(w*aspect);
+  const W=Math.round(w*dpr),H=Math.round(h*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
+  cv.style.height=h+'px';const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.font='12px '+FONT;ctx.textBaseline='alphabetic';return{ctx,w,h,cv};
+}
+function legend(ctx,x,y,items,right){ctx.font='12px '+FONT;ctx.textAlign='left';
+  if(right){let tw=-16;for(const [label] of items)tw+=22+ctx.measureText(label).width+16;x-=tw}
+  for(const [label,col,dash] of items){ctx.strokeStyle=col;ctx.lineWidth=2;ctx.setLineDash(dash||[]);ctx.beginPath();ctx.moveTo(x,y-4);ctx.lineTo(x+16,y-4);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=COL.muted;ctx.fillText(label,x+22,y);x+=22+ctx.measureText(label).width+16}}
+
+function drawCounts(p,q){
+  const {ctx,w,h,cv}=canvas('cc',$('cc').clientWidth<520?0.78:0.36);
+  const L=52,R=12,T=34,B=28,pw=w-L-R,ph=h-T-B;
+  let lo=1;for(let k=0;k<=KS;k++)lo=Math.min(lo,p[k],q[k]);
+  const e0=Math.min(-1,Math.floor(Math.log10(Math.max(lo,1e-15))));
+  const Y=v=>T+ph*Math.log10(Math.max(v,Math.pow(10,e0)))/e0;
+  const every=Math.ceil(-e0/7);
+  ctx.textAlign='right';
+  for(let e=0;e>=e0;e--){const y=Y(Math.pow(10,e));ctx.strokeStyle=COL.line;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(w-R,y);ctx.stroke();
+    if((-e)%every===0){ctx.fillStyle=COL.muted;ctx.fillText(e===0?'1':'10'+sup(e),L-8,y+4)}}
+  const gw=pw/(KS+1),bw=Math.max(6,Math.min(28,gw*0.28));
+  for(let k=0;k<=KS;k++){
+    const cx=L+gw*(k+0.5);
+    ctx.fillStyle=COL.pig;ctx.fillRect(cx-bw-1,Y(p[k]),bw,T+ph-Y(p[k]));
+    ctx.fillStyle=COL.nb;ctx.fillRect(cx+1,Y(q[k]),bw,T+ph-Y(q[k]));
+    ctx.textAlign='center';ctx.fillStyle=COL.ink;ctx.font='12px '+FONT;
+    ctx.fillText('×'+(p[k]/q[k]).toFixed(3),cx,Math.min(Y(p[k]),Y(q[k]))-6);
+    ctx.fillStyle=COL.muted;ctx.fillText(k===KS?'k = '+k:String(k),cx,h-9);
+  }
+  ctx.strokeStyle=COL.muted;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,T+ph+0.5);ctx.lineTo(w-R,T+ph+0.5);ctx.stroke();
+  legend(ctx,w-R,16,[['PIG',COL.pig],['negative binomial',COL.nb]],true);
+  cv.setAttribute('aria-label','Probabilities of 0 to 5 claims, PIG versus negative binomial: ratios '+Array.from({length:KS+1},(_,k)=>(p[k]/q[k]).toFixed(3)).join(', '));
+}
+
+function drawRenewal(ep,en,k){
+  const {ctx,w,h,cv}=canvas('cr',0.78);
+  const L=40,R=14,T=30,B=28,pw=w-L-R,ph=h-T-B;
+  let top=1;for(let j=0;j<=KS;j++)top=Math.max(top,ep[j],en[j]);
+  const st=niceStep(top*1.08,5),ymax=Math.ceil(top*1.08/st)*st;
+  const X=j=>L+pw*j/KS,Y=v=>T+ph*(1-v/ymax);
+  ctx.fillStyle=COL.band;ctx.fillRect(X(k)-pw/(2*KS)*0.8,T,pw/KS*0.8,ph);
+  ctx.textAlign='right';
+  for(let v=0;v<=ymax+1e-9;v+=st){const y=Y(v);ctx.strokeStyle=COL.line;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(w-R,y);ctx.stroke();
+    ctx.fillStyle=COL.muted;ctx.fillText(Number(v.toFixed(2)).toString(),L-7,y+4)}
+  ctx.strokeStyle=COL.ink;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(L,Y(1));ctx.lineTo(w-R,Y(1));ctx.stroke();ctx.setLineDash([]);
+  for(const [arr,col] of [[en,COL.nb],[ep,COL.pig]]){
+    ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();for(let j=0;j<=KS;j++){j?ctx.lineTo(X(j),Y(arr[j])):ctx.moveTo(X(j),Y(arr[j]))}ctx.stroke();
+    ctx.fillStyle=col;for(let j=0;j<=KS;j++){ctx.beginPath();ctx.arc(X(j),Y(arr[j]),j===k?5:3,0,2*Math.PI);ctx.fill()}
+  }
+  ctx.textAlign='center';ctx.fillStyle=COL.muted;
+  for(let j=0;j<=KS;j++)ctx.fillText(j===0?'k = 0':String(j),X(j),h-9);
+  legend(ctx,L,17,[['PIG',COL.pig],['NB',COL.nb],['before claims',COL.ink,[5,4]]]);
+  cv.setAttribute('aria-label','Renewal factors after '+k+' claims: PIG '+ep[k].toFixed(3)+', negative binomial '+en[k].toFixed(3));
+}
+
+function drawFrailty(tau,mu,k,p,ep,en){
+  const {ctx,w,h,cv}=canvas('cp',0.78);
+  const L=14,R=14,T=30,B=28,pw=w-L-R,ph=h-T-B;
+  const a=tau+k,b=tau+mu,sdN=Math.sqrt(a)/b,sdP=Math.sqrt(Math.max(0,second(p,mu,k)-ep[k]*ep[k]));
+  const xmax=Math.min(40,Math.max(3,ep[k]+3.5*sdP,en[k]+3.5*sdN));
+  const n=420,xs=[],c={pp:[],pn:[],qp:[],qn:[]};
+  for(let i=1;i<=n;i++){const x=xmax*i/n;xs.push(x);
+    c.pn.push(Math.exp(gammaLog(x,tau,tau)));c.pp.push(Math.exp(igLog(x,tau)));
+    c.qn.push(Math.exp(gammaLog(x,a,b)));
+    c.qp.push(Math.exp(-mu*x+k*Math.log(mu*x)-lgamma(k+1)+igLog(x,tau)-Math.log(p[k])))}
+  let ymax=0;for(let i=0;i<n;i++)if(xs[i]>=0.05*xmax)for(const s of ['pp','pn','qp','qn'])ymax=Math.max(ymax,c[s][i]);ymax*=1.12;
+  const X=x=>L+pw*x/xmax,Y=v=>T+ph*(1-Math.min(v,ymax*1.02)/ymax);
+  ctx.save();ctx.beginPath();ctx.rect(L,T-2,pw,ph+2);ctx.clip();
+  for(const [s,col,dash,lw] of [['pn',COL.nb,[4,4],1.5],['pp',COL.pig,[4,4],1.5],['qn',COL.nb,[],2.2],['qp',COL.pig,[],2.2]]){
+    ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.setLineDash(dash);ctx.beginPath();
+    for(let i=0;i<n;i++){const X0=X(xs[i]),Y0=Y(c[s][i]);i?ctx.lineTo(X0,Y0):ctx.moveTo(X0,Y0)}ctx.stroke()}
+  ctx.setLineDash([]);ctx.restore();
+  for(const [v,col] of [[en[k],COL.nb],[ep[k],COL.pig]]){ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(X(v),T+ph);ctx.lineTo(X(v),T+ph-12);ctx.stroke()}
+  ctx.strokeStyle=COL.muted;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,T+ph+0.5);ctx.lineTo(w-R,T+ph+0.5);ctx.stroke();
+  const st=niceStep(xmax,5);ctx.fillStyle=COL.muted;ctx.textAlign='center';
+  for(let v=0;v<=xmax+1e-9;v+=st){ctx.beginPath();ctx.moveTo(X(v),T+ph);ctx.lineTo(X(v),T+ph+4);ctx.stroke();
+    if(X(v)<w-R-26)ctx.fillText(Number(v.toFixed(2)).toString(),X(v),h-9)}
+  ctx.textAlign='right';ctx.font='italic 14px Newsreader,serif';ctx.fillText('θ',w-R,h-8);ctx.font='12px '+FONT;
+  legend(ctx,w-R,17,[['before',COL.ink,[4,4]],['after '+k+(k===1?' claim':' claims'),COL.ink]],true);
+  cv.setAttribute('aria-label','Frailty densities before and after '+k+' claims, PIG and negative binomial');
+}
+
+let state={mu:4,tau:4,k:2};
+function update(){
+  const mu=MU[state.mu],tau=TAU[state.tau],k=state.k;
+  $('muv').textContent=fmtMu(mu);$('tauv').textContent=TAUL[state.tau];$('varv').textContent=fmtVar(tau);
+  $('kv').textContent=k;$('kv2').textContent=k;
+  const p=pigPmf(tau,mu),q=nbPmf(tau,mu);
+  const ep=[],en=[];for(let j=0;j<=KS;j++){ep.push(renewal(p,mu,j));en.push(renewal(q,mu,j))}
+  $('rp').textContent=ep[k].toFixed(3);$('rn').textContent=en[k].toFixed(3);
+  const r=ep[k]/en[k],pct=Math.abs(r-1)*100;
+  $('ratio').textContent='PIG / NB = '+r.toFixed(3);
+  $('limit').textContent=(pct<0.05?'no visible difference':'PIG is '+pct.toFixed(1)+'% '+(r>1?'higher':'lower'))+'. After two claims, as μ → 0: '+limit2(tau).toFixed(3)+'.';
+  let r1='<tr><th>k</th>',r2='<tr><th>ratio</th>';
+  for(let j=0;j<=KS;j++){r1+='<th>'+j+'</th>';r2+='<td'+(j===k?' class="on"':'')+'>'+(ep[j]/en[j]).toFixed(3)+'</td>'}
+  $('kt').innerHTML=r1+'</tr>'+r2+'</tr>';
+  const d=distances(p,q);$('dist').innerHTML='d<sub>TV</sub> = '+sci(d.tv)+'<br>H² = '+sci(d.h2);
+  drawCounts(p,q);drawRenewal(ep,en,k);drawFrailty(tau,mu,k,p,ep,en);
+}
+for(const id of ['mu','tau','k'])$(id).addEventListener('input',e=>{state[id]=+e.target.value;update()});
+let rt;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(update,30)}).observe(document.querySelector('.lay'));
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(update);
+update();
+</script>
+</body>
+</html>
