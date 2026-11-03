@@ -24,19 +24,19 @@ nav ul{list-style:none;margin:0;padding:0;display:flex;gap:6px;font-size:14px}
 nav ul a{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;color:var(--muted);border:0;border-radius:4px}
 nav ul a:hover{color:var(--ink);background:var(--accent-soft)}
 nav ul a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:7px;text-decoration-thickness:2px}
-@media(max-width:720px){
+@media(max-width:860px){
   nav .wrap{flex-direction:column;align-items:stretch;gap:0;padding-top:12px;padding-bottom:8px}
   nav .brand{align-self:flex-start;font-size:20px}
   nav ul{justify-content:space-between;gap:0;flex-wrap:wrap}
   nav ul a{font-size:13px;padding:0 8px}
 }
-@media(max-width:560px){
+@media(max-width:640px){
   nav ul{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;gap:0 4px;margin-top:5px}
   nav ul a{justify-content:flex-start;padding:0 6px}
   nav{position:relative}
 }
 @media(max-width:350px){nav ul a{padding:0 3px;font-size:12.5px}}
-@media(min-width:721px) and (max-width:860px){
+@media(min-width:861px) and (max-width:1000px){
   nav .wrap{gap:16px}
   nav ul{gap:2px}
   nav ul a{padding:0 7px}
@@ -196,3 +196,27 @@ nav{background:rgba(252,252,248,.91)}
   .notice .when{display:block}
   .notice .when::first-letter{text-transform:uppercase}
 }
+
+/* "Industry experience" tab: shortened to "Industry" where the tabs sit below the name. */
+@media(max-width:860px){nav .nav-more{display:none}}
+
+/* Industry experience: roles, most recent first, each with its main projects. */
+ol.roles{list-style:none;margin:0;padding:0}
+ol.roles>li{display:grid;grid-template-columns:104px minmax(0,1fr);gap:4px 20px;padding:24px 0;border-top:1px solid var(--line)}
+ol.roles>li:first-child{border-top:none;padding-top:0}
+ol.roles .yr{color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums;padding-top:6px}
+ol.roles h2{font-size:23px;line-height:1.25}
+ol.roles .org{font-size:14px;color:var(--muted);margin:2px 0 0}
+ol.roles .org~*{margin-top:10px;margin-bottom:0}
+ol.roles ul{list-style:none;padding:0;max-width:66ch}
+ol.roles ul li{position:relative;padding:4px 0 4px 20px;font-size:15.5px;line-height:1.55}
+ol.roles ul li::before{content:"";position:absolute;left:3px;top:.95em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+@media(max-width:520px){ol.roles>li{grid-template-columns:1fr} ol.roles .yr{padding-top:0;font-size:13px}}
+
+/* Industry experience: papers that grew out of practice, with a figure. */
+.tag.ssrn{color:var(--accent);border-color:var(--accent)}
+#industry ol.papers{margin:6px 0 22px}
+.paper-fig{margin:16px 0 4px;max-width:560px}
+.paper-fig img{display:block;width:100%;height:auto;padding:10px;background:#fff;border:1px solid var(--line);border-radius:8px}
+.paper-fig figcaption{font-size:13px;line-height:1.5;color:var(--muted);margin-top:8px}
+@media(max-width:520px){#industry ol.papers li{grid-template-columns:1fr;gap:2px} .paper-fig img{padding:6px}}
