@@ -286,7 +286,7 @@ function regime(){const a=alpha(),b=beta();
     <tr><td>best rate λ*</td><td>${ls.boundary==='lo'?'→ 0':ls.boundary==='hi'?'→ ∞':ls.l.toFixed(3)}</td></tr>
     <tr><td>E τ at λ*</td><td>${ls.boundary==='lo'?fmtT(ls.e)+' (no reset)':ls.boundary==='hi'?'→ 0':fmtT(ls.e)}</td></tr>
     <tr><td>horizon T = min(60, max(3, 5 E τ))</td><td>${A.T.toFixed(1)}</td></tr></table>
-    ${c===0&&xR===0?'<div style="margin-top:6px">c = 0, x<sub>R</sub> = 0: the Evans–Majumdar formula E τ = (e<sup>u√(2λ)</sup> − 1)/λ, with λ* ≈ 1.5936²/(2u²) = '+(1.59362*1.59362/(2*u*u)).toFixed(3)+'.</div>':ls.boundary==='lo'?'<div style="margin-top:6px">For these parameters the mean is minimized by no resetting, with E τ = u/|c|.</div>':ls.boundary==='hi'?'<div style="margin-top:6px">x<sub>R</sub> ≥ u: every reset lands on or above the target, so the faster the resets, the shorter the search.</div>':''}`}
+    ${c===0&&xR===0?'<div style="margin-top:6px">c = 0, x<sub>R</sub> = 0: the Evans–Majumdar formula E τ = (e<sup>u√(2λ)</sup> − 1)/λ, with λ* ≈ 1.5936²/(2u²) = '+(1.59362*1.59362/(2*u*u)).toFixed(3)+'.</div>':ls.boundary==='lo'?'<div style="margin-top:6px">For these parameters the mean is minimised by no resetting, with E τ = u/|c|.</div>':ls.boundary==='hi'?'<div style="margin-top:6px">x<sub>R</sub> ≥ u: every reset lands on or above the target, so the faster the resets, the shorter the search.</div>':''}`}
   else if(mode==='B'){const d=0.5,nb=B.pairs.filter(p=>!p[2]).length;
     $('reg').innerHTML=`<b>Stationary law</b><table>
     <tr><td>β = √(c²+2λ)</td><td>${b.toFixed(3)}</td></tr>
