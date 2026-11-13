@@ -42,6 +42,29 @@ nav ul a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-de
   nav ul a{padding:0 7px}
 }
 
+/* Tab icons: a small line icon above each label, drawn as a mask so it takes the link colour.
+   A link names its icon with data-icon; a link without one stays text-only. */
+@supports ((-webkit-mask-image:none) or (mask-image:none)){
+  nav ul a[data-icon]{flex-direction:column;gap:3px;line-height:1.3;padding-top:5px;padding-bottom:5px;white-space:nowrap}
+  @media(min-width:861px) and (max-width:1000px){nav ul a[data-icon]{padding-left:5px;padding-right:5px}}
+  @media(min-width:641px) and (max-width:860px){nav ul a[data-icon]{padding-left:3px;padding-right:3px}}
+  @media(min-width:641px) and (max-width:720px){nav ul a[data-icon]{font-size:12.5px}}
+  nav ul a[data-icon]::before{content:"";flex:none;width:20px;height:20px;background:currentColor;-webkit-mask:var(--icon) center/contain no-repeat;mask:var(--icon) center/contain no-repeat}
+  nav ul a[data-icon][aria-current="page"]{text-underline-offset:5px}
+  nav ul a[data-icon][aria-current="page"]::before{background:var(--accent)}
+  @media(max-width:640px){nav ul{grid-template-columns:repeat(3,minmax(0,1fr))}}
+}
+@media(forced-colors:active){nav ul a[data-icon]::before{forced-color-adjust:none;background:LinkText}}
+nav a[data-icon="about"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='3.75'/%3E%3Cpath d='M4.75 20.25c.9-3.75 3.75-6.25 7.25-6.25s6.35 2.5 7.25 6.25'/%3E%3C/svg%3E")}
+nav a[data-icon="research"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.25 17.7C3.23 17.36 4.2 16.73 5.17 15.55C6.15 14.36 7.12 12.56 8.1 10.67C9.4 8.14 10.7 5.75 12 5.75C13.3 5.75 14.6 8.14 15.9 10.67C16.88 12.56 17.85 14.36 18.82 15.55C19.8 16.73 20.77 17.36 21.75 17.7'/%3E%3Cpath d='M2.75 21h18.5'/%3E%3C/svg%3E")}
+nav a[data-icon="preprints"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='rotate%2845 12 12.75%29 translate%280 .5%29'%3E%3Cpath d='M12 21.25 6.75 13.25c0-2.75 1.25-4.5 2.5-5.5h5.5c1.25 1 2.5 2.75 2.5 5.5Z'/%3E%3Cpath d='M9.25 7.75v-3.5h5.5v3.5'/%3E%3Ccircle cx='12' cy='12.5' r='1.4'/%3E%3Cpath d='M12 13.9v7.35'/%3E%3C/g%3E%3C/svg%3E")}
+nav a[data-icon="publications"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 6.75C10.25 5.25 7.25 4.75 3.25 5.25v13.5c4-.5 7 0 8.75 1.5 1.75-1.5 4.75-2 8.75-1.5V5.25c-4-.5-7 0-8.75 1.5Z'/%3E%3Cpath d='M12 6.75v13.5'/%3E%3C/svg%3E")}
+nav a[data-icon="gallery"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4.25' width='18' height='15.5' rx='2.25'/%3E%3Ccircle cx='8.5' cy='8.75' r='1.5'/%3E%3Cpath d='m3.5 17.25 4.5-4.5 2.75 2.25 3.75-4.5 6 5.5'/%3E%3C/svg%3E")}
+nav a[data-icon="industry"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 8.5 0 0 1 18 0 2.25 1.5 0 0 0-4.5 0 2.25 1.5 0 0 0-4.5 0 2.25 1.5 0 0 0-4.5 0 2.25 1.5 0 0 0-4.5 0Z'/%3E%3Cpath d='M12 12v6.75a2 2 0 0 1-4 0M12 3.5V2.25'/%3E%3C/svg%3E")}
+nav a[data-icon="students"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4.5 2.75 9 12 13.5 21.25 9Z'/%3E%3Cpath d='M6.5 11.25v4.5c0 1.5 2.5 2.75 5.5 2.75s5.5-1.25 5.5-2.75v-4.5M21.25 9v5.25'/%3E%3C/svg%3E")}
+nav a[data-icon="positions"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='7.25' width='18' height='12.5' rx='2'/%3E%3Cpath d='M9 7.25V5.5c0-.85.65-1.5 1.5-1.5h3c.85 0 1.5.65 1.5 1.5v1.75M3 12.5h7.25m3.5 0H21'/%3E%3Crect x='10.25' y='11.25' width='3.5' height='2.75' rx='.6'/%3E%3C/svg%3E")}
+nav a[data-icon="contact"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5.25' width='18' height='13.5' rx='2'/%3E%3Cpath d='m3.75 6.5 8.25 6.25 8.25-6.25'/%3E%3C/svg%3E")}
+
 /* hero */
 header.hero{position:relative;isolation:isolate;overflow:hidden;padding:76px 0 56px;border-bottom:1px solid var(--line)}
 header.hero .grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:start}
@@ -196,9 +219,6 @@ nav{background:rgba(252,252,248,.91)}
   .notice .when{display:block}
   .notice .when::first-letter{text-transform:uppercase}
 }
-
-/* "Industry experience" tab: shortened to "Industry" where the tabs sit below the name. */
-@media(max-width:860px){nav .nav-more{display:none}}
 
 /* Industry experience: roles, most recent first, each with its main projects. */
 ol.roles{list-style:none;margin:0;padding:0}

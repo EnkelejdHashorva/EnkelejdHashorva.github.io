@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Research — Enkelejd Hashorva, HEC Lausanne, UNIL</title>
-<meta name="description" content="Research of Enkelejd Hashorva, Professor of Actuarial Science at HEC Lausanne (UNIL): extremes of Gaussian random fields, shift-invariant structures, regular variation and tail measures, Brownian risk models, Laplace principles.">
+<meta name="description" content="Research of Enkelejd Hashorva, Professor of Actuarial Science at HEC Lausanne (UNIL): extremes of Gaussian random fields, shift-invariant structures, regular variation and tail measures, Brownian risk models, Laplace principles, BCART models for insurance pricing, customer value and risk aggregation.">
 <meta name="author" content="Enkelejd Hashorva">
-<meta name="keywords" content="Enkelejd Hashorva, research, extreme value theory, Gaussian random fields, max-stable fields, regular variation, tail measures, multiradial regular variation, ruin probability, Brownian risk models, Laplace principle, actuarial science, HEC Lausanne, UNIL, University of Lausanne">
+<meta name="keywords" content="Enkelejd Hashorva, research, extreme value theory, Gaussian random fields, max-stable fields, regular variation, tail measures, multiradial regular variation, ruin probability, Brownian risk models, Laplace principle, Bayesian CART, BCART, insurance pricing, customer future value, customer segmentation, risk aggregation, actuarial science, HEC Lausanne, UNIL, University of Lausanne">
 <link rel="canonical" href="https://enkelejdhashorva.github.io/research.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Research — Enkelejd Hashorva, HEC Lausanne, UNIL">
-<meta property="og:description" content="Research of Enkelejd Hashorva, Professor of Actuarial Science at HEC Lausanne (UNIL): extremes of Gaussian random fields, shift-invariant structures, regular variation and tail measures, Brownian risk models, Laplace principles.">
+<meta property="og:description" content="Research of Enkelejd Hashorva, Professor of Actuarial Science at HEC Lausanne (UNIL): extremes of Gaussian random fields, shift-invariant structures, regular variation and tail measures, Brownian risk models, Laplace principles, BCART models for insurance pricing, customer value and risk aggregation.">
 <meta property="og:url" content="https://enkelejdhashorva.github.io/research.html">
 <meta property="og:image" content="https://enkelejdhashorva.github.io/photo.jpg">
 <meta name="twitter:card" content="summary">
@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=ca474f484c">
+<link rel="stylesheet" href="site.css?v=5aca394f9f">
 </head>
 <body>
 
@@ -28,14 +28,15 @@
   <div class="wrap">
     <a class="brand" href="./">E. Hashorva</a>
     <ul>
-      <li><a href="index.html">About</a></li>
-      <li><a href="research.html" aria-current="page">Research</a></li>
-      <li><a href="preprints.html">Preprints</a></li>
-      <li><a href="gallery/">Gallery</a></li>
-      <li><a href="industry.html"><span>Industry<span class="nav-more"> experience</span></span></a></li>
-      <li><a href="students.html">Students</a></li>
-      <li><a href="positions.html">PhD positions</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html" data-icon="about">About</a></li>
+      <li><a href="research.html" data-icon="research" aria-current="page">Research</a></li>
+      <li><a href="preprints.html" data-icon="preprints">Preprints</a></li>
+      <li><a href="publications.html" data-icon="publications">Publications</a></li>
+      <li><a href="gallery/" data-icon="gallery">Gallery</a></li>
+      <li><a href="industry.html" data-icon="industry">I-Experience</a></li>
+      <li><a href="students.html" data-icon="students">Students</a></li>
+      <li><a href="positions.html" data-icon="positions">Positions</a></li>
+      <li><a href="contact.html" data-icon="contact">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -70,6 +71,11 @@
       <h2>Laplace principles and exponential functionals</h2>
       <p>Tail and density asymptotics for homogeneous functionals of Gaussian vectors and for exponential integrals of Gaussian processes, via a radial–angular Laplace principle: the rare event chooses a direction, and the price of the constraint is read off from the geometry of a switching curve or an RKHS minimiser. Closely related: the long memory of Gaussian queues, whose workload covariance decays like a power of the lag.</p>
       <p class="refs"><a href="papers/LaplaceEH.pdf" target="_blank" rel="noopener">Radial–angular Laplace principle</a> · <a href="papers/LOGN_nonstat.pdf" target="_blank" rel="noopener">Gaussian exponential integrals</a> · <a href="papers/CovarianceQueues.pdf" target="_blank" rel="noopener">Covariance decay for Gaussian queues</a> · <a href="gallery/laplace.html">illustration: the angle a rare event chooses</a> · <a href="gallery/expint.html">illustration: the most likely path</a></p>
+    </div>
+    <div class="theme">
+      <h2>BCART models, customer value and risk aggregation</h2>
+      <p>Applied actuarial work with my PhD students, carried over from my years in non-life pricing. Bayesian CART models split a portfolio into risk groups and fit a distribution in each leaf: Poisson–inverse Gaussian leaves for claim frequency, where the exposure recorded for a policy is itself informative, and Gamma–Burr and related leaves for normalised severity. Next to the policy stands the customer — future value and segmentation of policyholders, through profiles and weighted cells — and next to the single risk, the aggregation of dependent risks in groups, where a common factor drives the joint tail of several group sums and separates it from the joint tail of the group maxima by an explicit constant.</p>
+      <p class="refs"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7551801" target="_blank" rel="noopener">Poisson–inverse Gaussian BCART for claim frequency</a> · <a href="papers/agg_lognormal.pdf" target="_blank" rel="noopener">Aggregating lognormal risks in groups</a> · <a href="gallery/pig.html">illustration: similar claim counts, different premiums</a> · <a href="gallery/agg.html">illustration: near misses that add up</a> · <a href="industry.html">industry experience</a></p>
     </div>
   </div>
 
