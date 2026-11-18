@@ -18,16 +18,19 @@ a:hover{border-bottom-color:currentColor}
 
 /* All destinations remain visible, including on phones. */
 nav{position:sticky;top:0;background:var(--bg);background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;min-height:68px;gap:24px}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;min-height:68px;gap:16px}
 nav .brand{font-family:var(--serif);font-size:21px;font-weight:500;color:var(--ink);letter-spacing:.01em;white-space:nowrap;flex:none}
-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:6px;font-size:14px}
-nav ul a{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;color:var(--muted);border:0;border-radius:4px}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:2px;font-size:14px}
+nav ul a{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 6px;color:var(--muted);border:0;border-radius:4px}
 nav ul a:hover{color:var(--ink);background:var(--accent-soft)}
 nav ul a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:7px;text-decoration-thickness:2px}
-@media(max-width:860px){
+/* Ten tabs fit beside the name only on wide screens; below 1000px the name sits above them. */
+@media(max-width:1000px){
   nav .wrap{flex-direction:column;align-items:stretch;gap:0;padding-top:12px;padding-bottom:8px}
   nav .brand{align-self:flex-start;font-size:20px}
   nav ul{justify-content:space-between;gap:0;flex-wrap:wrap}
+}
+@media(max-width:860px){
   nav ul a{font-size:13px;padding:0 8px}
 }
 @media(max-width:640px){
@@ -36,11 +39,6 @@ nav ul a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-de
   nav{position:relative}
 }
 @media(max-width:350px){nav ul a{padding:0 3px;font-size:12.5px}}
-@media(min-width:861px) and (max-width:1000px){
-  nav .wrap{gap:16px}
-  nav ul{gap:2px}
-  nav ul a{padding:0 7px}
-}
 
 /* Tab icons: a small line icon above each label, drawn as a mask so it takes the link colour.
    A link names its icon with data-icon; a link without one stays text-only. */
@@ -53,6 +51,8 @@ nav ul a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-de
   nav ul a[data-icon][aria-current="page"]{text-underline-offset:5px}
   nav ul a[data-icon][aria-current="page"]::before{background:var(--accent)}
   @media(max-width:640px){nav ul{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(min-width:600px) and (max-width:760px){nav ul{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0 4px;margin-top:5px}}
+  @media(max-width:599px){nav ul li:last-child:nth-child(3n+1){grid-column:2}}
 }
 @media(forced-colors:active){nav ul a[data-icon]::before{forced-color-adjust:none;background:LinkText}}
 nav a[data-icon="about"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='3.75'/%3E%3Cpath d='M4.75 20.25c.9-3.75 3.75-6.25 7.25-6.25s6.35 2.5 7.25 6.25'/%3E%3C/svg%3E")}
@@ -64,6 +64,7 @@ nav a[data-icon="industry"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://
 nav a[data-icon="students"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4.5 2.75 9 12 13.5 21.25 9Z'/%3E%3Cpath d='M6.5 11.25v4.5c0 1.5 2.5 2.75 5.5 2.75s5.5-1.25 5.5-2.75v-4.5M21.25 9v5.25'/%3E%3C/svg%3E")}
 nav a[data-icon="positions"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='7.25' width='18' height='12.5' rx='2'/%3E%3Cpath d='M9 7.25V5.5c0-.85.65-1.5 1.5-1.5h3c.85 0 1.5.65 1.5 1.5v1.75M3 12.5h7.25m3.5 0H21'/%3E%3Crect x='10.25' y='11.25' width='3.5' height='2.75' rx='.6'/%3E%3C/svg%3E")}
 nav a[data-icon="contact"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5.25' width='18' height='13.5' rx='2'/%3E%3Cpath d='m3.75 6.5 8.25 6.25 8.25-6.25'/%3E%3C/svg%3E")}
+nav a[data-icon="funding"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Cellipse cx='12' cy='16' rx='7.25' ry='2.75'/%3E%3Cpath d='M4.75 16v2.25c0 1.52 3.25 2.75 7.25 2.75s7.25-1.23 7.25-2.75V16'/%3E%3Cpath d='M12 16V9.75'/%3E%3Cpath d='M12 11.75c0-2.75-2-4.5-5.25-4.5 0 2.9 2.1 4.5 5.25 4.5Z'/%3E%3Cpath d='M12 9.75c0-3.25 2.1-5.25 5.5-5.25 0 3.35-2.25 5.25-5.5 5.25Z'/%3E%3C/svg%3E")}
 
 /* hero */
 header.hero{position:relative;isolation:isolate;overflow:hidden;padding:76px 0 56px;border-bottom:1px solid var(--line)}
@@ -240,3 +241,15 @@ ol.roles ul li::before{content:"";position:absolute;left:3px;top:.95em;width:6px
 .paper-fig img{display:block;width:100%;height:auto;padding:10px;background:#fff;border:1px solid var(--line);border-radius:8px}
 .paper-fig figcaption{font-size:13px;line-height:1.5;color:var(--muted);margin-top:8px}
 @media(max-width:520px){#industry ol.papers li{grid-template-columns:1fr;gap:2px} .paper-fig img{padding:6px}}
+
+/* SNSF projects: title with the approved amount beside it, and a link to the SNSF Data Portal. */
+ol.grants{list-style:none;margin:0;padding:0}
+ol.grants li{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t amt" "tags tags";gap:6px 32px;align-items:baseline;padding:20px 0;border-top:1px solid var(--line)}
+ol.grants li:first-child{border-top:none;padding-top:0}
+ol.grants .t{grid-area:t;font-family:var(--serif);font-size:20px;line-height:1.3;margin:0}
+ol.grants .t a{color:var(--ink);border:none}
+ol.grants .t a:hover{color:var(--accent)}
+ol.grants .amt{grid-area:amt;margin:0;font-size:15px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+ol.grants .tags{grid-area:tags}
+.tag.snsf{color:var(--accent);border-color:var(--accent)}
+@media(max-width:520px){ol.grants li{grid-template-columns:minmax(0,1fr);grid-template-areas:"t" "amt" "tags";gap:4px}}
