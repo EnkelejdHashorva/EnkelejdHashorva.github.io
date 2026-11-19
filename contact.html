@@ -19,6 +19,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css?v=d4c7c3dac8">
+<link rel="stylesheet" href="interior.css">
+<script defer src="navigation.js"></script>
 </head>
 <body>
 
@@ -26,13 +28,16 @@
 
 <nav aria-label="Main navigation">
   <div class="wrap">
-    <a class="brand" href="./">E. Hashorva</a>
-    <ul>
+    <a class="brand" href="index.html">E. Hashorva</a>
+    <button class="menu-toggle" type="button" hidden aria-expanded="false" aria-controls="site-menu">Menu
+      <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 6 5 5 5-5"/></svg>
+    </button>
+    <ul id="site-menu">
       <li><a href="index.html" data-icon="about">About</a></li>
       <li><a href="research.html" data-icon="research">Research</a></li>
       <li><a href="preprints.html" data-icon="preprints">Preprints</a></li>
       <li><a href="publications.html" data-icon="publications">Publications</a></li>
-      <li><a href="gallery/" data-icon="gallery">Gallery</a></li>
+      <li><a href="gallery/index.html" data-icon="gallery">Gallery</a></li>
       <li><a href="snsf.html" data-icon="funding">SNSF Projects</a></li>
       <li><a href="industry.html" data-icon="industry">I-Experience</a></li>
       <li><a href="students.html" data-icon="students">Students</a></li>

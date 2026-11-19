@@ -95,6 +95,166 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css?v=d4c7c3dac8">
+<style>
+/* Homepage layout and the Upper envelope illustration. */
+.home {
+  --maxw: 1080px;
+  background: #fcfcf8;
+}
+.home header.hero {
+  padding: clamp(32px, 5vw, 76px) 0 0;
+  background: linear-gradient(112deg, #f9faf4 5%, #f3f6ee 70%, #f4f2e7);
+}
+.home header.hero::before { content: none; }
+.home header.hero .grid {
+  grid-template-columns: minmax(0, 1.48fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(26px, 5vw, 76px);
+}
+.home .eyebrow {
+  margin: 0 0 18px;
+  color: #506854;
+  font-weight: 600;
+  letter-spacing: .12em;
+}
+.home h1 {
+  font-size: clamp(3rem, 5.7vw, 4.65rem);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+}
+.home .lede { font-size: clamp(1.25rem, 2vw, 1.55rem); max-width: 41ch; }
+.home .lede em { color: #385f47; }
+.home .hero-actions { margin: 0 0 20px; gap: 10px; }
+.home .hero-actions .btn { border-radius: 4px; gap: 12px; }
+.home .notice {
+  display: inline-flex;
+  padding: 3px 0;
+  margin: 0;
+  gap: 11px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #405b46;
+}
+.home .notice .what { font-weight: 600; }
+.home .notice:hover .what { text-decoration: underline; text-underline-offset: 3px; }
+.home .notice .dot { background: #ab7241; box-shadow: 0 0 0 3px #eae1ce; }
+.home .profile-row { padding-top: clamp(28px, 4vw, 54px); }
+.home .profile-row .links {
+  gap: 8px clamp(16px, 2.3vw, 32px);
+  border-top: 1px solid #d3ddce;
+  padding: 15px 0;
+}
+.home .profile-row a { color: #4b6051; border: 0; }
+.home .profile-row a:hover { text-decoration: underline; text-underline-offset: .22em; }
+
+.envelope { margin: 0; min-width: 0; }
+.envelope-print {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 1.34;
+  background: radial-gradient(ellipse at 29% 15%, #faf5df 0, transparent 58%),
+    linear-gradient(144deg, #ecf0de 8%, #d5e2d2 80%, #cadbcb);
+  border: 1px solid #c8d4c4;
+  border-radius: 2px;
+}
+.home .envelope .portrait {
+  position: absolute;
+  width: 36.5%;
+  height: auto;
+  aspect-ratio: 1;
+  left: 12%;
+  top: 10%;
+  background: #edeae1;
+  border: 4px solid #fdfbf0;
+  box-shadow: 0 0 0 1px #bbc8b5, 0 4px 14px #304a3521;
+}
+.envelope svg.field { position: absolute; width: 100%; height: 59%; left: 0; bottom: 0; }
+.field path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.field .ridge { stroke: #315844; stroke-width: 2.25; }
+.field .profile { stroke-width: 1.35; }
+.field .profile-a { stroke: #668777; }
+.field .profile-b { stroke: #447c78; }
+.field .profile-c { stroke: #92744c; }
+.field .contour { stroke: #779b83; stroke-width: .75; opacity: .55; }
+.field .saddle { fill: #f3dfb7; stroke: #6e7049; stroke-width: 1.45; }
+.envelope figcaption {
+  display: flex; align-items: center; gap: 8px; min-height: 48px;
+  color: #415747; border-bottom: 1px solid #c8d4c4;
+}
+.envelope .art-title { font: italic 1.09rem var(--serif); }
+.envelope .art-formula { font: .93rem Georgia, serif; margin-left: 2px; white-space: nowrap; }
+.envelope .art-formula sub { font-size: .7em; }
+.motion-toggle, .menu-toggle {
+  font: inherit; color: #415747; cursor: pointer;
+  border: 1px solid #c8d4c4; background: transparent;
+}
+.motion-toggle {
+  width: 44px; height: 44px; padding: 0; margin-left: auto;
+  display: grid; place-items: center; border: 0; border-radius: 50%;
+}
+.motion-toggle:hover, .menu-toggle:hover { background: #e4ecde; }
+.motion-toggle svg { width: 18px; height: 18px; fill: currentColor; }
+.motion-toggle .play, .motion-toggle[data-playing="false"] .pause { display: none; }
+.motion-toggle[data-playing="false"] .play { display: inline; }
+.motion-toggle[hidden], .menu-toggle { display: none; }
+
+.home .about-intro {
+  display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 2fr);
+  gap: clamp(30px, 6vw, 88px);
+}
+.home .about-intro h2 { font-size: clamp(1.85rem, 3.2vw, 2.55rem); line-height: 1.12; }
+.home .about-intro p { max-width: 69ch; }
+.home .about-intro p:last-child { margin-bottom: 0; }
+.home .two { gap: 12px clamp(28px, 6vw, 80px); }
+.home footer { border-top: 1px solid var(--line); }
+.home footer cite { font-family: var(--serif); font-size: 1rem; }
+.home footer a { text-decoration: underline; text-underline-offset: .2em; }
+
+@media (max-width: 850px) {
+  .home header.hero .grid { gap: 24px; grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr); }
+  .home .envelope .art-formula { font-size: .86rem; }
+}
+@media (max-width: 760px) {
+  .home nav .wrap { flex-direction: row; flex-wrap: wrap; align-items: center; padding-top: 5px; padding-bottom: 5px; min-height: 56px; }
+  .home nav .brand { align-self: center; }
+  .home nav ul { width: 100%; }
+  .home nav .menu-toggle:not([hidden]) {
+    display: inline-flex; align-items: center; gap: 9px; margin-left: auto;
+    min-height: 44px; padding: 0 10px; border: 0; border-radius: 3px; font-size: .9rem;
+  }
+  .menu-toggle svg { width: 16px; height: 16px; transition: transform .16s; }
+  .menu-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .home nav .menu-toggle[aria-expanded="false"]:not([hidden]) + ul { display: none; }
+}
+@media (max-width: 680px) {
+  .home header.hero .grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .home h1 { font-size: clamp(2.8rem, 8.8vw, 3.7rem); }
+  .home .eyebrow { margin-bottom: 13px; }
+  .home .lede { max-width: 45ch; }
+  .home .envelope-print { aspect-ratio: 2.15; }
+  .home .envelope .portrait { width: min(25%, 122px); left: 11%; top: 11%; }
+  .home .envelope svg.field { height: 77%; }
+  .home .notice .sep { display: inline; }
+  .home .notice .when { display: inline; }
+  .home .about-intro { display: block; }
+  .home .about-intro h2 { margin-bottom: 20px; }
+  .home .profile-row { padding-top: 18px; }
+  .home .profile-row .links { border: 0; padding: 2px 0 20px; }
+}
+@media (max-width: 420px) {
+  .home .hero-actions .btn { gap: 7px; padding-inline: 11px; font-size: .84rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-toggle svg { transition: none; }
+}
+@media print {
+  .home .menu-toggle, .home .motion-toggle { display: none !important; }
+}
+.field .wash { fill: url(#ridge-wash); }
+.home .card img { object-fit: contain; aspect-ratio: 16 / 10; background: white; padding: 0; }
+</style>
 </head>
 <body class="home">
 
@@ -102,13 +262,16 @@
 
 <nav aria-label="Main navigation">
   <div class="wrap">
-    <a class="brand" href="./">E. Hashorva</a>
-    <ul>
+    <a class="brand" href="index.html">E. Hashorva</a>
+    <button class="menu-toggle" type="button" hidden aria-expanded="false" aria-controls="home-menu">Menu
+      <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 6 5 5 5-5"/></svg>
+    </button>
+    <ul id="home-menu">
       <li><a href="index.html" data-icon="about" aria-current="page">About</a></li>
       <li><a href="research.html" data-icon="research">Research</a></li>
       <li><a href="preprints.html" data-icon="preprints">Preprints</a></li>
       <li><a href="publications.html" data-icon="publications">Publications</a></li>
-      <li><a href="gallery/" data-icon="gallery">Gallery</a></li>
+      <li><a href="gallery/index.html" data-icon="gallery">Gallery</a></li>
       <li><a href="snsf.html" data-icon="funding">SNSF Projects</a></li>
       <li><a href="industry.html" data-icon="industry">I-Experience</a></li>
       <li><a href="students.html" data-icon="students">Students</a></li>
@@ -121,15 +284,52 @@
 <header class="hero" id="top">
   <div class="wrap grid">
     <div>
-      <!-- Open PhD positions: remove this notice (and the tab) once the positions are filled; application deadline 31 March 2027. -->
-      <a class="notice" href="positions.html"><span class="dot" aria-hidden="true"></span><span><span class="what">Two open PhD positions</span><span class="sep"> — </span><span class="when">apply by 31&nbsp;March&nbsp;2027&nbsp;<span aria-hidden="true">→</span></span></span></a>
       <p class="eyebrow">HEC Lausanne · University of Lausanne</p>
       <h1>Enkelejd Hashorva</h1>
       <p class="lede">Full Professor of <a href="https://www.unil.ch/hec/fr/home/menuinst/faculte/departements/dsa/membres-2.html" target="_blank" rel="noopener">Actuarial Science</a>, <a href="https://www.unil.ch/hec/fr/home.html" target="_blank" rel="noopener">HEC Lausanne</a>. I work on <em>extremes, random fields and regular variation</em>, and on the probability that underlies insurance and risk.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="preprints.html">Recent preprints <span aria-hidden="true">→</span></a>
-        <a class="btn" href="gallery/">Explore the illustrations <span aria-hidden="true">→</span></a>
+        <a class="btn" href="gallery/index.html">Explore the illustrations <span aria-hidden="true">→</span></a>
       </div>
+      <!-- Open PhD positions: remove this notice (and the tab) once the positions are filled; application deadline 31 March 2027. -->
+      <a class="notice" href="positions.html"><span class="dot" aria-hidden="true"></span><span><span class="what">Two open PhD positions</span><span class="sep"> — </span><span class="when">apply by 31&nbsp;March&nbsp;2027&nbsp;<span aria-hidden="true">→</span></span></span></a>
+    </div>
+    <figure class="envelope" aria-labelledby="art-title">
+      <div class="envelope-print">
+        <img width="150" height="150" class="portrait" src="photo.jpg" alt="Enkelejd Hashorva, Professor of Actuarial Science at HEC Lausanne, University of Lausanne">
+        <svg class="field" viewBox="0 0 480 190" preserveAspectRatio="none" role="img" aria-labelledby="field-description">
+          <title id="field-description">Three drifting curves. The dark green line follows the highest curve, with dots where the leading curve changes.</title>
+          <defs>
+            <linearGradient id="ridge-wash" x1="0" y1="0" x2="0.15" y2="1">
+              <stop stop-color="#93ae90" stop-opacity=".46"/><stop offset="1" stop-color="#668d79" stop-opacity=".14"/>
+            </linearGradient>
+          </defs>
+        <path class="wash" d="M0.0 152.0 L4.0 150.0 L8.0 147.8 L12.0 145.7 L16.0 143.4 L20.0 141.2 L24.0 139.0 L28.0 136.8 L32.0 134.6 L36.0 132.5 L40.0 130.4 L44.0 128.5 L48.0 126.6 L52.0 124.9 L56.0 123.4 L60.0 121.9 L64.0 120.7 L68.0 119.7 L72.0 118.8 L76.0 118.2 L80.0 117.8 L84.0 117.6 L88.0 117.7 L92.0 117.9 L96.0 118.4 L100.0 119.1 L104.0 120.0 L108.0 121.1 L112.0 122.4 L116.0 123.8 L120.0 125.4 L124.0 127.2 L128.0 129.0 L132.0 131.0 L136.0 133.0 L140.0 135.1 L144.0 137.2 L148.0 139.3 L152.0 141.5 L156.0 143.6 L160.0 145.7 L164.0 147.7 L168.0 149.7 L172.0 151.6 L176.0 153.5 L180.0 155.2 L180.8 155.5 L184.0 152.8 L188.0 148.9 L192.0 144.7 L196.0 140.1 L200.0 135.2 L204.0 130.0 L208.0 124.6 L212.0 118.9 L216.0 113.0 L220.0 107.1 L224.0 101.1 L228.0 95.3 L232.0 89.5 L236.0 84.1 L240.0 78.9 L244.0 74.2 L248.0 70.0 L252.0 66.4 L256.0 63.5 L260.0 61.3 L264.0 59.8 L268.0 59.1 L272.0 59.2 L276.0 60.1 L280.0 61.7 L284.0 64.1 L288.0 67.1 L292.0 70.7 L296.0 74.8 L300.0 79.3 L304.0 84.2 L308.0 89.3 L312.0 94.6 L316.0 99.9 L320.0 105.3 L324.0 110.5 L328.0 115.6 L332.0 120.4 L336.0 125.0 L336.8 125.8 L340.0 123.4 L344.0 120.2 L348.0 117.1 L352.0 113.9 L356.0 110.8 L360.0 107.6 L364.0 104.5 L368.0 101.4 L372.0 98.4 L376.0 95.5 L380.0 92.8 L384.0 90.1 L388.0 87.7 L392.0 85.4 L396.0 83.2 L400.0 81.4 L404.0 79.7 L408.0 78.3 L412.0 77.1 L416.0 76.2 L420.0 75.5 L424.0 75.1 L428.0 75.0 L432.0 75.2 L436.0 75.6 L440.0 76.3 L444.0 77.2 L448.0 78.4 L452.0 79.8 L456.0 81.5 L460.0 83.3 L464.0 85.3 L468.0 87.5 L472.0 89.8 L476.0 92.2 L480.0 94.7 L480 195 L0 195 Z"/>
+        <path class="contour" d="M0.0 191.4 L4.0 191.1 L8.0 190.8 L12.0 190.5 L16.0 190.2 L20.0 189.9 L24.0 189.6 L28.0 189.3 L32.0 188.9 L36.0 188.6 L40.0 188.3 L44.0 188.1 L48.0 187.8 L52.0 187.6 L56.0 187.3 L60.0 187.1 L64.0 187.0 L68.0 186.8 L72.0 186.7 L76.0 186.6 L80.0 186.5 L84.0 186.5 L88.0 186.5 L92.0 186.6 L96.0 186.6 L100.0 186.7 L104.0 186.9 L108.0 187.0 L112.0 187.2 L116.0 187.4 L120.0 187.6 L124.0 187.9 L128.0 188.1 L132.0 188.4 L136.0 188.7 L140.0 189.0 L144.0 189.3 L148.0 189.6 L152.0 189.9 L156.0 190.2 L160.0 190.5 L164.0 190.8 L168.0 191.1 L172.0 191.4 L176.0 191.6 L180.0 191.9 L184.0 191.5 L188.0 191.0 L192.0 190.4 L196.0 189.7 L200.0 189.0 L204.0 188.3 L208.0 187.5 L212.0 186.7 L216.0 185.9 L220.0 185.0 L224.0 184.2 L228.0 183.3 L232.0 182.5 L236.0 181.7 L240.0 181.0 L244.0 180.3 L248.0 179.7 L252.0 179.2 L256.0 178.8 L260.0 178.5 L264.0 178.3 L268.0 178.2 L272.0 178.2 L276.0 178.3 L280.0 178.5 L284.0 178.9 L288.0 179.3 L292.0 179.8 L296.0 180.4 L300.0 181.0 L304.0 181.7 L308.0 182.5 L312.0 183.2 L316.0 184.0 L320.0 184.8 L324.0 185.5 L328.0 186.2 L332.0 186.9 L336.0 187.6 L340.0 187.3 L344.0 186.9 L348.0 186.4 L352.0 186.0 L356.0 185.5 L360.0 185.1 L364.0 184.6 L368.0 184.2 L372.0 183.8 L376.0 183.4 L380.0 183.0 L384.0 182.6 L388.0 182.2 L392.0 181.9 L396.0 181.6 L400.0 181.3 L404.0 181.1 L408.0 180.9 L412.0 180.7 L416.0 180.6 L420.0 180.5 L424.0 180.4 L428.0 180.4 L432.0 180.5 L436.0 180.5 L440.0 180.6 L444.0 180.7 L448.0 180.9 L452.0 181.1 L456.0 181.4 L460.0 181.6 L464.0 181.9 L468.0 182.2 L472.0 182.5 L476.0 182.9 L480.0 183.2"/>
+        <path class="contour" d="M0.0 184.9 L4.0 184.3 L8.0 183.7 L12.0 183.0 L16.0 182.4 L20.0 181.8 L24.0 181.1 L28.0 180.5 L32.0 179.9 L36.0 179.3 L40.0 178.7 L44.0 178.1 L48.0 177.6 L52.0 177.1 L56.0 176.7 L60.0 176.3 L64.0 175.9 L68.0 175.6 L72.0 175.4 L76.0 175.2 L80.0 175.1 L84.0 175.0 L88.0 175.0 L92.0 175.1 L96.0 175.3 L100.0 175.5 L104.0 175.7 L108.0 176.0 L112.0 176.4 L116.0 176.8 L120.0 177.3 L124.0 177.8 L128.0 178.3 L132.0 178.8 L136.0 179.4 L140.0 180.0 L144.0 180.6 L148.0 181.2 L152.0 181.9 L156.0 182.5 L160.0 183.1 L164.0 183.6 L168.0 184.2 L172.0 184.8 L176.0 185.3 L180.0 185.8 L184.0 185.1 L188.0 184.0 L192.0 182.8 L196.0 181.5 L200.0 180.1 L204.0 178.6 L208.0 177.0 L212.0 175.4 L216.0 173.7 L220.0 172.0 L224.0 170.3 L228.0 168.6 L232.0 167.0 L236.0 165.4 L240.0 164.0 L244.0 162.6 L248.0 161.4 L252.0 160.4 L256.0 159.6 L260.0 158.9 L264.0 158.5 L268.0 158.3 L272.0 158.4 L276.0 158.6 L280.0 159.1 L284.0 159.7 L288.0 160.6 L292.0 161.6 L296.0 162.8 L300.0 164.1 L304.0 165.5 L308.0 166.9 L312.0 168.5 L316.0 170.0 L320.0 171.5 L324.0 173.0 L328.0 174.4 L332.0 175.8 L336.0 177.1 L340.0 176.7 L344.0 175.8 L348.0 174.9 L352.0 174.0 L356.0 173.1 L360.0 172.2 L364.0 171.3 L368.0 170.4 L372.0 169.6 L376.0 168.7 L380.0 167.9 L384.0 167.2 L388.0 166.5 L392.0 165.8 L396.0 165.2 L400.0 164.7 L404.0 164.2 L408.0 163.8 L412.0 163.5 L416.0 163.2 L420.0 163.0 L424.0 162.9 L428.0 162.9 L432.0 162.9 L436.0 163.0 L440.0 163.2 L444.0 163.5 L448.0 163.8 L452.0 164.2 L456.0 164.7 L460.0 165.2 L464.0 165.8 L468.0 166.4 L472.0 167.1 L476.0 167.8 L480.0 168.5"/>
+        <path class="contour" d="M0.0 178.3 L4.0 177.4 L8.0 176.5 L12.0 175.6 L16.0 174.6 L20.0 173.7 L24.0 172.7 L28.0 171.8 L32.0 170.8 L36.0 169.9 L40.0 169.0 L44.0 168.2 L48.0 167.4 L52.0 166.7 L56.0 166.0 L60.0 165.4 L64.0 164.9 L68.0 164.4 L72.0 164.1 L76.0 163.8 L80.0 163.6 L84.0 163.6 L88.0 163.6 L92.0 163.7 L96.0 163.9 L100.0 164.2 L104.0 164.6 L108.0 165.0 L112.0 165.6 L116.0 166.2 L120.0 166.9 L124.0 167.6 L128.0 168.4 L132.0 169.3 L136.0 170.1 L140.0 171.0 L144.0 171.9 L148.0 172.9 L152.0 173.8 L156.0 174.7 L160.0 175.6 L164.0 176.5 L168.0 177.3 L172.0 178.1 L176.0 178.9 L180.0 179.7 L184.0 178.6 L188.0 177.0 L192.0 175.2 L196.0 173.2 L200.0 171.1 L204.0 168.9 L208.0 166.5 L212.0 164.1 L216.0 161.6 L220.0 159.0 L224.0 156.5 L228.0 154.0 L232.0 151.5 L236.0 149.2 L240.0 147.0 L244.0 144.9 L248.0 143.2 L252.0 141.6 L256.0 140.4 L260.0 139.4 L264.0 138.8 L268.0 138.5 L272.0 138.5 L276.0 138.9 L280.0 139.6 L284.0 140.6 L288.0 141.9 L292.0 143.4 L296.0 145.2 L300.0 147.1 L304.0 149.2 L308.0 151.4 L312.0 153.7 L316.0 156.0 L320.0 158.3 L324.0 160.5 L328.0 162.7 L332.0 164.7 L336.0 166.7 L340.0 166.0 L344.0 164.7 L348.0 163.3 L352.0 162.0 L356.0 160.6 L360.0 159.3 L364.0 157.9 L368.0 156.6 L372.0 155.3 L376.0 154.1 L380.0 152.9 L384.0 151.8 L388.0 150.7 L392.0 149.7 L396.0 148.8 L400.0 148.0 L404.0 147.3 L408.0 146.7 L412.0 146.2 L416.0 145.8 L420.0 145.5 L424.0 145.3 L428.0 145.3 L432.0 145.4 L436.0 145.5 L440.0 145.8 L444.0 146.2 L448.0 146.8 L452.0 147.4 L456.0 148.1 L460.0 148.8 L464.0 149.7 L468.0 150.6 L472.0 151.6 L476.0 152.7 L480.0 153.7"/>
+        <path class="contour" d="M0.0 171.7 L4.0 170.5 L8.0 169.3 L12.0 168.1 L16.0 166.8 L20.0 165.6 L24.0 164.3 L28.0 163.0 L32.0 161.8 L36.0 160.6 L40.0 159.4 L44.0 158.3 L48.0 157.2 L52.0 156.2 L56.0 155.3 L60.0 154.5 L64.0 153.8 L68.0 153.2 L72.0 152.8 L76.0 152.4 L80.0 152.2 L84.0 152.1 L88.0 152.1 L92.0 152.2 L96.0 152.5 L100.0 152.9 L104.0 153.4 L108.0 154.1 L112.0 154.8 L116.0 155.6 L120.0 156.5 L124.0 157.5 L128.0 158.6 L132.0 159.7 L136.0 160.9 L140.0 162.0 L144.0 163.3 L148.0 164.5 L152.0 165.7 L156.0 166.9 L160.0 168.1 L164.0 169.3 L168.0 170.4 L172.0 171.5 L176.0 172.6 L180.0 173.5 L184.0 172.2 L188.0 169.9 L192.0 167.5 L196.0 164.9 L200.0 162.1 L204.0 159.2 L208.0 156.0 L212.0 152.8 L216.0 149.4 L220.0 146.1 L224.0 142.7 L228.0 139.3 L232.0 136.0 L236.0 132.9 L240.0 130.0 L244.0 127.3 L248.0 124.9 L252.0 122.8 L256.0 121.1 L260.0 119.9 L264.0 119.0 L268.0 118.6 L272.0 118.7 L276.0 119.2 L280.0 120.1 L284.0 121.5 L288.0 123.2 L292.0 125.3 L296.0 127.6 L300.0 130.2 L304.0 133.0 L308.0 135.9 L312.0 138.9 L316.0 142.0 L320.0 145.0 L324.0 148.0 L328.0 150.9 L332.0 153.7 L336.0 156.3 L340.0 155.3 L344.0 153.6 L348.0 151.8 L352.0 150.0 L356.0 148.1 L360.0 146.3 L364.0 144.6 L368.0 142.8 L372.0 141.1 L376.0 139.5 L380.0 137.9 L384.0 136.4 L388.0 134.9 L392.0 133.6 L396.0 132.4 L400.0 131.3 L404.0 130.4 L408.0 129.6 L412.0 128.9 L416.0 128.4 L420.0 128.0 L424.0 127.8 L428.0 127.7 L432.0 127.8 L436.0 128.1 L440.0 128.5 L444.0 129.0 L448.0 129.7 L452.0 130.5 L456.0 131.4 L460.0 132.4 L464.0 133.6 L468.0 134.8 L472.0 136.2 L476.0 137.5 L480.0 139.0"/>
+        <path class="contour" d="M0.0 165.2 L4.0 163.7 L8.0 162.2 L12.0 160.6 L16.0 159.0 L20.0 157.4 L24.0 155.9 L28.0 154.3 L32.0 152.7 L36.0 151.2 L40.0 149.7 L44.0 148.3 L48.0 147.0 L52.0 145.8 L56.0 144.7 L60.0 143.7 L64.0 142.8 L68.0 142.1 L72.0 141.5 L76.0 141.0 L80.0 140.7 L84.0 140.6 L88.0 140.6 L92.0 140.8 L96.0 141.1 L100.0 141.6 L104.0 142.3 L108.0 143.1 L112.0 144.0 L116.0 145.0 L120.0 146.2 L124.0 147.4 L128.0 148.7 L132.0 150.1 L136.0 151.6 L140.0 153.1 L144.0 154.6 L148.0 156.1 L152.0 157.6 L156.0 159.1 L160.0 160.6 L164.0 162.1 L168.0 163.5 L172.0 164.9 L176.0 166.2 L180.0 167.4 L184.0 165.7 L188.0 162.9 L192.0 159.9 L196.0 156.7 L200.0 153.2 L204.0 149.5 L208.0 145.5 L212.0 141.5 L216.0 137.3 L220.0 133.1 L224.0 128.8 L228.0 124.6 L232.0 120.5 L236.0 116.6 L240.0 112.9 L244.0 109.6 L248.0 106.6 L252.0 104.0 L256.0 101.9 L260.0 100.3 L264.0 99.3 L268.0 98.8 L272.0 98.9 L276.0 99.5 L280.0 100.7 L284.0 102.4 L288.0 104.5 L292.0 107.1 L296.0 110.0 L300.0 113.2 L304.0 116.7 L308.0 120.4 L312.0 124.1 L316.0 127.9 L320.0 131.8 L324.0 135.5 L328.0 139.1 L332.0 142.6 L336.0 145.9 L340.0 144.7 L344.0 142.5 L348.0 140.2 L352.0 138.0 L356.0 135.7 L360.0 133.4 L364.0 131.2 L368.0 129.0 L372.0 126.9 L376.0 124.8 L380.0 122.8 L384.0 121.0 L388.0 119.2 L392.0 117.5 L396.0 116.0 L400.0 114.7 L404.0 113.5 L408.0 112.5 L412.0 111.6 L416.0 111.0 L420.0 110.5 L424.0 110.2 L428.0 110.2 L432.0 110.3 L436.0 110.6 L440.0 111.1 L444.0 111.7 L448.0 112.6 L452.0 113.6 L456.0 114.8 L460.0 116.1 L464.0 117.5 L468.0 119.0 L472.0 120.7 L476.0 122.4 L480.0 124.2"/>
+        <path class="contour" d="M0.0 158.6 L4.0 156.8 L8.0 155.0 L12.0 153.1 L16.0 151.2 L20.0 149.3 L24.0 147.4 L28.0 145.5 L32.0 143.7 L36.0 141.9 L40.0 140.1 L44.0 138.4 L48.0 136.8 L52.0 135.4 L56.0 134.0 L60.0 132.8 L64.0 131.8 L68.0 130.9 L72.0 130.1 L76.0 129.6 L80.0 129.3 L84.0 129.1 L88.0 129.1 L92.0 129.4 L96.0 129.8 L100.0 130.4 L104.0 131.2 L108.0 132.1 L112.0 133.2 L116.0 134.4 L120.0 135.8 L124.0 137.3 L128.0 138.9 L132.0 140.5 L136.0 142.3 L140.0 144.1 L144.0 145.9 L148.0 147.7 L152.0 149.6 L156.0 151.4 L160.0 153.2 L164.0 154.9 L168.0 156.6 L172.0 158.3 L176.0 159.8 L180.0 161.3 L184.0 159.2 L188.0 155.9 L192.0 152.3 L196.0 148.4 L200.0 144.2 L204.0 139.7 L208.0 135.1 L212.0 130.2 L216.0 125.2 L220.0 120.1 L224.0 115.0 L228.0 109.9 L232.0 105.0 L236.0 100.3 L240.0 95.9 L244.0 91.9 L248.0 88.3 L252.0 85.2 L256.0 82.7 L260.0 80.8 L264.0 79.6 L268.0 79.0 L272.0 79.1 L276.0 79.8 L280.0 81.2 L284.0 83.2 L288.0 85.8 L292.0 88.9 L296.0 92.4 L300.0 96.3 L304.0 100.5 L308.0 104.8 L312.0 109.4 L316.0 113.9 L320.0 118.5 L324.0 123.0 L328.0 127.3 L332.0 131.5 L336.0 135.4 L340.0 134.0 L344.0 131.4 L348.0 128.7 L352.0 125.9 L356.0 123.2 L360.0 120.5 L364.0 117.8 L368.0 115.2 L372.0 112.7 L376.0 110.2 L380.0 107.8 L384.0 105.5 L388.0 103.4 L392.0 101.4 L396.0 99.6 L400.0 98.0 L404.0 96.6 L408.0 95.4 L412.0 94.4 L416.0 93.6 L420.0 93.0 L424.0 92.7 L428.0 92.6 L432.0 92.7 L436.0 93.1 L440.0 93.7 L444.0 94.5 L448.0 95.5 L452.0 96.7 L456.0 98.1 L460.0 99.7 L464.0 101.4 L468.0 103.3 L472.0 105.2 L476.0 107.3 L480.0 109.5"/>
+        <path class="profile profile-a" d="M0.0 152.0 L4.0 150.0 L8.0 147.8 L12.0 145.7 L16.0 143.4 L20.0 141.2 L24.0 139.0 L28.0 136.8 L32.0 134.6 L36.0 132.5 L40.0 130.4 L44.0 128.5 L48.0 126.6 L52.0 124.9 L56.0 123.4 L60.0 121.9 L64.0 120.7 L68.0 119.7 L72.0 118.8 L76.0 118.2 L80.0 117.8 L84.0 117.6 L88.0 117.7 L92.0 117.9 L96.0 118.4 L100.0 119.1 L104.0 120.0 L108.0 121.1 L112.0 122.4 L116.0 123.8 L120.0 125.4 L124.0 127.2 L128.0 129.0 L132.0 131.0 L136.0 133.0 L140.0 135.1 L144.0 137.2 L148.0 139.3 L152.0 141.5 L156.0 143.6 L160.0 145.7 L164.0 147.7 L168.0 149.7 L172.0 151.6 L176.0 153.5 L180.0 155.2 L184.0 156.9 L188.0 158.4 L192.0 159.8 L196.0 161.1 L200.0 162.4 L204.0 163.5 L208.0 164.5 L212.0 165.3 L216.0 166.1 L220.0 166.8 L224.0 167.4 L228.0 167.9 L232.0 168.3 L236.0 168.7 L240.0 168.9 L244.0 169.1 L248.0 169.3 L252.0 169.3 L256.0 169.3 L260.0 169.3 L264.0 169.3 L268.0 169.1 L272.0 169.0 L276.0 168.8 L280.0 168.6 L284.0 168.4 L288.0 168.2 L292.0 167.9 L296.0 167.6 L300.0 167.3 L304.0 167.0 L308.0 166.7 L312.0 166.4 L316.0 166.1 L320.0 165.8 L324.0 165.4 L328.0 165.1 L332.0 164.8 L336.0 164.4 L340.0 164.1 L344.0 163.8 L348.0 163.4 L352.0 163.1 L356.0 162.8 L360.0 162.5 L364.0 162.1 L368.0 161.8 L372.0 161.5 L376.0 161.2 L380.0 160.9 L384.0 160.6 L388.0 160.3 L392.0 160.0 L396.0 159.7 L400.0 159.4 L404.0 159.1 L408.0 158.9 L412.0 158.6 L416.0 158.4 L420.0 158.1 L424.0 157.9 L428.0 157.6 L432.0 157.4 L436.0 157.2 L440.0 157.0 L444.0 156.8 L448.0 156.6 L452.0 156.4 L456.0 156.2 L460.0 156.0 L464.0 155.8 L468.0 155.7 L472.0 155.5 L476.0 155.4 L480.0 155.3"/>
+        <path class="profile profile-b" d="M0.0 178.0 L4.0 178.1 L8.0 178.1 L12.0 178.2 L16.0 178.2 L20.0 178.3 L24.0 178.3 L28.0 178.3 L32.0 178.4 L36.0 178.4 L40.0 178.5 L44.0 178.5 L48.0 178.5 L52.0 178.6 L56.0 178.6 L60.0 178.6 L64.0 178.6 L68.0 178.6 L72.0 178.6 L76.0 178.6 L80.0 178.6 L84.0 178.6 L88.0 178.5 L92.0 178.5 L96.0 178.4 L100.0 178.3 L104.0 178.2 L108.0 178.0 L112.0 177.9 L116.0 177.6 L120.0 177.4 L124.0 177.0 L128.0 176.6 L132.0 176.1 L136.0 175.5 L140.0 174.8 L144.0 174.0 L148.0 173.0 L152.0 171.8 L156.0 170.4 L160.0 168.7 L164.0 166.8 L168.0 164.7 L172.0 162.2 L176.0 159.4 L180.0 156.3 L184.0 152.8 L188.0 148.9 L192.0 144.7 L196.0 140.1 L200.0 135.2 L204.0 130.0 L208.0 124.6 L212.0 118.9 L216.0 113.0 L220.0 107.1 L224.0 101.1 L228.0 95.3 L232.0 89.5 L236.0 84.1 L240.0 78.9 L244.0 74.2 L248.0 70.0 L252.0 66.4 L256.0 63.5 L260.0 61.3 L264.0 59.8 L268.0 59.1 L272.0 59.2 L276.0 60.1 L280.0 61.7 L284.0 64.1 L288.0 67.1 L292.0 70.7 L296.0 74.8 L300.0 79.3 L304.0 84.2 L308.0 89.3 L312.0 94.6 L316.0 99.9 L320.0 105.3 L324.0 110.5 L328.0 115.6 L332.0 120.4 L336.0 125.0 L340.0 129.3 L344.0 133.3 L348.0 136.9 L352.0 140.2 L356.0 143.1 L360.0 145.7 L364.0 148.0 L368.0 149.9 L372.0 151.6 L376.0 153.0 L380.0 154.1 L384.0 155.1 L388.0 155.8 L392.0 156.4 L396.0 156.8 L400.0 157.1 L404.0 157.4 L408.0 157.5 L412.0 157.5 L416.0 157.5 L420.0 157.5 L424.0 157.4 L428.0 157.3 L432.0 157.1 L436.0 157.0 L440.0 156.8 L444.0 156.6 L448.0 156.5 L452.0 156.3 L456.0 156.1 L460.0 156.0 L464.0 155.8 L468.0 155.7 L472.0 155.5 L476.0 155.4 L480.0 155.3"/>
+        <path class="profile profile-c" d="M0.0 178.0 L4.0 178.1 L8.0 178.1 L12.0 178.2 L16.0 178.2 L20.0 178.3 L24.0 178.3 L28.0 178.3 L32.0 178.4 L36.0 178.4 L40.0 178.5 L44.0 178.5 L48.0 178.5 L52.0 178.6 L56.0 178.6 L60.0 178.6 L64.0 178.6 L68.0 178.6 L72.0 178.6 L76.0 178.6 L80.0 178.6 L84.0 178.6 L88.0 178.6 L92.0 178.6 L96.0 178.5 L100.0 178.5 L104.0 178.5 L108.0 178.4 L112.0 178.4 L116.0 178.3 L120.0 178.2 L124.0 178.1 L128.0 178.0 L132.0 177.9 L136.0 177.8 L140.0 177.7 L144.0 177.6 L148.0 177.5 L152.0 177.3 L156.0 177.2 L160.0 177.0 L164.0 176.8 L168.0 176.6 L172.0 176.4 L176.0 176.2 L180.0 176.0 L184.0 175.8 L188.0 175.5 L192.0 175.2 L196.0 174.9 L200.0 174.6 L204.0 174.3 L208.0 173.9 L212.0 173.5 L216.0 173.1 L220.0 172.6 L224.0 172.1 L228.0 171.6 L232.0 171.0 L236.0 170.4 L240.0 169.7 L244.0 169.0 L248.0 168.2 L252.0 167.3 L256.0 166.4 L260.0 165.4 L264.0 164.3 L268.0 163.1 L272.0 161.8 L276.0 160.4 L280.0 158.9 L284.0 157.4 L288.0 155.7 L292.0 153.8 L296.0 151.9 L300.0 149.9 L304.0 147.7 L308.0 145.4 L312.0 143.0 L316.0 140.5 L320.0 137.9 L324.0 135.1 L328.0 132.3 L332.0 129.4 L336.0 126.4 L340.0 123.4 L344.0 120.2 L348.0 117.1 L352.0 113.9 L356.0 110.8 L360.0 107.6 L364.0 104.5 L368.0 101.4 L372.0 98.4 L376.0 95.5 L380.0 92.8 L384.0 90.1 L388.0 87.7 L392.0 85.4 L396.0 83.2 L400.0 81.4 L404.0 79.7 L408.0 78.3 L412.0 77.1 L416.0 76.2 L420.0 75.5 L424.0 75.1 L428.0 75.0 L432.0 75.2 L436.0 75.6 L440.0 76.3 L444.0 77.2 L448.0 78.4 L452.0 79.8 L456.0 81.5 L460.0 83.3 L464.0 85.3 L468.0 87.5 L472.0 89.8 L476.0 92.2 L480.0 94.7"/>
+        <path class="ridge" d="M0.0 152.0 L4.0 150.0 L8.0 147.8 L12.0 145.7 L16.0 143.4 L20.0 141.2 L24.0 139.0 L28.0 136.8 L32.0 134.6 L36.0 132.5 L40.0 130.4 L44.0 128.5 L48.0 126.6 L52.0 124.9 L56.0 123.4 L60.0 121.9 L64.0 120.7 L68.0 119.7 L72.0 118.8 L76.0 118.2 L80.0 117.8 L84.0 117.6 L88.0 117.7 L92.0 117.9 L96.0 118.4 L100.0 119.1 L104.0 120.0 L108.0 121.1 L112.0 122.4 L116.0 123.8 L120.0 125.4 L124.0 127.2 L128.0 129.0 L132.0 131.0 L136.0 133.0 L140.0 135.1 L144.0 137.2 L148.0 139.3 L152.0 141.5 L156.0 143.6 L160.0 145.7 L164.0 147.7 L168.0 149.7 L172.0 151.6 L176.0 153.5 L180.0 155.2 L180.8 155.5 L184.0 152.8 L188.0 148.9 L192.0 144.7 L196.0 140.1 L200.0 135.2 L204.0 130.0 L208.0 124.6 L212.0 118.9 L216.0 113.0 L220.0 107.1 L224.0 101.1 L228.0 95.3 L232.0 89.5 L236.0 84.1 L240.0 78.9 L244.0 74.2 L248.0 70.0 L252.0 66.4 L256.0 63.5 L260.0 61.3 L264.0 59.8 L268.0 59.1 L272.0 59.2 L276.0 60.1 L280.0 61.7 L284.0 64.1 L288.0 67.1 L292.0 70.7 L296.0 74.8 L300.0 79.3 L304.0 84.2 L308.0 89.3 L312.0 94.6 L316.0 99.9 L320.0 105.3 L324.0 110.5 L328.0 115.6 L332.0 120.4 L336.0 125.0 L336.8 125.8 L340.0 123.4 L344.0 120.2 L348.0 117.1 L352.0 113.9 L356.0 110.8 L360.0 107.6 L364.0 104.5 L368.0 101.4 L372.0 98.4 L376.0 95.5 L380.0 92.8 L384.0 90.1 L388.0 87.7 L392.0 85.4 L396.0 83.2 L400.0 81.4 L404.0 79.7 L408.0 78.3 L412.0 77.1 L416.0 76.2 L420.0 75.5 L424.0 75.1 L428.0 75.0 L432.0 75.2 L436.0 75.6 L440.0 76.3 L444.0 77.2 L448.0 78.4 L452.0 79.8 L456.0 81.5 L460.0 83.3 L464.0 85.3 L468.0 87.5 L472.0 89.8 L476.0 92.2 L480.0 94.7"/>
+        <circle class="saddle" cx="180.82" cy="155.54" r="3.0"/>
+        <circle class="saddle" cx="336.76" cy="125.83" r="3.0"/>
+        </svg>
+      </div>
+      <figcaption>
+        <span id="art-title" class="art-title">Upper envelope</span>
+        <span aria-hidden="true">·</span>
+        <span class="art-formula" aria-label="M of t is the pointwise maximum of the three profiles"><i>M</i>(<i>t</i>) = max<sub><i>i</i></sub> <i>f</i><sub><i>i</i></sub>(<i>t</i>)</span>
+        <button class="motion-toggle" type="button" hidden aria-label="Pause line animation" title="Pause line animation">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path class="pause" d="M5 4h3v12H5zm7 0h3v12h-3z"/><path class="play" d="m6 3 10 7-10 7z"/></svg>
+        </button>
+      </figcaption>
+    </figure>
+  </div>
+  <div class="wrap profile-row">
       <div class="links" role="group" aria-label="Academic profiles, email and department">
         <a href="https://iris.unil.ch/entities/person/enkelejdhashorva" target="_blank" rel="noopener">Publications on IRIS</a>
         <a href="https://arxiv.org/search/math?searchtype=author&query=Hashorva%2C+E" target="_blank" rel="noopener">arXiv</a>
@@ -138,18 +338,20 @@
         <a href="mailto:enkelejd.hashorva@unil.ch">Email</a>
         <a href="https://www.unil.ch/hec/en/home/menuinst/faculte/departements/dsa.html" target="_blank" rel="noopener">Actuarial Department</a>
       </div>
-    </div>
-    <img width="150" height="150" class="portrait" src="photo.jpg" alt="Enkelejd Hashorva, Professor of Actuarial Science at HEC Lausanne, University of Lausanne">
   </div>
 </header>
 <main class="wrap" id="main" tabindex="-1">
 
 <section id="about" class="prose">
-  <div class="sec-head"><h2>Research &amp; background</h2></div>
-  <p>My research focuses on stochastic analysis and applied probability, particularly rare events, extremes of random fields, regular variation, shift-invariant structures, multivariate dependence, and representations of asymptotic constants. Drawing on my actuarial expertise and <a href="industry.html">industry experience at Allianz Suisse</a>, I also work on applied problems in non-life insurance, risk management, market management and financial mathematics.</p>
-  <p>Together with <a href="https://www.math.uni.wroc.pl/users/debicki" target="_blank" rel="noopener">Krzysztof Dębicki</a> and our teams, I have developed a theory of rare events for vector-valued Gaussian random fields, including the asymptotic constants governing their extremal behaviour.</p>
-  <p>Before joining the University of Lausanne, I led the non-life insurance pricing team at Allianz Suisse. I have been a qualified actuary of the Swiss Association of Actuaries (SAA) since 2004 and have served on its Education Committee since 2011.</p>
-  <p>I completed my PhD at the University of Bern in 1999 under the supervision of Professor Jürg Hüsler, received the <em>Venia Docendi</em> in Applied Stochastics from the University of Bern in 2004, and hold the title of Privatdozent.</p>
+  <div class="about-intro">
+    <h2>Research &amp; background</h2>
+    <div>
+      <p>My research focuses on stochastic analysis and applied probability, particularly rare events, extremes of random fields, regular variation, shift-invariant structures, multivariate dependence, and representations of asymptotic constants. Drawing on my actuarial expertise and <a href="industry.html">industry experience at Allianz Suisse</a>, I also work on applied problems in non-life insurance, risk management, market management and financial mathematics.</p>
+      <p>Together with <a href="https://www.math.uni.wroc.pl/users/debicki" target="_blank" rel="noopener">Krzysztof Dębicki</a> and our teams, I have developed a theory of rare events for vector-valued Gaussian random fields, including the asymptotic constants governing their extremal behaviour.</p>
+      <p>Before joining the University of Lausanne, I led the non-life insurance pricing team at Allianz Suisse. I have been a qualified actuary of the Swiss Association of Actuaries (SAA) since 2004 and have served on its Education Committee since 2011.</p>
+      <p>I completed my PhD at the University of Bern in 1999 under the supervision of Professor Jürg Hüsler, received the <em>Venia Docendi</em> in Applied Stochastics from the University of Bern in 2004, and hold the title of Privatdozent.</p>
+    </div>
+  </div>
 
   <div class="two">
     <div>
@@ -179,44 +381,44 @@
 
 <section id="gallery">
   <div class="sec-head"><h2>Probability, illustrated</h2></div>
-  <p>Explore objects from recent papers: move a slider, resample a path, and see what changes. These four illustrations are a starting point; the <a href="gallery/">gallery</a> has all seventeen.</p>
+  <p>Explore objects from recent papers: move a slider, resample a path, and see what changes. These four illustrations are a starting point; the <a href="gallery/index.html">gallery</a> has all seventeen.</p>
   <!-- Featured cards: swap any of these for a card from gallery/index.html (same markup, paths prefixed with gallery/). -->
   <div class="cards">
     <article class="card">
       <a class="main" href="gallery/resetting.html">
-        <img src="gallery/resetting.png" alt="Brownian paths with resets racing to a high level" width="740" height="309" loading="lazy" decoding="async">
+        <img src="gallery/resetting.png" alt="A Brownian path that jumps to its reset position, with first-passage diagnostics." width="960" height="600" loading="lazy" decoding="async">
         <h3>Back to square one</h3>
       </a>
-      <p>Animated: Brownian motion sent back to <em>x<sub>R</sub></em> at Poisson times. Explore how the reset rate affects the search for a level <em>u</em>, the asymmetric Laplace steady state, and the different high-level tail regimes for positive and non-positive reset points. From Dębicki, Hashorva &amp; Michna.</p>
+      <p>Follow a drifting Brownian path between Poisson reset times. A reset can jump across the target. Compare first passage with the mean search time, and explore the asymmetric Laplace stationary law. From Dębicki, Hashorva &amp; Michna.</p>
       <a class="cta" aria-label="Open illustration: Back to square one" href="gallery/resetting.html">Open →</a>
     </article>
     <article class="card">
       <a class="main" href="gallery/blockruin.html">
-        <img src="gallery/blockruin.png" alt="Brownian loss process ruined in every reporting block" width="740" height="309" loading="lazy" decoding="async">
+        <img src="gallery/blockruin.png" alt="A Brownian path crossing reporting-block thresholds, with probability estimates and first-hit times." width="960" height="600" loading="lazy" decoding="async">
         <h3>Ruin in every block, ruin in every window</h3>
       </a>
-      <p>Animated: Brownian paths rain down until one exceeds <em>u</em> in each of <em>m</em> reporting blocks, or in every sliding window of length <em>h</em>. At high levels the first hit crowds against <em>h</em>; each ruin probability has the one-block Gaussian tail scale multiplied by its own constant. From Dębicki, Hashorva &amp; Michna.</p>
+      <p>Compare crossing a level in each reporting block with crossing it in every sliding window. Brownian-bridge sampling detects within-block crossings; the sliding-window panel reports lower and upper bounds. From Dębicki, Hashorva &amp; Michna.</p>
       <a class="cta" aria-label="Open illustration: Ruin in every block, ruin in every window" href="gallery/blockruin.html">Open →</a>
     </article>
     <article class="card">
       <a class="main" href="gallery/tree.html">
-        <img src="gallery/tree.png" alt="Max-stable field on a binary tree" width="740" height="495" loading="lazy" decoding="async">
+        <img src="gallery/tree.png" alt="A finite binary tree coloured by the spectral atom that attains each maximum." width="960" height="600" loading="lazy" decoding="async">
         <h3>A max-stable field on a binary tree</h3>
       </a>
-      <p>Brown–Resnick construction driven by a Gaussian branching random walk. Colours show which Poisson point wins at each vertex. Explore the branch-stationarity of the full model through a finite simulation. From Hashorva &amp; Novikov.</p>
+      <p>Construct a max-stable field from a Gaussian branching random walk. Colours identify the winning Poisson atom at each vertex. Increase the number of retained atoms to see how the finite approximation changes on the same realization. From Hashorva &amp; Novikov.</p>
       <a class="cta" aria-label="Open illustration: A max-stable field on a binary tree" href="gallery/tree.html">Open →</a>
     </article>
     <article class="card">
       <a class="main" href="gallery/pickands.html">
-        <img src="gallery/pickands.png" alt="Excursion set of a rough Gaussian field" width="740" height="392" loading="lazy" decoding="async">
+        <img src="gallery/pickands.png" alt="A sampled Gaussian field, its threshold excursion and a conditional level profile." width="960" height="600" loading="lazy" decoding="async">
         <h3>Where the Euler characteristic ends and Pickands begins</h3>
       </a>
-      <p>Turn the roughness α of a Gaussian field from 2 downwards: the Euler-characteristic heuristic gives way to Pickands–Piterbarg asymptotics and the constant ℋ<sub>α</sub>. A companion to <a href="https://ievlevpn.github.io/viz/pillow.html" target="_blank" rel="noopener">Pavel Ievlev's illustration</a>.</p>
+      <p>Change the roughness of a Gaussian field and inspect its excursion set on a finite grid. The smooth case admits an Euler-characteristic comparison. For rough fields, the theoretical high-level tail involves the Pickands constant. A companion to <a href="https://ievlevpn.github.io/viz/pillow.html" target="_blank" rel="noopener">Pavel Ievlev’s illustration</a>.</p>
       <a class="cta" aria-label="Open illustration: Where the Euler characteristic ends and Pickands begins" href="gallery/pickands.html">Open →</a>
     </article>
   </div>
 
-  <a class="btn" href="gallery/">All 17 illustrations
+  <a class="btn" href="gallery/index.html">All 17 illustrations
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
   </a>
 </section>
@@ -226,11 +428,124 @@
 <footer>
   <div class="wrap">
     <span>© <span id="y">2026</span> Enkelejd Hashorva</span>
+    <span><cite>Upper envelope</cite> · Linework designed with <a href="https://openai.com/fr-FR/index/introducing-gpt-6-2-astra-sol/">GPT-6.2 Astra</a></span>
   </div>
 </footer>
 
 <script>
-  document.getElementById('y').textContent=new Date().getFullYear();
+  document.getElementById('y').textContent = new Date().getFullYear();
+  (() => {
+    // The three profiles share a gently sloping baseline. The dark ridge follows their maximum.
+    function envelopeGeometry(time) {
+      const profiles = [
+        { center: 85 + 25 * Math.sin(time / 6), height: 61 + 7 * Math.sin(time / 5), width: 92 },
+        { center: 253 + 23 * Math.sin(time / 8 + .7), height: 109 + 11 * Math.sin(time / 6 + .2), width: 67 },
+        { center: 405 + 21 * Math.sin(time / 7 + 2), height: 76 + 8 * Math.sin(time / 8 + 1), width: 100 }
+      ];
+      const paths = profiles.map(() => []);
+      const ridge = [], contours = Array.from({ length: 6 }, () => []), switches = [];
+      const point = (x, y) => x.toFixed(1) + ' ' + y.toFixed(1);
+      let previous;
+
+      for (let x = 0; x <= 480; x += 4) {
+        const base = 178 - .037 * x + 5 * Math.sin(x / 100);
+        const ys = profiles.map(({ center, height, width }) =>
+          base - height * Math.exp(-(((x - center) / width) ** 2))
+        );
+        ys.forEach((y, i) => paths[i].push(point(x, y)));
+        const top = Math.min(...ys);
+        const winner = ys.indexOf(top);
+        if (previous && winner !== previous.winner) {
+          // Insert the exact intersection of the drawn segments at each change of leader.
+          const old = previous.winner;
+          const before = previous.ys[winner] - previous.ys[old];
+          const after = ys[old] - ys[winner];
+          const fraction = before / (before + after);
+          const sx = x - 4 + 4 * fraction;
+          const sy = previous.ys[old] + fraction * (ys[old] - previous.ys[old]);
+          switches.push([sx, sy]);
+          ridge.push(point(sx, sy));
+        }
+        ridge.push(point(x, top));
+        contours.forEach((line, i) => {
+          const weight = (i + 1) / (contours.length + 1);
+          line.push(point(x, 198 + (top - 198) * weight));
+        });
+        previous = { winner, ys };
+      }
+      const path = points => 'M' + points.join(' L');
+      return { profiles: paths.map(path), ridge: path(ridge), contours: contours.map(path), switches };
+    }
+
+    const menu = document.querySelector('.menu-toggle');
+    const narrow = window.matchMedia('(max-width: 760px)');
+    menu.hidden = false;
+    function closeMenu() { menu.setAttribute('aria-expanded', 'false'); }
+    menu.addEventListener('click', () => menu.setAttribute('aria-expanded', String(menu.getAttribute('aria-expanded') === 'false')));
+    narrow.addEventListener('change', closeMenu);
+    document.querySelector('nav').addEventListener('keydown', event => {
+      if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') {
+        closeMenu();
+        menu.focus();
+      }
+    });
+
+    const figure = document.querySelector('.envelope');
+    const toggle = figure.querySelector('.motion-toggle');
+    const field = figure.querySelector('.field');
+    const ridgePath = field.querySelector('.ridge');
+    const washPath = field.querySelector('.wash');
+    const profiles = field.querySelectorAll('.profile');
+    const contours = field.querySelectorAll('.contour');
+    const markers = field.querySelectorAll('.saddle');
+    function draw(time) {
+      const geometry = envelopeGeometry(time);
+      profiles.forEach((line, i) => line.setAttribute('d', geometry.profiles[i]));
+      contours.forEach((line, i) => line.setAttribute('d', geometry.contours[i]));
+      ridgePath.setAttribute('d', geometry.ridge);
+      washPath.setAttribute('d', geometry.ridge + ' L480 195 L0 195 Z');
+      markers.forEach((dot, i) => {
+        const [x, y] = geometry.switches[i];
+        dot.setAttribute('cx', x);
+        dot.setAttribute('cy', y);
+      });
+    }
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let playing = !reducedMotion.matches;
+    let visible = true;
+    let frame = 0, lastPaint = null, elapsed = 0;
+    function tick(now) {
+      if (lastPaint === null) lastPaint = now;
+      const delta = now - lastPaint;
+      if (delta >= 1000 / 24) {
+        elapsed += Math.min(delta, 100) / 1000;
+        draw(elapsed);
+        lastPaint = now;
+      }
+      frame = requestAnimationFrame(tick);
+    }
+    function updateMotion() {
+      cancelAnimationFrame(frame);
+      lastPaint = null;
+      toggle.dataset.playing = String(playing);
+      const label = playing ? 'Pause line animation' : 'Play line animation';
+      toggle.setAttribute('aria-label', label);
+      toggle.title = label;
+      if (playing && visible && !document.hidden) frame = requestAnimationFrame(tick);
+    }
+    toggle.addEventListener('click', () => { playing = !playing; updateMotion(); });
+    reducedMotion.addEventListener('change', () => { playing = !reducedMotion.matches; updateMotion(); });
+    document.addEventListener('visibilitychange', updateMotion);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        updateMotion();
+      }).observe(figure);
+    }
+    toggle.hidden = false;
+    updateMotion();
+  })();
 </script>
 </body>
 </html>
