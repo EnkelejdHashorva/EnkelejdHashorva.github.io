@@ -49,9 +49,11 @@
   .stat .s{font-size:12px;color:var(--muted);margin-top:4px}
   .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 </style>
+<link rel="stylesheet" href="illustrations.css">
+<script defer src="illustrations.js"></script>
 </head>
 <body>
-<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="top"><b><a href="../index.html" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="index.html">← all illustrations</a></div>
 <div class="wrap">
   <h1>The angle a rare event chooses</h1>
   <p class="lead">Let <span class="m">B</span> be planar Brownian motion and <span class="m">Y(r) = ‖B(r)‖²</span>. For <span class="m">0 &lt; s &lt; t</span> ask for both <span class="m">Y(s) &gt; u</span> and <span class="m">Y(t) &gt; bu</span> at once. Writing the driving Gaussian vector in <span class="m">ℝ⁴</span> as <span class="m">Z = RU</span> with <span class="m">R² ∼ χ²₄</span> and <span class="m">U</span> uniform on the sphere, both constraints become a single radial one, <span class="m">R &gt; √u · q(U)</span>, where the cost <span class="m">q = max(q₁, q₂)</span> is the larger of the two required radii. The exponential rate is <span class="m">½ min q²</span>; the <em>prefactor</em> is decided by the local geometry where the minimum is attained. Move <span class="m">b</span> and watch the conditional angular cloud pass through the three mechanisms: a slack constraint leaves a full Gaussian blob, a weakly contacting one asymptotically cuts it in half, and a genuinely switching pair moves the minimiser off and costs a factor <span class="m">u<sup>−1/2</sup></span>.
@@ -60,8 +62,8 @@
   <div class="lay">
     <div>
       <div class="two">
-        <figure><canvas id="cw" width="520" height="440"></canvas><figcaption>the conditional angular cloud in the normal chart <span class="m">w = ρ₂(cos ψ, sin ψ)</span>, where <span class="m">ρ₂</span> is the weight on the increment directions and <span class="m">ψ</span> the angle between the two; the orange curve is where the two required radii are equal. At large u, slack gives a full blob away from it; weak contact gives half a blob against it. Switching: the cloud clings to it, long in the quadratic directions and thin across the linear one — that anisotropy is the factor u<sup>−1/2</sup>.</figcaption></figure>
-        <figure><canvas id="cq" width="520" height="440"></canvas><figcaption>the cost <span class="m">q(U)²</span> over the angular chart <span class="m">(ψ, χ)</span>, <span class="m">ρ₂ = sin χ</span>; dark is cheap. The minimiser is marked: the edge χ = 0 when b ≤ 1, and one point in this chart when b &gt; 1. In the full sphere each represents a circle of common directions; the edge is a coordinate degeneracy.</figcaption></figure>
+        <figure><canvas id="cw" width="520" height="440"></canvas><figcaption>the conditional angular cloud in the rotation-reduced chart <span class="m">w = ρ₂(cos ψ, sin ψ)</span>, where <span class="m">ρ₂</span> is the weight on the increment directions and <span class="m">ψ</span> the signed angle from B(s) to the increment B(t) − B(s); the orange curve is where the two required radii are equal. At large u, slack gives a full blob away from it; weak contact gives half a blob against it. Switching: the cloud clings to it, long in the quadratic directions and thin across the linear one — that anisotropy is the factor u<sup>−1/2</sup>.</figcaption></figure>
+        <figure><canvas id="cq" width="520" height="440"></canvas><figcaption>the cost <span class="m">q(U)²</span> over the angular chart <span class="m">(ψ, χ)</span>, <span class="m">ρ₂ = sin χ</span>; blue is low cost, orange is high cost. The black marker or line identifies the minimiser: the edge χ = 0 when b ≤ 1, and one point in this chart when b &gt; 1. In the full sphere each represents a circle of common directions; the edge is a coordinate degeneracy.</figcaption></figure>
       </div>
       <figure><canvas id="cr" width="1060" height="300"></canvas><figcaption>the exponential rate <span class="m">I<sub>b</sub> = ½ min q²</span> against <span class="m">b</span>, with the five regimes; dots are Monte Carlo values of <span class="m">−log p<sub>b</sub>(u)/u</span> at the current <span class="m">u</span></figcaption></figure>
       <div class="grid3">
@@ -71,15 +73,15 @@
       </div>
     </div>
     <div class="panel">
-      <label>Threshold ratio b = <span id="bv">1.00</span></label>
+      <label for="b">Threshold ratio b = <span id="bv">1.00</span></label>
       <input type="range" id="b" min="0.4" max="4.2" step="0.0001" value="1">
-      <label>Level u = <span id="uv">60</span></label>
+      <label for="u">Level u = <span id="uv">60</span></label>
       <input type="range" id="u" min="10" max="300" step="5" value="60">
-      <label>Second time t = <span id="tv">1.60</span> &nbsp;(s = 1)</label>
+      <label for="t">Second time t = <span id="tv">1.60</span> &nbsp;(s = 1)</label>
       <input type="range" id="t" min="1.1" max="2.5" step="0.05" value="1.6">
       <div class="row"><button id="re">Resample</button><button id="b1">b = 1</button><button id="bh">b = (t/s)²</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">The radial–angular identity <span class="m">p<sub>b</sub>(u) = E[ F̄<sub>χ²₄</sub>(u q(U)²) ]</span> is exact, and for four degrees of freedom <span class="m">F̄(x) = (1 + x/2)e<sup>−x/2</sup></span>. The displayed Monte Carlo values average this function over 40 000 uniform directions. This avoids counting rare hits, but still has sampling error, especially when the angular mass is concentrated. The effective sample size (ESS) and estimated relative standard error are shown below the estimate. The cloud resamples these finitely many directions with weight <span class="m">F̄(u q(U)²)</span>, approximating the exact conditional angular law. Half-clouds and Gaussian shapes describe the large-u limit, not exact finite-u shapes.</div>
+      <div class="note">The radial–angular identity <span class="m">p<sub>b</sub>(u) = E[ F̄<sub>χ²₄</sub>(u q(U)²) ]</span> is exact, and for four degrees of freedom <span class="m">F̄(x) = (1 + x/2)e<sup>−x/2</sup></span>. The displayed Monte Carlo values average this function over 40 000 uniform directions. The cloud resamples 1 400 of these directions with probabilities proportional to their radial survival weights. This avoids counting rare hits, but still has sampling error, especially when the angular mass is concentrated. The effective sample size (ESS) and estimated relative standard error are shown below the estimate. The cloud resamples these finitely many directions with weight <span class="m">F̄(u q(U)²)</span>, approximating the exact conditional angular law. Half-clouds and Gaussian shapes describe the large-u limit, not exact finite-u shapes.</div>
     </div>
   </div>
 </div>
@@ -117,7 +119,7 @@ function evaluate(){let s=0,mx=-Infinity;const w=new Float64Array(N);
     while(lo<hi){const mid=(lo+hi)>>1;if(cum[mid]<r)lo=mid+1;else hi=mid}
     cloud.push([WC[lo],WS[lo]])}}
 function chiB(){const D=T-S;if(b<=1)return 0;if(b>=(T/S)**2)return Math.atan(Math.sqrt(D/S));return Math.atan((Math.sqrt(b)-1)*Math.sqrt(S/D))}
-function Ib(){const D=T-S,bh=(T/S)*(T/S);
+function Ib(bValue=b){const b=bValue;const D=T-S,bh=(T/S)*(T/S);
   if(b<=1)return 1/(2*S);
   if(b>=bh)return b/(2*T);
   return 1/(2*S)+Math.pow(Math.sqrt(b)-1,2)/(2*D)}
@@ -141,7 +143,8 @@ function drawW(){
   let mx=0,my=0;for(const p of cloud){mx+=p[0];my+=p[1]}mx/=cloud.length;my/=cloud.length;
   let sd=0;for(const p of cloud)sd+=(p[0]-mx)**2+(p[1]-my)**2;sd=Math.sqrt(sd/cloud.length);
   const R=Math.max(3.4*sd,0.06), cx=mx, cy=my;
-  const X=v=>W/2+(W/2-30)*(v-cx)/R, Y=v=>H/2-(H/2-26)*(v-cy)/R;
+  const scale=Math.min(W/2-30,H/2-26)/R;
+  const X=v=>W/2+scale*(v-cx), Y=v=>H/2-scale*(v-cy);
   ctx.strokeStyle='rgba(27,42,74,.18)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(X(cx-R),Y(0));ctx.lineTo(X(cx+R),Y(0));ctx.moveTo(X(0),Y(cy-R));ctx.lineTo(X(0),Y(cy+R));ctx.stroke();
   // boundary of the second constraint: g2 = b*s*rho1^2, in w-coords
   const D=T-S,rt=Math.sqrt(S*D);
@@ -195,7 +198,9 @@ function drawR(){
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   const b0=0.4,bh=(T/S)*(T/S),b1=Math.max(4.2,bh+0.4);
   const X=v=>46+(W-64)*(v-b0)/(b1-b0);
-  let ymax=0;const f=x=>{const sv=b;b=x;const r=Ib();b=sv;return r};
+  const f=Ib;
+  const dots=Array.from({length:19},(_,i)=>{const x=b0+(b1-b0)*i/18;return [x,-rateAt(x)/u]});
+  let ymax=Math.max(...dots.map(point=>point[1]));
   for(let k=0;k<=200;k++)ymax=Math.max(ymax,f(b0+(b1-b0)*k/200));
   const Y=v=>16+(H-48)*(1-v/(ymax*1.08));
   const bands=[[b0,1,'rgba(31,95,168,.07)'],[1,Math.min(bh,b1),'rgba(224,114,42,.10)'],[Math.min(bh,b1),b1,'rgba(31,95,168,.07)']];
@@ -204,8 +209,7 @@ function drawR(){
   for(let k=0;k<=400;k++){const x=b0+(b1-b0)*k/400,y=Y(f(x));k?ctx.lineTo(X(x),y):ctx.moveTo(X(x),y)}ctx.stroke();
   // Monte Carlo dots
   ctx.fillStyle='#1b2a4a';
-  for(let k=0;k<=18;k++){const x=b0+(b1-b0)*k/18;const lp=rateAt(x);
-    ctx.beginPath();ctx.arc(X(x),Y(-lp/u),3.4,0,7);ctx.fill()}
+  for(const [x,rate] of dots){ctx.beginPath();ctx.arc(X(x),Y(rate),3.4,0,7);ctx.fill()}
   ctx.strokeStyle='rgba(27,42,74,.35)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
   ctx.beginPath();ctx.moveTo(X(b),16);ctx.lineTo(X(b),H-32);ctx.stroke();ctx.setLineDash([]);
   ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';
@@ -220,7 +224,7 @@ function stats(){const a=asymp();
   document.getElementById('rv').textContent=(pMC/a.v).toFixed(3)}
 function regime(){const r=regimeOf(b),e=document.getElementById('reg');
   const txt=[
-   ['Slack','Only the first constraint binds. The minimiser is the whole circle χ = 0, the second constraint is strictly inactive there, and the angular cloud is a full Gaussian blob: the classical quadratic Laplace approximation, prefactor 1.'],
+   ['Slack','Only the first constraint binds. On the sphere the minimisers form the circle χ = 0, the second constraint is strictly inactive there, and the angular cloud is a full Gaussian blob: the classical quadratic Laplace approximation, prefactor 1.'],
    ['Weak contact','At b = 1 the second constraint ties at the minimiser but with zero multiplier. It does not move the minimiser and does not change the power of u — it simply cuts the normal Gaussian tube in half. The limiting cloud is half a Gaussian blob; the leading asymptotic constant is ½. At finite u the shape and probability still have corrections.'],
    ['Genuinely switching','Both multipliers are positive. The minimiser leaves the circle χ = 0 and moves to χ_b = arctan((√b−1)√(s/Δ)); one normal direction now has first-order contact and is scaled differently from the quadratic ones, which costs a factor u^(−1/2).'],
    ['Weak contact again','At b = (t/s)² the first constraint ties with zero multiplier — the mirror image of b = 1, again a factor ½.'],

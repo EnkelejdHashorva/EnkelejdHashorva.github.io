@@ -50,9 +50,11 @@
   .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
   .status{font-size:13px;color:var(--muted);margin-top:8px;min-height:1.3em}
 </style>
+<link rel="stylesheet" href="illustrations.css">
+<script defer src="illustrations.js"></script>
 </head>
 <body>
-<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="top"><b><a href="../index.html" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="index.html">← all illustrations</a></div>
 <div class="wrap">
   <h1>The most likely path of a large exponential integral</h1>
   <p class="lead">Let <span class="m">X</span> be a fractional Brownian motion with Hurst index <span class="m">H</span> on <span class="m">[0,1]</span> and <span class="m">I = ∫₀¹ e<sup>X(t)</sup> dt</span>. How does <span class="m">I</span> become larger than a big <span class="m">b</span>? The answer is a variational problem in the reproducing kernel Hilbert space: the cheapest path <span class="m">h<sub>b</sub></span> with <span class="m">∫e<sup>h<sub>b</sub></sup> ≥ b</span>, whose norm <span class="m">ρ<sub>b</sub></span> gives the Jensen–Gaussian lower bound <span class="m">P(I &gt; b) ≥ Ψ(ρ<sub>b</sub>)</span>. The variational path concentrates its exponential mass near the variance-maximising endpoint <span class="m">t = 1</span>; below we compare a numerical candidate with simulated exceedances. The bound is asymptotically <em>exact</em> when <span class="m">H &gt; ½</span>; for Brownian motion the ratio tends to <span class="m">√2</span>; for rougher paths the cited result gives logarithmic asymptotics, without an exact ratio limit.
@@ -66,25 +68,25 @@
       </div>
       <div class="grid3">
         <div class="stat"><div class="k">Level b</div><div class="v" id="bv">—</div><div class="s" id="bs"></div></div>
-        <div class="stat"><div class="k">ρ<sub>b</sub> and Ψ(ρ<sub>b</sub>)</div><div class="v" id="rv">—</div><div class="s" id="rs"></div></div>
+        <div class="stat"><div class="k">ρ<sub>b</sub> (grid candidate)</div><div class="v" id="rv">—</div><div class="s" id="rs"></div></div>
         <div class="stat"><div class="k">Monte Carlo P(I &gt; b)</div><div class="v" id="pv">—</div><div class="s" id="ps"></div></div>
       </div>
       <div class="status" id="st"></div>
     </div>
     <div class="panel">
-      <label>Hurst index H = <span id="hv">0.75</span></label>
+      <label for="h">Hurst index H = <span id="hv">0.75</span></label>
       <input type="range" id="h" min="0.2" max="0.95" step="0.05" value="0.75">
-      <label>Level: log b = <span id="lv">2.0</span></label>
+      <label for="l">Level: log b = <span id="lv">2.0</span></label>
       <input type="range" id="l" min="0.5" max="4" step="0.05" value="2">
       <div class="row"><button id="run">Resimulate</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">Grid of 60 points; fBm by Cholesky; 40 000 paths, stored so that the level slider re-reads them instantly. The numerical candidate solves the discrete KKT system <span class="m">R<sup>−1</sup>h = λ Δt e<sup>h</sup></span>, <span class="m">Δt Σe<sup>h</sup> = b</span> by Newton continuation; stationarity alone does not certify global minimality. The continuous-time results require mesh refinement as b grows. The ratio curve stops below 20 exceedances; even its endpoint is statistically noisy.</div>
+      <div class="note">Grid of 60 points; fBm by Cholesky; 40 000 paths, stored so that the level slider re-reads them instantly. The numerical candidate solves the discrete KKT system <span class="m">R<sup>−1</sup>h = λ Δt e<sup>h</sup></span>, <span class="m">Δt Σe<sup>h</sup> = b</span> by Newton continuation; stationarity alone does not certify global minimality. At H = ½ the statistic also reports the exact continuous norm from Example 3.1, equation (32). The continuous-time results require mesh refinement as b grows. The ratio curve stops below 20 exceedances; even its endpoint is statistically noisy.</div>
     </div>
   </div>
 </div>
 <script>
 const n=60,T=1,dt=T/n,t=Array.from({length:n},(_,i)=>(i+0.5)*dt);
-let H=0.75,logb=2,L=null,Rinv=null,paths=null,I=null,order=null,sol=[],running=false;
+let H=0.75,logb=2,L=null,Rinv=null,paths=null,I=null,sol=[],running=false;
 function randn(){let a=1-Math.random(),b=Math.random();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
 const dark=()=>true;
 function erfc(x){const z=Math.abs(x),s=1/(1+z/2);const r=s*Math.exp(-z*z-1.26551223+s*(1.00002368+s*(0.37409196+s*(0.09678418+s*(-0.18628806+s*(0.27886807+s*(-1.13520398+s*(1.48851587+s*(-0.82215223+s*0.17087277)))))))));return x>=0?r:2-r}
@@ -105,6 +107,12 @@ function newton(h,lam,b){for(let it=0;it<60;it++){const e=h.map(Math.exp);const 
   return{h,lam,ok:false}}
 function computeMinimisers(){sol=[];let h=new Array(n).fill(0),lam=0;const grid=[];for(let lb=0.15;lb<=4.05;lb+=0.05)grid.push(lb);
   for(const lb of grid){const b=Math.exp(lb);const r=newton(h.slice(),lam,b);h=r.h;lam=r.lam;let rho2=0;for(let i=0;i<n;i++){let q=0;for(let j=0;j<n;j++)q+=Rinv[i][j]*h[j];rho2+=h[i]*q}sol.push({lb,b,h:h.slice(),rho:Math.sqrt(Math.max(rho2,0)),ok:r.ok})}}
+// Example 3.1, equation (32), for standard Brownian motion on [0,1].
+function brownianNorm(b){
+  let lo=0,hi=12;
+  for(let k=0;k<60;k++){const w=(lo+hi)/2;if(Math.sinh(w)/w<b)lo=w;else hi=w}
+  const w=(lo+hi)/2;return Math.sqrt(w*w-2*w*Math.tanh(w/2))
+}
 function nearest(lb){let best=sol[0];for(const s of sol)if(Math.abs(s.lb-lb)<Math.abs(best.lb-lb))best=s;return best}
 async function simulate(){if(running)return;running=true;for(const id of ['run','h','l'])document.getElementById(id).disabled=true;
   try{
@@ -112,33 +120,34 @@ async function simulate(){if(running)return;running=true;for(const id of ['run',
   const N=40000;paths=new Float32Array(N*n);I=new Float64Array(N);const z=new Float64Array(n);
   for(let p=0;p<N;p++){for(let i=0;i<n;i++)z[i]=randn();let s=0;for(let i=0;i<n;i++){let v=0;const Li=L[i];for(let k=0;k<=i;k++)v+=Li[k]*z[k];paths[p*n+i]=v;s+=Math.exp(v)}I[p]=s*dt;
     if(p%8000===0){document.getElementById('st').textContent=`simulating… ${p}/${N}`;await new Promise(r=>setTimeout(r,0))}}
-  order=Array.from({length:N},(_,i)=>i).sort((a,b)=>I[b]-I[a]);document.getElementById('st').textContent=`${N.toLocaleString()} paths simulated`;
-  }catch(error){paths=null;I=null;order=null;document.getElementById('st').textContent='Simulation failed. Please resimulate: '+error.message}
+  document.getElementById('st').textContent=`${N.toLocaleString()} paths simulated`;
+  }catch(error){paths=null;I=null;document.getElementById('st').textContent='Simulation failed. Please resimulate: '+error.message}
   finally{running=false;for(const id of ['run','h','l'])document.getElementById(id).disabled=false}if(paths)update()}
 function draw(){
   if(running||!sol.length)return;const s=nearest(logb),b=s.b,d=dark();
   const cv=document.getElementById('cp'),ctx=cv.getContext('2d'),W=cv.width,Hh=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,Hh);
-  let ymin=Math.min(-2.5,...s.h),ymax=Math.max(logb+1.5,3,...s.h);
+  let ymin=s.ok?Math.min(-2.5,...s.h):-2.5,ymax=s.ok?Math.max(logb+1.5,3,...s.h):Math.max(logb+1.5,3);
   if(paths){const displayed=Array.from({length:Math.min(60,I.length)},(_,i)=>i);let accepted=0;for(let p=0;p<I.length&&accepted<40;p++)if(I[p]>b){displayed.push(p);accepted++}for(const p of displayed)for(let i=0;i<n;i++){const v=paths[p*n+i];ymin=Math.min(ymin,v);ymax=Math.max(ymax,v)}}
   const margin=.06*(ymax-ymin);ymin-=margin;ymax+=margin;const X=tt=>30+(W-40)*tt/T,Y=v=>16+(Hh-40)*(ymax-v)/(ymax-ymin);
   ctx.strokeStyle=d?'rgba(27,42,74,.2)':'rgba(27,42,74,.15)';ctx.beginPath();ctx.moveTo(X(0),Y(0));ctx.lineTo(X(T),Y(0));ctx.stroke();
   if(paths){ctx.lineWidth=1;ctx.strokeStyle=d?'rgba(93,107,133,.18)':'rgba(93,107,133,.16)';for(let p=0;p<60;p++){ctx.beginPath();for(let i=0;i<n;i++){const y=Y(paths[p*n+i]);i?ctx.lineTo(X(t[i]),y):ctx.moveTo(X(t[i]),y)}ctx.stroke()}
     let k=0;ctx.strokeStyle=d?'rgba(27,42,74,.7)':'rgba(27,42,74,.6)';for(let p=0;p<I.length&&k<40;p++){if(I[p]<=b)continue;k++;ctx.beginPath();for(let i=0;i<n;i++){const y=Y(paths[p*n+i]);i?ctx.lineTo(X(t[i]),y):ctx.moveTo(X(t[i]),y)}ctx.stroke()}}
-  ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=2.2;ctx.setLineDash([7,4]);ctx.beginPath();for(let i=0;i<n;i++){const y=Y(s.h[i]);i?ctx.lineTo(X(t[i]),y):ctx.moveTo(X(t[i]),y)}ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('t → 1',W-42,Hh-8);ctx.fillText('h_b',X(T)-30,Y(s.h[n-1])-8);ctx.fillText(`H = ${H.toFixed(2)}`,30,Hh-8);
+  if(s.ok){ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=2.2;ctx.setLineDash([7,4]);ctx.beginPath();for(let i=0;i<n;i++){const y=Y(s.h[i]);i?ctx.lineTo(X(t[i]),y):ctx.moveTo(X(t[i]),y)}ctx.stroke();ctx.setLineDash([])}
+  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('t = 1',W-42,Hh-8);ctx.fillText('0',12,Y(0)+4);
+  for(let v=Math.ceil(ymin);v<=ymax;v++){if(v!==0&&v%2===0)ctx.fillText(String(v),8,Y(v)+4)}if(s.ok)ctx.fillText('h_b',X(T)-30,Y(s.h[n-1])-8);ctx.fillText(`H = ${H.toFixed(2)}`,30,Hh-8);
   // ratio panel
   const c2=document.getElementById('cr'),cx=c2.getContext('2d'),W2=c2.width,H2=c2.height;cx.fillStyle=d?'#ffffff':'#ffffff';cx.fillRect(0,0,W2,H2);
   const ratioPoints=[];if(I)for(const q of sol){if(!q.ok)continue;let cnt=0;for(let p=0;p<I.length;p++)if(I[p]>q.b)cnt++;if(cnt<20)break;ratioPoints.push({lb:q.lb,r:(cnt/I.length)/Psi(q.rho)})}
   const rmax=Math.max(2,...ratioPoints.map(p=>p.r))*1.1;const X2=lb=>36+(W2-50)*(lb-0.15)/(4.05-0.15),Y2=r=>16+(H2-44)*(rmax-r)/rmax;
   cx.strokeStyle=d?'rgba(27,42,74,.5)':'rgba(27,42,74,.4)';cx.setLineDash([4,4]);cx.beginPath();cx.moveTo(X2(0.15),Y2(1));cx.lineTo(X2(4.05),Y2(1));cx.moveTo(X2(0.15),Y2(Math.SQRT2));cx.lineTo(X2(4.05),Y2(Math.SQRT2));cx.stroke();cx.setLineDash([]);
-  cx.fillStyle=d?'#5d6b85':'#5d6b85';cx.fillText('1',X2(4.05)+4,Y2(1)+4);cx.fillText('√2',X2(4.05)+2,Y2(Math.SQRT2)+4);cx.fillText('log b →',W2-56,H2-8);cx.fillText('P(I>b) / Ψ(ρ_b)',36,14);
+  cx.fillStyle=d?'#5d6b85':'#5d6b85';cx.fillText('1',X2(4.05)+4,Y2(1)+4);cx.fillText('√2',X2(4.05)+2,Y2(Math.SQRT2)+4);for(let v=1;v<=4;v++)cx.fillText(String(v),X2(v)-3,H2-8);cx.fillText('log b',X2(.2),H2-8);cx.fillText('P(I>b) / Ψ(ρ_b)',36,14);
   if(paths){cx.strokeStyle=d?'#1f5fa8':'#1f5fa8';cx.lineWidth=2;cx.beginPath();let first=true;const N=I.length;
     for(const q of ratioPoints){const x=X2(q.lb),y=Y2(q.r);first?cx.moveTo(x,y):cx.lineTo(x,y);first=false}cx.stroke();
     cx.strokeStyle=d?'#e0722a':'#e0722a';cx.lineWidth=1;cx.setLineDash([3,3]);cx.beginPath();cx.moveTo(X2(logb),16);cx.lineTo(X2(logb),H2-28);cx.stroke();cx.setLineDash([])}
   // stats
   document.getElementById('bv').textContent=b.toFixed(2);document.getElementById('bs').textContent=`log b = ${logb.toFixed(2)}; E I = ${(sol[0]?'':'')}${meanI().toFixed(2)}`;
-  document.getElementById('rv').textContent=s.rho.toFixed(3);document.getElementById('rs').textContent=`Ψ(ρ_b) = ${Psi(s.rho).toExponential(2)}`+(s.ok?'':' · Newton not fully converged');
-  if(paths){let cnt=0;for(let p=0;p<I.length;p++)if(I[p]>b)cnt++;const pr=cnt/I.length;document.getElementById('pv').textContent=cnt?pr.toExponential(2):'0';document.getElementById('ps').textContent=cnt?`${cnt} of ${I.length.toLocaleString()} · ratio ${(pr/Psi(s.rho)).toFixed(2)}`:'no path exceeded b'}}
+  document.getElementById('rv').textContent=s.ok?s.rho.toFixed(3):'—';document.getElementById('rs').textContent=(s.ok?`Grid Ψ(ρ) = ${Psi(s.rho).toExponential(2)}`:'Newton did not converge')+(H===0.5?` · exact continuous ρ = ${brownianNorm(b).toFixed(3)}`:'');
+  if(paths){let cnt=0;for(let p=0;p<I.length;p++)if(I[p]>b)cnt++;const pr=cnt/I.length;document.getElementById('pv').textContent=cnt?pr.toExponential(2):'0';document.getElementById('ps').textContent=cnt?`${cnt} of ${I.length.toLocaleString()}`+(s.ok?` · ratio ${(pr/Psi(s.rho)).toFixed(2)}`:''):'no path exceeded b'}}
 function meanI(){let s=0;for(let i=0;i<n;i++)s+=Math.exp(0.5*Math.pow(t[i],2*H));return s*dt}
 function regime(){const r=document.getElementById('reg');
   r.innerHTML=H>0.5?`<b>Exact regime, H &gt; ½</b>Squared-increment exponent 2H exceeds the variance-loss exponent 1: P(I &gt; b) ~ Ψ(ρ<sub>b</sub>). This is a continuous-time limit, not a convergence guarantee for a fixed simulation grid.`

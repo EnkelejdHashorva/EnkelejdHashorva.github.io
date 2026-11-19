@@ -1,0 +1,46 @@
+/* Keep the colours inside each graph aligned with its legend. */
+:root {
+  --bg: #f7f8f2;
+  --ink: #26372e;
+  --muted: #4e6156;
+  --line: #d3ddd2;
+}
+body { color: var(--ink); background: var(--bg); }
+.top {
+  background: #eef3e9;
+  border-block: 1px solid var(--line);
+  padding-inline: max(20px, calc((100% - 1060px) / 2));
+  gap: 14px;
+}
+.top a { color: #385e43; }
+.wrap { min-width: 0; }
+h1 { font-size: clamp(1.85rem, 3.6vw, 2.85rem); line-height: 1.1; }
+.lead { font-size: 1rem; }
+figure { min-width: 0; }
+:focus-visible { outline: 2px solid #356546; outline-offset: 3px; }
+.plot-expand {
+  display: block; margin: 3px 0 0 auto; padding: 3px 5px;
+  border: 0; border-radius: 3px; background: transparent; color: #385e43;
+  font: 500 .81rem/1.5 system-ui, sans-serif; text-decoration: underline; text-underline-offset: .18em;
+}
+.plot-expand:hover { background: #e5eee3; color: #213e2c; }
+.plot-dialog {
+  width: fit-content; max-width: 95vw; max-height: 93vh; box-sizing: border-box;
+  overflow: auto; padding: 14px; background: white; color: var(--ink);
+  border: 1px solid #aab8aa; border-radius: 5px;
+}
+.plot-dialog::backdrop { background: rgba(22,37,29,.55); }
+.plot-dialog header {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding-bottom: 10px; line-height: 1.3;
+}
+.plot-dialog header strong { font: 500 1.12rem Georgia,serif; }
+.plot-dialog header button { margin: 0; min-height: 36px; }
+.plot-dialog .plot-frame { overflow: auto; width: 100%; max-width: 89vw; max-height: 65vh; }
+.plot-dialog .plot-frame canvas { border: 0; border-radius: 0; display: block; max-width: none; background: white; }
+.plot-dialog p { max-width: 75ch; margin: 8px 0 0; font: .9rem/1.45 system-ui,sans-serif; }
+@media (max-width: 600px) {
+  .plot-expand { min-height: 32px; }
+  .plot-dialog { padding: 10px; }
+}
+@media print { .plot-expand, .plot-dialog { display: none; } }

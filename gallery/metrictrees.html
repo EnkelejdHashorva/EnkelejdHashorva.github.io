@@ -49,9 +49,11 @@
   .stat .s{font-size:12px;color:var(--muted);margin-top:4px}
   .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 </style>
+<link rel="stylesheet" href="illustrations.css">
+<script defer src="illustrations.js"></script>
 </head>
 <body>
-<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="top"><b><a href="../index.html" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="index.html">← all illustrations</a></div>
 <div class="wrap">
   <h1>Ruin on a Brownian metric tree</h1>
   <p class="lead">A fixed rooted skeleton carries an independent Brownian motion on every edge, so each leaf sees a Brownian path and two leaves share their history up to their most recent common ancestor: <span class="m">Σ<sub>ij</sub> = t(i ∧ j)</span>. Ruin asks that <em>all</em> leaves cross their own barriers <span class="m">u q<sub>j</sub></span> at one common time. Two things decide the answer. The exponent comes from the quadratic programme <span class="m">min{ w<sup>⊤</sup>Σ<sup>−1</sup>w : w ≥ q }</span>, which is an obstacle problem on an electrical network: each edge has resistance equal to its length, and the multipliers are the currents injected at the leaves — an <em>active</em> leaf pays, a strictly slack leaf is carried above its barrier by the others. A binding leaf with zero multiplier still contributes a Gaussian boundary factor. The ruin constant combines the reversed trunk with what happens in the last window of length <span class="m">κ/u²</span>, where each leaf sprouts a whole genealogy whose descendants must all be above the barrier at that same instant.
@@ -71,19 +73,19 @@
       </div>
     </div>
     <div class="panel">
-      <label>Barriers q₁ … q₄</label>
-      <input type="range" id="q0" min="0.2" max="1.6" step="0.02" value="1">
-      <input type="range" id="q1" min="0.2" max="1.6" step="0.02" value="1">
-      <input type="range" id="q2" min="0.2" max="1.6" step="0.02" value="1">
-      <input type="range" id="q3" min="0.2" max="1.6" step="0.02" value="0.62">
+      <label for="q0">Barriers q₁ … q₄</label>
+      <input type="range" id="q0" min="0.2" max="1.6" step="0.02" value="1" aria-label="Barrier at leaf 1">
+      <input type="range" id="q1" min="0.2" max="1.6" step="0.02" value="1" aria-label="Barrier at leaf 2">
+      <input type="range" id="q2" min="0.2" max="1.6" step="0.02" value="1" aria-label="Barrier at leaf 3">
+      <input type="range" id="q3" min="0.2" max="1.6" step="0.02" value="0.62" aria-label="Barrier at leaf 4">
       <div id="qv" style="font-size:12px;color:var(--muted);margin-top:4px"></div>
-      <label>Split time of leaves 1,2 : r₁ = <span id="r1v">0.70</span></label>
+      <label for="r1">Split time of leaves 1,2 : r₁ = <span id="r1v">0.70</span></label>
       <input type="range" id="r1" min="0.4" max="0.95" step="0.01" value="0.7">
-      <label>Split time of leaves 3,4 : r₂ = <span id="r2v">0.55</span></label>
+      <label for="r2">Split time of leaves 3,4 : r₂ = <span id="r2v">0.55</span></label>
       <input type="range" id="r2" min="0.4" max="0.95" step="0.01" value="0.55">
-      <label>Window length κ = <span id="kv">1.5</span></label>
+      <label for="k">Window length κ = <span id="kv">1.5</span></label>
       <input type="range" id="k" min="0.4" max="3" step="0.1" value="1.5">
-      <div class="row"><button id="re">Resample</button><button id="eq">Equal barriers</button></div>
+      <div class="row"><button id="re">Resample</button><button id="eq">Equal barriers</button><button id="boundary">Zero-current boundary</button></div>
       <div class="regime" id="reg"></div>
       <div class="note">Skeleton: root splits at r₀ = 0.35 into two branches, which split at r₁ and r₂ into the sister pairs {1,2} and {3,4} — a four-leaf instance of Theorem 2.1 and Proposition 3.4. Each of these four groups has its own binary genealogy splitting at κ/2. The upper paths are Brownian bridge draws on a time grid, conditional on the skeleton leaf targets u q̃. In the lower panel, positive active offsets have rate νⱼ in the displayed u(X − u qⱼ) scale. Strictly slack groups have diverging positive offsets on this scale. A binding constraint with zero multiplier instead contributes the theorem’s conditional Gaussian boundary factor; it must not be treated as automatically cleared.</div>
     </div>
@@ -221,7 +223,8 @@ function drawWin(){const cv=document.getElementById('cw'),ctx=cv.getContext('2d'
     if(!g.active){ctx.fillStyle='#5d6b85';ctx.font='11px Inter,sans-serif';ctx.fillText(`group ${j+1}`,8,y0+12);
       ctx.fillText(g.isBoundary?'Zero multiplier, binding: conditional Gaussian boundary factor (not drawn on this scale).':'Strictly slack: its positive offset diverges on this scale.',62,y0+laneH/2);continue}
     let lo=g.off-2.1,hi=g.off+2.1;lo=Math.min(lo,-1.4);
-    const Y=v=>y0+(laneH-20)*(hi-Math.max(Math.min(v,hi),lo))/(hi-lo);
+    for(const branch of [g.stem,g.s1,g.s2])for(const [,v] of branch){lo=Math.min(lo,v-0.15);hi=Math.max(hi,v+0.15)}
+    const Y=v=>y0+(laneH-20)*(hi-v)/(hi-lo);
     ctx.strokeStyle='rgba(27,42,74,.45)';ctx.setLineDash([4,4]);ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(X(0),Y(0));ctx.lineTo(X(KAP),Y(0));ctx.stroke();ctx.setLineDash([]);
     ctx.strokeStyle=g.active?'rgba(31,95,168,.85)':'rgba(93,107,133,.35)';ctx.lineWidth=g.active?1.5:1;
@@ -260,6 +263,11 @@ $('r2').oninput=e=>{r2=+e.target.value;$('r2v').textContent=r2.toFixed(2);recomp
 $('k').oninput=e=>{KAP=+e.target.value;$('kv').textContent=KAP.toFixed(1);recompute()};
 $('re').onclick=recompute;
 $('eq').onclick=()=>{q=[1,1,1,1];for(let i=0;i<4;i++)$('q'+i).value=1;recompute()};
+$('boundary').onclick=()=>{
+  r2=0.6;q=[0.2,0.2,1,r2];
+  $('r2').value=r2;$('r2v').textContent=r2.toFixed(2);
+  q.forEach((v,i)=>$('q'+i).value=v);recompute()
+};
 recompute();
 </script>
 </body>

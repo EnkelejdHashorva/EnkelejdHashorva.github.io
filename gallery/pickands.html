@@ -50,10 +50,12 @@
   @media(max-width:700px){.two{grid-template-columns:1fr}}
   figcaption{font-size:12px;color:var(--muted);margin-top:6px}
   figure{margin:0}
-</style>
+.field-key{display:inline-flex;align-items:center;gap:.35em;white-space:nowrap}.field-key i{display:inline-block;width:3.4em;height:.6em;background:linear-gradient(90deg,#e2e9f5,#1f5fa8,#e0722a);border:1px solid #8792a5}</style>
+<link rel="stylesheet" href="illustrations.css">
+<script defer src="illustrations.js"></script>
 </head>
 <body>
-<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="top"><b><a href="../index.html" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="index.html">← all illustrations</a></div>
 <div class="wrap">
   <h1>Where the Euler characteristic ends and Pickands begins</h1>
   <p class="lead">A centred, unit-variance stationary Gaussian field on the unit square with covariance
@@ -66,7 +68,7 @@
   <div class="lay">
     <div>
       <div class="two">
-        <figure><canvas id="cf" width="480" height="480"></canvas><figcaption>Gaussian field sampled on a 100×100 grid</figcaption></figure>
+        <figure><canvas id="cf" width="480" height="480"></canvas><figcaption>Gaussian field on a 100×100 grid · <span class="field-key">≤ −3 <i aria-hidden="true"></i> ≥ 3</span> (blue = 0)</figcaption></figure>
         <figure><canvas id="ce" width="480" height="480"></canvas><figcaption>grid excursion {X &gt; u}: <span id="ncc">—</span> components (side-sharing pixels)</figcaption></figure>
       </div>
       <div class="grid3">
@@ -76,11 +78,11 @@
       </div>
     </div>
     <div class="panel">
-      <label>Roughness α = <span id="av">2.00</span></label>
+      <label for="a">Roughness α = <span id="av">2.00</span></label>
       <input type="range" id="a" min="0.5" max="2" step="0.05" value="2">
-      <label>Level u = <span id="uv">1.75</span></label>
+      <label for="u">Level u = <span id="uv">1.75</span></label>
       <input type="range" id="u" min="1" max="3.5" step="0.05" value="1.75">
-      <label>Correlation length ℓ = <span id="lv">0.25</span></label>
+      <label for="l">Correlation length ℓ = <span id="lv">0.25</span></label>
       <input type="range" id="l" min="0.1" max="0.5" step="0.01" value="0.25">
       <div class="row"><button id="re">New field</button><button id="run">Run Monte Carlo</button></div>
       <div class="note">Monte Carlo: <span id="nn">0</span> independent Gaussian fields on a 56×56 grid, sampled from the stated covariance by numerical factorisation. The level slider re-reads their maxima instantly. A grid maximum can miss continuous peaks, especially at small α; Monte Carlo sampling and finite levels add further error. The implied constant is simply
@@ -89,7 +91,7 @@
   </div>
 
   <h2>The field near a conditioned high value</h2>
-  <p class="lead">For a one-dimensional slice, condition on <span class="m">X(0) = u</span> and plot <span class="m">u[X(ℓ u<sup>−2/α</sup>s) − u]</span>. As <span class="m">u → ∞</span>, this converges on compact intervals to <span class="m">√2 B<sub>α</sub>(s) − |s|<sup>α</sup></span>, where <span class="m">B<sub>α</sub></span> has Hurst index <span class="m">α/2</span> and variance <span class="m">|s|<sup>α</sup></span>. At <span class="m">α = 2</span> the limit is a parabola with a Gaussian linear tilt. The plot samples the finite-level conditional Gaussian law at the selected <span class="m">u</span>; the dashed curve is the limiting mean. The origin is a conditioned point, so nearby values can exceed <span class="m">u</span>.</p>
+  <p class="lead">For a one-dimensional slice, condition on <span class="m">X(0) = u</span> and plot <span class="m">u[X(ℓ u<sup>−2/α</sup>s) − u]</span>. As <span class="m">u → ∞</span>, this converges on compact intervals to <span class="m">√2 B<sub>α</sub>(s) − |s|<sup>α</sup></span>, where <span class="m">B<sub>α</sub></span> has Hurst index <span class="m">α/2</span> and variance <span class="m">|s|<sup>α</sup></span>. At <span class="m">α = 2</span> the limit is a parabola with a Gaussian linear tilt. The plot samples the finite-level conditional Gaussian law at the selected <span class="m">u</span>; the orange curve is the exact finite-level mean and the dashed curve is the limiting mean. The level slider reuses the Gaussian innovations across levels. The origin is a conditioned point, so nearby values can exceed <span class="m">u</span>.</p>
   <canvas id="cs" width="1100" height="300"></canvas>
   <p class="note">Mathematical background: <a href="https://arxiv.org/abs/math/0507442" target="_blank" rel="noopener">Taylor–Takemura–Adler: the smooth-field EC approximation</a>; <a href="https://arxiv.org/abs/1312.2863" target="_blank" rel="noopener">Dębicki–Hashorva–Soja-Kukieła: homogeneous Gaussian fields</a>; <a href="https://arxiv.org/abs/0904.3832" target="_blank" rel="noopener">Michna: Pickands’ theorem and conditional scaling</a>.</p>
 </div>
@@ -192,13 +194,15 @@ function conditionedShape(ns=241,S=3){
   const factor=covarianceFactor(ns,(i,j)=>u*u*(r(points[i]-points[j])-r(points[i])*r(points[j])));
   return {points,mean,factor};
 }
+let shapeNoise=[];
 function drawShape(){
   const cv=document.getElementById('cs'),ctx=cv.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,cv.width,cv.height);
   const S=3,ns=241,{points,mean,factor}=conditionedShape(ns,S),paths=[];
-  let low=-Math.pow(S,alpha),high=0;
+  let low=Math.min(-Math.pow(S,alpha),...mean),high=0;
   for(let path=0;path<40;path++){
     const y=Float64Array.from(mean);
-    for(const col of factor){const z=randn();for(let i=0;i<ns;i++)y[i]+=col[i]*z}
+    const noise=shapeNoise[path]||(shapeNoise[path]=Float64Array.from({length:ns},randn));
+    for(let k=0;k<factor.length;k++){const col=factor[k];for(let i=0;i<ns;i++)y[i]+=col[i]*noise[k]}
     for(const v of y){low=Math.min(low,v);high=Math.max(high,v)}paths.push(y);
   }
   const pad=.07*Math.max(1,high-low);low-=pad;high+=pad;
@@ -208,10 +212,14 @@ function drawShape(){
   for(const y of paths){ctx.beginPath();for(let i=0;i<ns;i++)i?ctx.lineTo(xs(points[i]),ys(y[i])):ctx.moveTo(xs(points[i]),ys(y[i]));ctx.stroke()}
   ctx.strokeStyle='#1b2a4a';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();
   for(let i=0;i<ns;i++){const x=xs(points[i]),y=ys(-Math.pow(Math.abs(points[i]),alpha));i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('0',22,ys(0)+4);ctx.fillText('s = −3',xs(-S),cv.height-28);ctx.fillText('0',xs(0)-3,cv.height-28);ctx.fillText('3',xs(S)-6,cv.height-28);
+  ctx.strokeStyle='#c36928';ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<ns;i++){const x=xs(points[i]),y=ys(mean[i]);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();
+  ctx.fillStyle='#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('0',22,ys(0)+4);
+  const step=2**Math.ceil(Math.log2((high-low)/5));
+  for(let v=Math.ceil(low/step)*step;v<=high;v+=step){if(v!==0)ctx.fillText(String(v),12,ys(v)+4)}ctx.fillText('s = −3',xs(-S),cv.height-28);ctx.fillText('0',xs(0)-3,cv.height-28);ctx.fillText('3',xs(S)-6,cv.height-28);
   ctx.fillText(`40 conditional Gaussian paths; u = ${u.toFixed(2)}, α = ${alpha.toFixed(2)}; time = ℓ u^(−2/α)s; dashed: −|s|^α`,16,cv.height-8);
 }
-function newField(){gridFactor=gridFactor||fieldFactor(G);X=gaussianGrid(gridFactor,G);drawField();drawExc();stats();drawShape()}
+function newField(){shapeNoise=[];gridFactor=gridFactor||fieldFactor(G);X=gaussianGrid(gridFactor,G);drawField();drawExc();stats();drawShape()}
 const $=id=>document.getElementById(id);
 $('a').oninput=e=>{alpha=+e.target.value;$('av').textContent=alpha.toFixed(2);resetMC();newField()};
 $('l').oninput=e=>{ell=+e.target.value;$('lv').textContent=ell.toFixed(2);resetMC();newField()};

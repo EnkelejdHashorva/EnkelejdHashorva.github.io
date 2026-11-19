@@ -48,20 +48,22 @@
   .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
   .status{font-size:13px;color:var(--muted);margin-top:4px;min-height:1.3em}
 </style>
+<link rel="stylesheet" href="illustrations.css">
+<script defer src="illustrations.js"></script>
 </head>
 <body>
-<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="top"><b><a href="../index.html" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="index.html">← all illustrations</a></div>
 <div class="wrap">
   <h1>How long does a Gaussian queue remember?</h1>
   <p class="lead">A fluid queue is fed by fractional Brownian motion and drained at rate <span class="m">c</span>: the stationary workload is <span class="m">Q(t) = sup<sub>u≥0</sub> (W(t) − W(t−u))</span> with <span class="m">W(t) = B<sub>H</sub>(t) − ct</span>. The marginal law of <span class="m">Q</span> has been understood for decades; its <em>temporal dependence</em> — an open problem listed by Dębicki &amp; Mandjes — is what this paper settles. The lookback time <span class="m">τ</span>, how far into the past the supremum reaches, is the key: for <span class="m">H ≠ ½</span>,
-  <span class="m">Cov(Q(0), Q(r)) ~ H(2H−1) (E τ)<sup>2</sup> r<sup>2H−2</sup></span> — the queue inherits the dependence range of its input, positive and non-integrable for <span class="m">H &gt; ½</span>, eventually negative for <span class="m">H &lt; ½</span>. Brownian input (<span class="m">H = ½</span>) is the Markovian exception, with exponential decay <span class="m">r<sup>−3/2</sup> e<sup>−c²r/2</sup></span> (Abate–Whitt).
+  <span class="m">Cov(Q(0), Q(r)) ~ H(2H−1) (E τ)<sup>2</sup> r<sup>2H−2</sup></span> — in this equal-drain, single-queue specialization, the queue inherits the dependence range of its input, positive and non-integrable for <span class="m">H &gt; ½</span>, eventually negative for <span class="m">H &lt; ½</span>. Brownian input (<span class="m">H = ½</span>) is the Markovian exception, with exponential decay <span class="m">r<sup>−3/2</sup> e<sup>−c²r/2</sup></span> (Abate–Whitt).
   From <a href="../papers/CovarianceQueues.pdf" target="_blank" rel="noopener">Dębicki, Hashorva &amp; Novikov</a>, <em>Covariance decay for Gaussian queues</em>.</p>
 
   <div class="lay">
     <div>
       <figure><canvas id="ca" width="1060" height="300"></canvas><figcaption>live: the net input W(t) = B<sub>H</sub>(t) − ct (dark), its running minimum (dashed), the workload Q(t) as the gap between them (blue), and the lookback τ(t) — the bracket from now back to the time of the minimum</figcaption></figure>
       <figure><canvas id="cq" width="1060" height="300"></canvas><figcaption>a stretch of the workload Q(t) (blue area) and, below it, the lookback τ(t): the age of the increment that realises the supremum</figcaption></figure>
-      <figure><canvas id="cc" width="1060" height="340"></canvas><figcaption>empirical covariance Cov(Q(0), Q(r)) against lag r on log–log axes (dots; hollow = negative), with the theoretical asymptote (dashed); its fBm constant uses the simulated mean lookback</figcaption></figure>
+      <figure><canvas id="cc" width="1060" height="340"></canvas><figcaption>empirical covariance Cov(Q(0), Q(r)) against lag r on log–log axes (dots; hollow = negative), with the theoretical asymptote (dashed); its fBm constant uses the simulated mean lookback. At H = ½ the solid green curve evaluates the paper’s finite-lag covariance integral for the stationary continuous-time queue</figcaption></figure>
       <div class="grid3">
         <div class="stat"><div class="k">E τ (from the simulation)</div><div class="v" id="et">—</div><div class="s">mean lookback over time</div></div>
         <div class="stat"><div class="k">Var Q</div><div class="v" id="vq">—</div><div class="s" id="vqs"></div></div>
@@ -70,9 +72,9 @@
       <div class="status" id="st"></div>
     </div>
     <div class="panel">
-      <label>Hurst index H = <span id="hv">0.75</span></label>
+      <label for="h">Hurst index H = <span id="hv">0.75</span></label>
       <input type="range" id="h" min="0.3" max="0.9" step="0.05" value="0.75">
-      <label>Drain rate c = <span id="cv">1.0</span></label>
+      <label for="c">Drain rate c = <span id="cv">1.0</span></label>
       <input type="range" id="c" min="0.5" max="2" step="0.1" value="1">
       <div class="row"><button id="run">Resimulate</button><button id="pp">Pause</button></div>
       <div class="regime" id="reg"></div>
@@ -105,9 +107,22 @@ async function simulate(){if(busy)return;busy=true;for(const id of ['run','h','c
     if(r%2===0)previousQ=Q;else{const diff=Q.map((q,i)=>q-previousQ[i]);let vv=0;for(let i=burn;i<N;i++)vv+=diff[i]*diff[i];varQ+=vv/n2/REP;
       for(let k=0;k<ul.length;k++){const lag=ul[k];let s=0,cnt=0;for(let i=burn;i+lag<N;i++){s+=diff[i]*diff[i+lag];cnt++}cov[k]+=s/cnt/REP}previousQ=null}
     if(r===0){sample=Q.slice(burn,burn+15000);sampleTau=tau.slice(burn,burn+15000);sampleW=W.slice(burn,burn+15000)}}
-  sim={ul,cov,meanQ,varQ,meanTau,sample,sampleTau,sampleW};pos=0;st.textContent='';
+  const brownianCurve=H===0.5?ul.map(l=>brownianCovariance(l*dt)):null;
+  sim={ul,brownianCurve,cov,meanQ,varQ,meanTau,sample,sampleTau,sampleW};pos=0;st.textContent='';
   }catch(error){sim=null;st.textContent='Simulation failed. Please resimulate: '+error.message}
   finally{busy=false;for(const id of ['run','h','c'])document.getElementById(id).disabled=false}draw()}
+// Brownian finite-lag covariance, equation (3), in z = 2cs coordinates.
+function brownianCovariance(r){
+  const normalTail=x=>{
+    const z=Math.abs(x)/Math.SQRT2,t=1/(1+0.5*z);
+    const tail=0.5*t*Math.exp(-z*z-1.26551223+t*(1.00002368+t*(0.37409196+t*(0.09678418+t*(-0.18628806+t*(0.27886807+t*(-1.13520398+t*(1.48851587+t*(-0.82215223+t*0.17087277)))))))));
+    return x>=0?tail:1-tail};
+  const sd=Math.sqrt(r),step=0.025;let sum=0;
+  for(let j=1;j<2400;j++){const z=j*step,s=z/(2*c);
+    const v=z*(Math.exp(-z)*normalTail((c*r-s)/sd)-normalTail((c*r+s)/sd));
+    sum+=(j%2?4:2)*v}
+  return sum*step/(12*c*c)
+}
 function theory(r){if(Math.abs(H-0.5)<1e-9)return Math.pow(2,1.5)/(Math.sqrt(Math.PI)*Math.pow(c,5))*Math.pow(r,-1.5)*Math.exp(-c*c*r/2);
   return H*(2*H-1)*sim.meanTau*sim.meanTau*Math.pow(r,2*H-2)}
 function draw(){if(!sim)return;const d=dark();
@@ -127,6 +142,9 @@ function draw(){if(!sim)return;const d=dark();
   cx.strokeStyle=d?'rgba(27,42,74,.15)':'rgba(27,42,74,.12)';for(let e=Math.ceil(ylo);e<=Math.floor(yhi);e++){cx.beginPath();cx.moveTo(X2(xlo),Y2(e));cx.lineTo(X2(xhi),Y2(e));cx.stroke();cx.fillStyle=d?'#5d6b85':'#5d6b85';cx.fillText('1e'+e,8,Y2(e)+4)}
   for(let e=-1;e<=3;e++){if(e<xlo||e>xhi)continue;cx.beginPath();cx.moveTo(X2(e),Y2(ylo));cx.lineTo(X2(e),Y2(yhi));cx.stroke();cx.fillText('r = '+Math.pow(10,e),X2(e)-12,H2-10)}
   cx.strokeStyle=d?'#e0722a':'#e0722a';cx.lineWidth=2;cx.setLineDash([7,5]);cx.beginPath();let f=true;for(let k=0;k<rs.length;k++){const th=Math.abs(theory(rs[k]));if(th<=0)continue;const y=Math.log10(th);if(y<ylo)continue;f?cx.moveTo(X2(lr[k]),Y2(y)):cx.lineTo(X2(lr[k]),Y2(y));f=false}cx.stroke();cx.setLineDash([]);
+  if(sim.brownianCurve){cx.strokeStyle='#2e805f';cx.beginPath();let started=false;
+    sim.brownianCurve.forEach((v,k)=>{const y=Math.log10(v);if(!Number.isFinite(y)||y<ylo||y>yhi){started=false;return}
+      if(started)cx.lineTo(X2(lr[k]),Y2(y));else cx.moveTo(X2(lr[k]),Y2(y));started=true});cx.stroke()}
   for(let k=0;k<vals.length;k++){const a=Math.abs(vals[k]);if(a<=Math.pow(10,ylo))continue;const x=X2(lr[k]),y=Y2(Math.log10(a));cx.beginPath();cx.arc(x,y,4,0,7);if(vals[k]>0){cx.fillStyle=d?'#1f5fa8':'#1f5fa8';cx.fill()}else{cx.strokeStyle=d?'#1f5fa8':'#1f5fa8';cx.lineWidth=1.5;cx.stroke()}}
   cx.fillStyle=d?'#5d6b85':'#5d6b85';cx.fillText('|Cov(Q(0),Q(r))|',54,14);cx.fillText(Math.abs(H-0.5)<1e-9?'dashed: 2^{3/2}/(√π c^5) · r^{-3/2} e^{-c²r/2}':`dashed: H(2H−1)(Eτ)² · r^{${(2*H-2).toFixed(2)}}`,W2-330,14);
   document.getElementById('et').textContent=sim.meanTau.toFixed(2);document.getElementById('vq').textContent=sim.varQ.toFixed(3);document.getElementById('vqs').textContent=`E Q = ${sim.meanQ.toFixed(3)}`+(Math.abs(H-0.5)<1e-9?` (exact 1/(2c) = ${(1/(2*c)).toFixed(3)})`:'');

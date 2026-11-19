@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Parisian ruin of branching Brownian motion — Enkelejd Hashorva, HEC Lausanne</title>
-<meta name="description" content="Parisian ruin of branching Brownian motion: every particle alive stays above a moving line for a whole window, with exponentially small probability. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<title>Parisian simultaneous ruin of branching Brownian motion — Enkelejd Hashorva, HEC Lausanne</title>
+<meta name="description" content="Parisian simultaneous ruin of branching Brownian motion: every particle alive stays above a moving line for a whole window, with exponentially small probability. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
 <meta name="author" content="Enkelejd Hashorva">
 <link rel="canonical" href="https://enkelejdhashorva.github.io/gallery/bbm.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Parisian ruin of branching Brownian motion">
-<meta property="og:description" content="Parisian ruin of branching Brownian motion: every particle alive stays above a moving line for a whole window, with exponentially small probability. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
+<meta property="og:title" content="Parisian simultaneous ruin of branching Brownian motion">
+<meta property="og:description" content="Parisian simultaneous ruin of branching Brownian motion: every particle alive stays above a moving line for a whole window, with exponentially small probability. Interactive illustration by Enkelejd Hashorva, HEC Lausanne.">
 <meta property="og:url" content="https://enkelejdhashorva.github.io/gallery/bbm.html">
 <meta property="og:image" content="https://enkelejdhashorva.github.io/gallery/bbm.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -44,13 +44,15 @@
   .status{font-size:13px;color:var(--muted);margin-top:4px;min-height:1.3em}
   .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 </style>
+<link rel="stylesheet" href="illustrations.css">
+<script defer src="illustrations.js"></script>
 </head>
 <body>
-<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="top"><b><a href="../index.html" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="index.html">← all illustrations</a></div>
 <div class="wrap">
-  <h1>Parisian ruin of branching Brownian motion</h1>
+  <h1>Parisian simultaneous ruin of branching Brownian motion</h1>
   <p class="lead">One Brownian particle starts at the origin; at rate <span class="m">β</span> a particle splits into <span class="m">k</span> children whose motions may be correlated. Against the rising line <span class="m">u + ct</span>, <em>simultaneous Parisian ruin</em> means: at some moment, every particle alive stays above the line for a whole window of length <span class="m">h</span> — the lower envelope <span class="m">Y(t) = min<sub>v</sub> X<sub>v</sub>(t) − ct</span> exceeds <span class="m">u</span> throughout the window. For fixed model parameters and window, as <span class="m">u → ∞</span>, the infinite-horizon probability is asymptotic to <span class="m">C e<sup>−κu</sup></span> with <span class="m">κ = c + √(c² + 2β)</span>: the rate depends only on the slope and the splitting rate, while the offspring numbers, correlations, window and observation grid all sit in the constant. In that high-level limit, conditional on ruin, the first successful window starts around time <span class="m">u/a</span>, <span class="m">a = √(c² + 2β)</span>, with Gaussian spread <span class="m">√(u/a³)</span>. The animation shows successful sampled trees in a finite-horizon approximation; it does not compute the constant <span class="m">C</span> or certify the continuous-time event.
-  From <a href="../papers/Simultaneous_BBM.pdf" target="_blank" rel="noopener">Hashorva, Popivoda, Novikov &amp; Shashkov</a>, <em>Parisian ruin of branching Brownian motion</em>.</p>
+  From <a href="../papers/Simultaneous_BBM.pdf" target="_blank" rel="noopener">Hashorva, Popivoda, Novikov &amp; Shashkov</a>, <em>Parisian simultaneous ruin of branching Brownian motion</em>.</p>
 
   <div class="lay">
     <div>
@@ -62,15 +64,15 @@
       <div class="status" id="st"></div>
     </div>
     <div class="panel">
-      <label>Level u = <span id="uv">1.5</span></label>
+      <label for="u">Level u = <span id="uv">1.5</span></label>
       <input type="range" id="u" min="0.5" max="3" step="0.1" value="1.5">
-      <label>Slope c = <span id="cv">1.0</span> · rate β = <span id="bv">1.0</span></label>
-      <input type="range" id="c" min="0.3" max="2" step="0.1" value="1">
-      <input type="range" id="b" min="0.3" max="2" step="0.1" value="1">
-      <label>Offspring k = <span id="kv">2</span> · sibling correlation ρ = <span id="rv">0.0</span></label>
-      <input type="range" id="k" min="2" max="3" step="1" value="2">
-      <input type="range" id="r" min="-0.45" max="0.95" step="0.05" value="0">
-      <label>Parisian window h = <span id="hv">0.3</span></label>
+      <label for="c">Slope c = <span id="cv">1.0</span> · rate β = <span id="bv">1.0</span></label>
+      <input type="range" id="c" min="0.3" max="2" step="0.1" value="1" aria-label="Boundary slope c">
+      <input type="range" id="b" min="0.3" max="2" step="0.1" value="1" aria-label="Branching rate β">
+      <label for="k">Offspring k = <span id="kv">2</span> · sibling correlation ρ = <span id="rv">0.0</span></label>
+      <input type="range" id="k" min="2" max="3" step="1" value="2" aria-label="Offspring per split">
+      <input type="range" id="r" min="-0.45" max="0.95" step="0.05" value="0" aria-label="Sibling correlation ρ">
+      <label for="h">Parisian window h = <span id="hv">0.3</span></label>
       <input type="range" id="h" min="0" max="1" step="0.05" value="0.3">
       <div class="row"><button id="cont" class="on">fine grid δ = 0.01</button><button id="grid">grid δ = 0.1</button></div>
       <div class="row"><button id="run">Find trees</button><button id="next">Next tree</button><button id="pp">Pause</button></div>
@@ -140,8 +142,8 @@ function drawTree(){const cv=document.getElementById('ct'),ctx=cv.getContext('2d
     if(p.parent>=0&&p.birth<=f){ctx.fillStyle=d?'#1f5fa8':'#1f5fa8';ctx.beginPath();ctx.arc(X(p.birth),Y(p.x[0]),2,0,7);ctx.fill()}}
   // envelope in position space: Y(t)+ct
   ctx.strokeStyle=d?'#1f5fa8':'#1f5fa8';ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<=f;i++){const y=Y(tr.Y[i]+c*i*dt);i?ctx.lineTo(X(i),y):ctx.moveTo(X(i),y)}ctx.stroke();
-  if(f>=s0){ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=3;ctx.beginPath();for(let i=s0;i<=Math.min(f,s1);i++){const y=Y(tr.Y[i]+c*i*dt);i===s0?ctx.moveTo(X(i),y):ctx.lineTo(X(i),y)}ctx.stroke()}
-  if(gridMode){const g=Math.round(delta/dt);ctx.fillStyle=d?'#e0722a':'#e0722a';for(let i=0;i<=f;i+=g){ctx.beginPath();ctx.arc(X(i),Y(u+c*i*dt),2.5,0,7);ctx.fill()}}
+  if(!gridMode && f>=s0){ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=3;ctx.beginPath();for(let i=s0;i<=Math.min(f,s1);i++){const y=Y(tr.Y[i]+c*i*dt);i===s0?ctx.moveTo(X(i),y):ctx.lineTo(X(i),y)}ctx.stroke()}
+  if(gridMode){const g=Math.round(delta/dt);ctx.fillStyle=d?'#e0722a':'#e0722a';for(let i=s0;i<=Math.min(s1,f);i+=g){ctx.beginPath();ctx.arc(X(i),Y(tr.Y[i]+c*i*dt),2.5,0,7);ctx.fill()}}
   ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';const alive=tr.parts.filter(p=>p.birth<=f&&(p.alive||p.death>f)).length;
   ctx.fillText(`t = ${(f*dt).toFixed(2)}   particles alive: ${alive}   tree ${cur+1}/${trees.length}`,34,Hh-10);ctx.fillText('u + ct',X(f)-40,Y(u+c*f*dt)-8)}
 function drawEnv(){const cv=document.getElementById('ce'),ctx=cv.getContext('2d'),d=dark(),W=cv.width,Hh=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,Hh);const tr=trees[cur];if(!tr)return;
@@ -149,8 +151,8 @@ function drawEnv(){const cv=document.getElementById('ce'),ctx=cv.getContext('2d'
   ctx.fillStyle=d?'rgba(31,95,168,.3)':'rgba(31,95,168,.22)';for(let i=1;i<=f;i++)if(tr.Y[i]>u){ctx.fillRect(X(i-1),Y(tr.Y[i]),X(i)-X(i-1)+0.5,Y(u)-Y(tr.Y[i]))}
   ctx.setLineDash([5,4]);ctx.strokeStyle=d?'rgba(27,42,74,.6)':'rgba(27,42,74,.5)';ctx.beginPath();ctx.moveTo(X(0),Y(u));ctx.lineTo(X(n-1),Y(u));ctx.stroke();ctx.setLineDash([]);
   ctx.strokeStyle=d?'#1f5fa8':'#1f5fa8';ctx.lineWidth=1.8;ctx.beginPath();for(let i=0;i<=f;i++){i?ctx.lineTo(X(i),Y(tr.Y[i])):ctx.moveTo(X(i),Y(tr.Y[i]))}ctx.stroke();
-  const s0=tr.start,s1=s0+Math.round(duration()/dt);if(f>=s0){ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=3;ctx.beginPath();for(let i=s0;i<=Math.min(f,s1);i++){i===s0?ctx.moveTo(X(i),Y(tr.Y[i])):ctx.lineTo(X(i),Y(tr.Y[i]))}ctx.stroke()}
-  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';ctx.fillText('u',12,Y(u)+4);ctx.fillText('Y(t)',34,18)}
+  const s0=tr.start,s1=s0+Math.round(duration()/dt);if(!gridMode && f>=s0){ctx.strokeStyle=d?'#e0722a':'#e0722a';ctx.lineWidth=3;ctx.beginPath();for(let i=s0;i<=Math.min(f,s1);i++){i===s0?ctx.moveTo(X(i),Y(tr.Y[i])):ctx.lineTo(X(i),Y(tr.Y[i]))}ctx.stroke()}
+  ctx.fillStyle=d?'#5d6b85':'#5d6b85';ctx.font='12px Inter,sans-serif';if(gridMode){ctx.fillStyle='#e0722a';for(let i=s0;i<=Math.min(s1,f);i+=Math.round(delta/dt)){ctx.beginPath();ctx.arc(X(i),Y(tr.Y[i]),3,0,7);ctx.fill()}}ctx.fillText('u',12,Y(u)+4);ctx.fillText('Y(t)',34,18)}
 function drawHist(){const cv=document.getElementById('ch'),ctx=cv.getContext('2d'),d=dark(),W=cv.width,Hh=cv.height;ctx.fillStyle=d?'#ffffff':'#ffffff';ctx.fillRect(0,0,W,Hh);
   const T=horizon(),X=t=>24+(W-36)*t/T;const nb=24,hh=new Array(nb).fill(0);let m=1;for(const s of starts){const b=Math.min(nb-1,Math.floor(nb*s/T));hh[b]++;m=Math.max(m,hh[b])}
   ctx.fillStyle=d?'rgba(224,114,42,.7)':'rgba(224,114,42,.6)';for(let i=0;i<nb;i++){if(!hh[i])continue;const x=X(i*T/nb),w=(W-36)/nb-1,b=(Hh-50)*hh[i]/m;ctx.fillRect(x,Hh-26-b,w,b)}

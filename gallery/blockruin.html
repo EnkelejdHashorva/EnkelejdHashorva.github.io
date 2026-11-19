@@ -48,9 +48,11 @@
   .warn{color:var(--warn)}
   .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 </style>
+<link rel="stylesheet" href="illustrations.css">
+<script defer src="illustrations.js"></script>
 </head>
 <body>
-<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="top"><b><a href="../index.html" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="index.html">← all illustrations</a></div>
 <div class="wrap">
   <h1>Ruin in every block, ruin in every window</h1>
   <p class="lead">The loss process <span class="m">X(t) = B(t) − ct</span> of a Brownian risk model is watched over a horizon <span class="m">T = mh</span> cut into <span class="m">m</span> reporting blocks of length <span class="m">h</span>. <em>Block ruin</em> asks for an exceedance of the level <span class="m">u</span> in every block; <em>sliding-window ruin</em> asks for one in every window of length <span class="m">h</span>, wherever it is placed — equivalently, no recovery interval of length <span class="m">h</span>. Both probabilities are bounded by first-block ruin and hence by ordinary ruin on <span class="m">[0, T]</span>; they are not products of one-block probabilities. As <span class="m">u → ∞</span> with <span class="m">h, c, m</span> fixed, conditional on ruin in the first block, the first hit of <span class="m">u</span> concentrates just before <span class="m">h</span>; the strong Markov property there turns everything that follows into a finite-level event, so
@@ -60,27 +62,27 @@
 
   <div class="lay">
     <div>
-      <figure><canvas id="ct" width="1060" height="440"></canvas><figcaption id="capt">the loss X(t) = B(t) − ct over the m blocks; the level u dashed; failed attempts in grey; the first exceedance in each block marked, and the first hitting time τ<sub>u</sub> — which crowds against h as u grows</figcaption></figure>
+      <figure><canvas id="ct" width="1060" height="440"></canvas><figcaption id="capt">the loss X(t) = B(t) − ct over the m blocks; the level u dashed; failed attempts in grey; the first sampled exceedance in each block marked, and the first hitting time τ<sub>u</sub> — which crowds against h as u grows</figcaption></figure>
       <div class="two">
         <figure><canvas id="ce" width="700" height="220"></canvas><figcaption>frequencies for the piecewise-linear simulated paths, with Wilson uncertainty bars, against the continuous-path asymptotics 2GΨ((u+ch)/√h); ψ(u,h) is the exact continuous first-block probability</figcaption></figure>
-        <figure><canvas id="ch" width="340" height="220"></canvas><figcaption>grid-estimated first hitting times τ<sub>u</sub> of all paths ruined in block 1, whether or not later blocks are ruined; the curve is the continuous-time conditional density (inverse Gaussian restricted to [0,h]); the lemma says τ<sub>u</sub> | τ<sub>u</sub> &lt; h → h</figcaption></figure>
+        <figure><canvas id="ch" width="340" height="220"></canvas><figcaption>first hitting times of the polygonal paths, interpolated at the barrier, τ<sub>u</sub> of all paths ruined in block 1, whether or not later blocks are ruined; the curve is the continuous-time conditional density (inverse Gaussian restricted to [0,h]); the lemma says τ<sub>u</sub> | τ<sub>u</sub> &lt; h → h</figcaption></figure>
       </div>
       <div class="status" id="st"></div>
     </div>
     <div class="panel">
-      <label>Level u = <span id="uv">1.5</span></label>
+      <label for="u">Level u = <span id="uv">1.5</span></label>
       <input type="range" id="u" min="0.5" max="3" step="0.1" value="1.5">
-      <label>Premium rate c = <span id="cv">1.0</span></label>
+      <label for="c">Premium rate c = <span id="cv">1.0</span></label>
       <input type="range" id="c" min="0.2" max="1.5" step="0.1" value="1">
-      <label>Block length h = <span id="hv">1.0</span> · blocks m = <span id="mv">4</span></label>
-      <input type="range" id="h" min="0.5" max="2" step="0.1" value="1">
-      <input type="range" id="m" min="2" max="6" step="1" value="4">
-      <label>Replay speed ×<span id="sv">1.0</span></label>
+      <label for="h">Block length h = <span id="hv">1.0</span> · blocks m = <span id="mv">4</span></label>
+      <input type="range" id="h" min="0.5" max="2" step="0.1" value="1" aria-label="Block length h">
+      <input type="range" id="m" min="2" max="6" step="1" value="4" aria-label="Number of blocks m">
+      <label for="s">Replay speed ×<span id="sv">1.0</span></label>
       <input type="range" id="s" min="0.25" max="3" step="0.25" value="1">
       <div class="row"><button id="bbl" class="on">block ruin</button><button id="bsl">sliding window</button></div>
       <div class="row"><button id="run">Search</button><button id="next">Next path</button><button id="pp">Pause</button></div>
       <div class="regime" id="reg"></div>
-      <div class="note">Brownian increments are sampled at step h/200 and joined by straight lines. Block maxima and recovery intervals are evaluated on this polygonal path. The constants G<sub>m</sub>, G<sup>sl</sup><sub>m</sub> and J<sub>m</sub> = P{B(jh) − cjh &gt; 0, 1 ≤ j ≤ m−2} use 4 000 such paths; for m = 2 their exact values are 1. The estimates can be noisy or zero. The theoretical ordering is J<sub>m</sub> ≤ G<sup>sl</sup><sub>m</sub> ≤ G<sub>m</sub> ≤ 1. Interpolation misses Brownian fluctuations between samples; the sliding-event error has no asserted direction. A fixed mesh does not validate a high-level limit, and 2GΨ is an asymptotic, not a finite-level identity. Wilson bars are the usual fixed-sample approximation for sampling uncertainty; they do not account for numerical error or provide a sequential confidence guarantee. Brute-force search becomes slow when first-block ruin is rare.</div>
+      <div class="note">Brownian increments are sampled at step h/200 and joined by straight lines. Block maxima and recovery intervals are evaluated on this polygonal path. The constants G<sub>m</sub>, G<sup>sl</sup><sub>m</sub> and J<sub>m</sub> = P{B(jh) − cjh &gt; 0, 1 ≤ j ≤ m−2} use 4 000 such paths; for m = 2 their exact values are 1. The estimates can be noisy or zero. The theoretical ordering is J<sub>m</sub> ≤ G<sup>sl</sup><sub>m</sub> ≤ G<sub>m</sub> ≤ 1. Interpolation misses Brownian fluctuations between samples; the sliding-event error has no asserted direction. A fixed mesh does not validate a high-level limit, and 2GΨ is an asymptotic, not a finite-level identity. The status line also reports continuous-path estimates. One bridge crossing indicator per cell gives an exact-in-law block test. For each possible start cell, a crossing in the common interior of its length-h windows is sufficient, and a crossing in their union is necessary. The same indicators are reused in overlapping windows. The two resulting frequencies estimate lower and upper bounds on continuous sliding ruin and carry Monte Carlo error. Wilson bars are the usual fixed-sample approximation for sampling uncertainty; they do not account for numerical error or provide a sequential confidence guarantee. Brute-force search becomes slow when first-block ruin is rare.</div>
     </div>
   </div>
 </div>
@@ -115,8 +117,27 @@ function analyse(x){const N=m*K;const firsts=[];let block=true;
   for(let k=0;k<m;k++){let f=-1;for(let i=k*K;i<=(k+1)*K;i++){if(x[i]>u){f=i;break}}firsts.push(f);if(f<0)block=false}
   const M=windowMax(x,N);let minM=Infinity,arg=0;for(let i=0;i<M.length;i++)if(M[i]<minM){minM=M[i];arg=i}
   const recovery=recoveryInfo(x,N,u);
-  return {x,firsts,tau:firsts[0],block,sliding:recovery.sliding,M,minM,arg}}
+  const first=firsts[0];
+  const tau=first>0?first-1+(u-x[first-1])/(x[first]-x[first-1]):first;
+  return {x,firsts,tau,block,sliding:recovery.sliding,M,minM,arg}}
 
+// One bridge crossing indicator per cell, reused across all overlapping windows.
+function bridgeEvents(x){
+  const n=x.length-1, prefix=new Int32Array(n+1),dt=h/K;
+  for(let i=0;i<n;i++){
+    const a=u-x[i],b=u-x[i+1];
+    const crossed=a<=0||b<=0||Math.random()<Math.exp(-2*a*b/dt);
+    prefix[i+1]=prefix[i]+Number(crossed)
+  }
+  let block=true,inner=true,outer=true;
+  for(let j=0;j<n;j+=K)if(prefix[j+K]===prefix[j])block=false;
+  for(let j=0;j<n-K && outer;j++){
+    if(prefix[j+K]===prefix[j+1])inner=false;
+    if(prefix[j+K+1]===prefix[j])outer=false
+  }
+  return {block,inner,outer}
+}
+let bridgeBlock=0,bridgeInner=0,bridgeOuter=0;
 function computeConstants(){if(m===2){consts={G:1,Gs:1,J:1};return}
   const L=(m-1)*K,dt=h/K,sd=Math.sqrt(dt),R=4000;let cG=0,cS=0,cJ=0;const y=new Float64Array(L+1);
   for(let r=0;r<R;r++){for(let i=1;i<=L;i++)y[i]=y[i-1]+sd*randn()-c*dt;
@@ -126,9 +147,10 @@ function computeConstants(){if(m===2){consts={G:1,Gs:1,J:1};return}
     if(j)cJ++}
   consts={G:cG/R,Gs:cS/R,J:cJ/R}}
 
-function reset(){paths=[];cur=-1;frame=0;facc=0;holdUntil=0;att=0;nBl=0;nSl=0;nTau=0;sumTau=0;faint=[];drops=[];bins=new Array(NB).fill(0);computeConstants();regime();status()}
+function reset(){bridgeBlock=0;bridgeInner=0;bridgeOuter=0;paths=[];cur=-1;frame=0;facc=0;holdUntil=0;att=0;nBl=0;nSl=0;nTau=0;sumTau=0;faint=[];drops=[];bins=new Array(NB).fill(0);computeConstants();regime();status()}
 function searchBatch(){const t0=performance.now();let found=false;
-  while(performance.now()-t0<12){const a=analyse(simulate());att++;
+  while(performance.now()-t0<12){const a=analyse(simulate()),br=bridgeEvents(a.x);att++;
+    bridgeBlock+=br.block;bridgeInner+=br.inner;bridgeOuter+=br.outer;
     if(a.tau>=0){
       nTau++;sumTau+=a.tau;
       if(drops.length<40)drops.push({t:a.tau,y:0,v:0});
@@ -141,7 +163,8 @@ function searchBatch(){const t0=performance.now();let found=false;
     if(found)break}
   status()}
 
-function status(){const p=psiExact();let s=`attempts ${att.toLocaleString()} · block ruin ${nBl} (${att?fmt(nBl/att):'–'}) · sliding ${nSl} (${att?fmt(nSl/att):'–'})`;
+function status(){const p=psiExact();let s=`attempts ${att.toLocaleString()} · polygonal block ruin ${nBl} (${att?fmt(nBl/att):'–'}) · sliding ${nSl} (${att?fmt(nSl/att):'–'})`;
+  if(att)s+=`<br>Continuous Brownian bridge estimates · block ${fmt(bridgeBlock/att)} · sliding bracket ${fmt(bridgeInner/att)} to ${fmt(bridgeOuter/att)}`;
   if(p<1e-5)s+=` <span class="warn">— ψ(u,h) ≈ ${fmt(p)}: about one continuous first-block hit per ${Math.round(1/p).toLocaleString()} paths; the full event is rarer</span>`;
   $('st').innerHTML=s}
 function regime(){const z=(u+c*h)/Math.sqrt(h),L=lead(),p=psiExact();
@@ -248,7 +271,7 @@ requestAnimationFrame(loop);
 function bind(id,set,fmtv){const el=$(id);el.addEventListener('input',()=>{set(+el.value);$(id+'v').textContent=fmtv(+el.value);reset()})}
 bind('u',v=>u=v,v=>v.toFixed(1));bind('c',v=>c=v,v=>v.toFixed(1));bind('h',v=>h=v,v=>v.toFixed(1));bind('m',v=>m=v,v=>v);
 $('s').addEventListener('input',()=>{speed=+$('s').value;$('sv').textContent=speed.toFixed(2).replace(/0$/,'')});
-$('bbl').onclick=()=>{mode='block';$('bbl').classList.add('on');$('bsl').classList.remove('on');$('capt').innerHTML='the loss X(t) = B(t) − ct over the m blocks; the level u dashed; failed attempts in grey; the first exceedance in each block marked, and the first hitting time τ<sub>u</sub> — which crowds against h as u grows';reset()};
+$('bbl').onclick=()=>{mode='block';$('bbl').classList.add('on');$('bsl').classList.remove('on');$('capt').innerHTML='the loss X(t) = B(t) − ct over the m blocks; the level u dashed; failed attempts in grey; the first sampled exceedance in each block marked, and the first hitting time τ<sub>u</sub> — which crowds against h as u grows';reset()};
 $('bsl').onclick=()=>{mode='sliding';$('bsl').classList.add('on');$('bbl').classList.remove('on');$('capt').innerHTML='the loss X(t) = B(t) − ct; in orange the polygonal moving-window maximum at sampled window starts; survival is checked at all starts using interpolated recovery lengths; the weakest sampled-start window is boxed';reset()};
 $('run').onclick=()=>{searching=!searching;$('run').textContent=searching?'Searching…':'Search';$('run').classList.toggle('on',searching)};
 $('next').onclick=()=>{if(paths.length){cur=(cur+1)%paths.length;frame=0;facc=0;holdUntil=0}};

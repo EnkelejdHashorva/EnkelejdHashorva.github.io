@@ -48,18 +48,20 @@
   .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
   .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 </style>
+<link rel="stylesheet" href="illustrations.css">
+<script defer src="illustrations.js"></script>
 </head>
 <body>
-<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="top"><b><a href="../index.html" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="index.html">← all illustrations</a></div>
 <div class="wrap">
   <h1>Near misses that add up</h1>
-  <p class="lead">Lognormal risks <span class="m">e<sup>X<sub>j</sub></sup></span>, with <span class="m">X</span> Gaussian, are split into groups, and every group total must exceed a high level <span class="m">u</span>. Within a single group, a large total comes from its largest risk: the single-big-jump principle. Across groups this can fail. The paper shows that <span class="m">P(all group sums &gt; u) ∼ C<sub>*</sub> P(all group maxima &gt; u)</span> as <span class="m">u → ∞</span>, with a constant <span class="m">C<sub>*</sub> ≥ 1</span> determined by the cheapest Gaussian configurations. Here group 1 is one risk <span class="m">e<sup>X<sub>1</sub></sup></span>, and group 2 has two risks with <span class="m">X<sub>2</sub> = X<sub>1</sub> + cW<sub>2</sub></span> and <span class="m">X<sub>3</sub> = X<sub>1</sub> + cW<sub>3</sub></span>, where <span class="m">(W<sub>2</sub>, W<sub>3</sub>)</span> is standard Gaussian with correlation <span class="m">r</span>, independent of <span class="m">X<sub>1</sub></span>. The cheapest way to make both groups large is a single jump <span class="m">X<sub>1</sub> &gt; log u</span>. It also lifts both risks of group 2 to the level <span class="m">u</span>: given the jump, <span class="m">e<sup>X<sub>2</sub></sup>/u</span> and <span class="m">e<sup>X<sub>3</sub></sup>/u</span> converge in law to <span class="m">e<sup>cW<sub>2</sub></sup></span> and <span class="m">e<sup>cW<sub>3</sub></sup></span>. Group 2 then exceeds <span class="m">u</span> when one of its risks does, or when two near misses add up, so <span class="m">C<sub>*</sub> = P(e<sup>cW<sub>2</sub></sup> + e<sup>cW<sub>3</sub></sup> &gt; 1) / P(max(W<sub>2</sub>, W<sub>3</sub>) &gt; 0) &gt; 1</span>. In general, <span class="m">C<sub>*</sub> &gt; 1</span> exactly when such a boundary group contains at least two risks. With <span class="m">c = 1</span> and <span class="m">r = 0</span> this is Example 3.1 of the paper. In Example 3.2, three groups of two risks from a stationary Gaussian process, the middle group is the boundary group, with <span class="m">c = 1/√2</span> and <span class="m">r = 1/2</span>.
+  <p class="lead">Lognormal risks <span class="m">e<sup>X<sub>j</sub></sup></span>, with <span class="m">X</span> Gaussian, are split into groups, and every group total must exceed a high level <span class="m">u</span>. Within a single group, a large total comes from its largest risk: the single-big-jump principle. Across groups this can fail. The paper shows that <span class="m">P(all group sums &gt; u) ∼ C<sub>*</sub> P(all group maxima &gt; u)</span> as <span class="m">u → ∞</span>, with a constant <span class="m">C<sub>*</sub> ≥ 1</span> determined by the cheapest Gaussian configurations. Here group 1 is one risk <span class="m">e<sup>X<sub>1</sub></sup></span>, and group 2 has two risks with <span class="m">X<sub>2</sub> = X<sub>1</sub> + cW<sub>2</sub></span> and <span class="m">X<sub>3</sub> = X<sub>1</sub> + cW<sub>3</sub></span>, where <span class="m">(W<sub>2</sub>, W<sub>3</sub>)</span> is standard Gaussian with correlation <span class="m">r</span>, independent of <span class="m">X<sub>1</sub></span>. Exceedance in group 1 requires <span class="m">X<sub>1</sub> &gt; log u</span>. It also lifts both risks of group 2 to the level <span class="m">u</span>: conditional on this exceedance, <span class="m">e<sup>X<sub>2</sub></sup>/u</span> and <span class="m">e<sup>X<sub>3</sub></sup>/u</span> converge in law to <span class="m">e<sup>cW<sub>2</sub></sup></span> and <span class="m">e<sup>cW<sub>3</sub></sup></span>. Group 2 then exceeds <span class="m">u</span> when one of its risks does, or when two near misses add up, so <span class="m">C<sub>*</sub> = P(e<sup>cW<sub>2</sub></sup> + e<sup>cW<sub>3</sub></sup> &gt; 1) / P(max(W<sub>2</sub>, W<sub>3</sub>) &gt; 0) &gt; 1</span>. In general, <span class="m">C<sub>*</sub> &gt; 1</span> exactly when such a boundary group contains at least two risks. With <span class="m">c = 1</span> and <span class="m">r = 0</span> this is Example 3.1 of the paper. In Example 3.2, three groups of two risks from a stationary Gaussian process, the middle group is the boundary group, with <span class="m">c = 1/√2</span> and <span class="m">r = 1/2</span>.
   From <a href="../papers/agg_lognormal.pdf" target="_blank" rel="noopener">E. Hashorva</a>, <em>Aggregating lognormal risks in groups: joint tails and copulas</em>.</p>
 
   <div class="lay">
     <div>
       <div class="two">
-        <figure><canvas id="cz" role="img" aria-label="The boundary group after the jump"></canvas><figcaption>after the jump in group 1: the two risks of group 2 on the log scale, <span class="m">X<sub>2</sub> − log u ≈ cW<sub>2</sub></span> and <span class="m">X<sub>3</sub> − log u ≈ cW<sub>3</sub></span>. Blue: one risk exceeds <span class="m">u</span>. Orange: neither does, but their sum does; the orange curve is where the sum equals <span class="m">u</span>. Ellipses hold 50%, 90% and 99% of the Gaussian mass.</figcaption></figure>
+        <figure><canvas id="cz" role="img" aria-label="The boundary group after the jump"></canvas><figcaption>after the jump in group 1: the two risks of group 2 on the log scale, <span class="m">X<sub>2</sub> − log u ≈ cW<sub>2</sub></span> and <span class="m">X<sub>3</sub> − log u ≈ cW<sub>3</sub></span>. Blue: one risk exceeds <span class="m">u</span>. Orange: neither does, but their sum does; the orange curve is where the sum equals <span class="m">u</span>. The three complete ellipses enclose 50%, 90% and 99% of the Gaussian mass. The axes expand with the spread so that all three stay visible.</figcaption></figure>
         <figure><canvas id="cc" role="img" aria-label="The constant C star against the spread c"></canvas><figcaption>the constant <span class="m">C<sub>*</sub></span> against the spread <span class="m">c</span>, for the current <span class="m">r</span> (dark) and for <span class="m">r = 0</span> and <span class="m">r = 1/2</span> (light), with Examples 3.1 and 3.2 of the paper marked. As <span class="m">c → 0</span> it tends to <span class="m">1/P(max(W<sub>2</sub>, W<sub>3</sub>) &gt; 0)</span> (dashed); as <span class="m">c</span> grows, near misses become rare and <span class="m">C<sub>*</sub> → 1</span>.</figcaption></figure>
       </div>
     </div>
@@ -117,7 +119,6 @@ function canvas(id,aspect){
   ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.font='12px '+FONT;return{ctx,w,h,cv};
 }
 function halo(ctx,t,x,y,bg){ctx.strokeStyle=bg;ctx.strokeText(t,x,y);ctx.fillText(t,x,y)}
-function plate(ctx,t,x,y,bg){const f=ctx.fillStyle;ctx.fillStyle=bg;ctx.fillRect(x-3,y-11,ctx.measureText(t).width+6,15);ctx.fillStyle=f;ctx.fillText(t,x,y)}
 // Canvas aspect that makes the plot area of the plane square (left+right margins 46, top+bottom 42), so circles look round.
 const sqAspect=id=>{const w=$(id).clientWidth||1;return (w-4)/w};
 function niceStep(range,n){const raw=range/n,p=Math.pow(10,Math.floor(Math.log10(raw)));for(const m of [1,2,2.5,5,10])if(m*p>=raw)return m*p;return 10*p}
@@ -125,7 +126,9 @@ function niceStep(range,n){const raw=range/n,p=Math.pow(10,Math.floor(Math.log10
 // Left: the boundary group of the dominant configuration.
 function drawPlane(c,r){
   const {ctx,w,h,cv}=canvas('cz',sqAspect('cz'));
-  const L=34,R=12,T=12,B=30,pw=w-L-R,ph=h-T-B,lo=-3,hi=2;
+  const L=34,R=12,T=12,B=30,pw=w-L-R,ph=h-T-B;
+  const extent=Math.max(1,Math.ceil(3.06*c*2)/2), lo=-extent, hi=extent;
+  const tick=niceStep(hi-lo,6);
   const X=v=>L+pw*(v-lo)/(hi-lo),Y=v=>T+ph*(hi-v)/(hi-lo);
   ctx.save();ctx.beginPath();ctx.rect(L,T,pw,ph);ctx.clip();
   // a single risk exceeds u: max > 0
@@ -153,16 +156,11 @@ function drawPlane(c,r){
   ctx.strokeStyle=COL.ink;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(X(0),T);ctx.lineTo(X(0),T+ph);ctx.moveTo(L,Y(0));ctx.lineTo(L+pw,Y(0));ctx.stroke();
   ctx.strokeStyle=COL.line;ctx.strokeRect(L+0.5,T+0.5,pw-1,ph-1);
   ctx.fillStyle=COL.muted;ctx.textAlign='center';
-  for(let v=lo;v<=hi;v++){ctx.fillText(String(v).replace('-','−'),X(v),T+ph+15)}
-  ctx.textAlign='right';for(let v=lo;v<=hi;v++){if(v!==lo)ctx.fillText(String(v).replace('-','−'),L-6,Y(v)+4)}
+  for(let v=Math.ceil(lo/tick)*tick;v<=hi+1e-9;v+=tick){ctx.fillText(String(Number(v.toFixed(2))).replace('-','−'),X(v),T+ph+15)}
+  ctx.textAlign='right';for(let v=Math.ceil(lo/tick)*tick;v<=hi+1e-9;v+=tick){if(v!==lo)ctx.fillText(String(Number(v.toFixed(2))).replace('-','−'),L-6,Y(v)+4)}
   ctx.textAlign='center';ctx.fillText('X₂ − log u',L+pw/2,h-3);
   ctx.save();ctx.translate(11,T+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('X₃ − log u',0,0);ctx.restore();
-  // labels on a plate in the colour behind them, so that no ellipse runs through the text
-  ctx.textAlign='left';ctx.font='500 12px '+FONT;
-  ctx.fillStyle=COL.blue;plate(ctx,'one risk exceeds u',X(0.15),T+16,'#e2eaf4');
-  ctx.fillStyle='#b3561a';plate(ctx,'near misses',X(-2.9),Y(-1.25),'#fff');plate(ctx,'that add up ↗',X(-2.9),Y(-1.25)+15,'#fff');
-  const ys=-2.55,xs=X(Math.log(-Math.expm1(ys)))-8;plate(ctx,'sum = u',xs-ctx.measureText('sum = u').width,Y(ys)+4,'#fff');
-  ctx.font='12px '+FONT;
+  // Put the region key in the caption and table so labels never cover the ellipses.
   cv.setAttribute('aria-label','Boundary group after the jump: c = '+c.toFixed(2)+', r = '+r.toFixed(2));
 }
 
@@ -201,14 +199,17 @@ function update(){
   $('cv').textContent=Math.abs(c-Math.SQRT1_2)<1e-9?'1/√2 ≈ 0.71':c.toFixed(2);$('rv').textContent=r.toFixed(2).replace('-','−');
   const pm=pMax(r),ps=1-pLe(c,r),cs=ps/pm;
   $('cs').textContent=cs.toFixed(4);$('pm').textContent=pm.toFixed(4);$('pn').textContent=(ps-pm).toFixed(4);$('ps').textContent=ps.toFixed(4);
-  $('reg').innerHTML='Given that both group sums exceed <span class="m">u</span>, both group maxima exceed <span class="m">u</span> as well with probability tending to <span class="m">1/C<sub>*</sub></span> = '+(1/cs).toFixed(4)+'. In the remaining cases the near misses carry group 2.';
+  $('reg').innerHTML='Given that both group sums exceed <span class="m">u</span>, both group maxima exceed <span class="m">u</span> as well with probability tending to <span class="m">1/C<sub>*</sub></span> = '+(1/cs).toFixed(4)+'. The remaining '+(100*(1-1/cs)).toFixed(1)+'% are near misses: both sums exceed the level while the second group maximum falls short.';
   drawPlane(c,r);drawCurve(c,r,cs);
 }
 $('c').addEventListener('input',e=>{state.c=+e.target.value;update()});
 $('r').addEventListener('input',e=>{state.r=+e.target.value;update()});
 $('ex1').onclick=()=>{state.c=1;state.r=0;$('c').value=1;$('r').value=0;update()};
 $('ex2').onclick=()=>{state.c=Math.SQRT1_2;state.r=0.5;$('c').value=0.71;$('r').value=0.5;update()};
-let rt;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(update,30)}).observe(document.querySelector('.lay'));
+let rt;
+function resized(){clearTimeout(rt);rt=setTimeout(update,30);}
+if ('ResizeObserver' in window) new ResizeObserver(resized).observe(document.querySelector('.lay'));
+else window.addEventListener('resize',resized);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(update);
 update();
 </script>

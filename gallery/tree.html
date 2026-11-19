@@ -37,11 +37,13 @@
   .math{font-family:Newsreader,serif;font-style:italic}
   .note{font-size:13px;color:var(--muted);margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
   .legend{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--muted)}
-  .bar{flex:1;height:8px;border-radius:4px;background:linear-gradient(90deg,#222a4e,#1f5fa8,#e0722a)}
+  .bar{flex:1;height:8px;border-radius:4px;background:linear-gradient(90deg,#e2e9f5,#1f5fa8,#e0722a)}
 </style>
+<link rel="stylesheet" href="illustrations.css">
+<script defer src="illustrations.js"></script>
 </head>
 <body>
-<div class="top"><b><a href="../" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="./">← all illustrations</a></div>
+<div class="top"><b><a href="../index.html" style="color:inherit">E. Hashorva</a> · Gallery</b><a href="index.html">← all illustrations</a></div>
 <div class="wrap">
   <h1>A branch-stationary max-stable field on a binary tree</h1>
   <p class="lead">Vertices are words over the alphabet {L, R}. Along each edge an independent Gaussian increment with variance <span class="math">Δ</span> is added, giving a branching random walk <span class="math">W</span>. The field is
@@ -50,7 +52,7 @@
   <div class="lay">
     <div>
       <canvas id="c" width="1200" height="800"></canvas>
-      <div class="legend" id="lg" style="visibility:hidden"><span>low</span><div class="bar"></div><span>high</span></div>
+      <div class="legend" id="lg" style="visibility:hidden"><span id="low">low</span><div class="bar"></div><span id="high">high</span></div>
     </div>
     <div class="panel">
       <label>Colour</label>
@@ -58,37 +60,45 @@
         <button id="mVal">log η<sub>v</sub></button>
         <button id="mWin" class="on">winning point i</button>
       </div>
-      <label>Edge variance Δ = <span id="dv">1.0</span></label>
+      <label for="d">Edge variance Δ = <span id="dv">1.0</span></label>
       <input type="range" id="d" min="0.1" max="3" step="0.1" value="1">
-      <label>Depth = <span id="hv">6</span></label>
+      <label for="h">Depth = <span id="hv">6</span></label>
       <input type="range" id="h" min="3" max="9" step="1" value="6">
-      <label>Poisson points retained = <span id="nv">40</span></label>
+      <label for="n">Poisson points retained = <span id="nv">40</span></label>
       <input type="range" id="n" min="5" max="150" step="5" value="40">
       <div class="row">
         <button id="re">Resample</button>
         <button id="zoom">Zoom into a random subtree</button>
         <button id="reset">Whole tree</button>
       </div>
-      <div class="note" id="info">Small Δ: the same Poisson point tends to win everywhere (one colour). Large Δ: the winning point changes from branch to branch — the colours form smaller patches as the branching random walk spreads out. This does not assert independence. With finitely many Poisson points the maxima are underestimated, especially far from the root when Δ is large; this approximation is not itself branch-stationary. Increase the retained count to reduce truncation. Value colours are scaled within the displayed subtree.</div>
+      <div class="note" id="info">Small Δ: the same Poisson point tends to win everywhere (one colour). Large Δ: the winning point changes from branch to branch — the colours form smaller patches as the branching random walk spreads out. This does not assert independence. With finitely many Poisson points the maxima are underestimated, especially far from the root when Δ is large; this approximation is not itself branch-stationary. Change the retained count to compare nested sets of Poisson points in the same realisation. Each extra point can only raise a vertex maximum. The value scale shows the minimum and maximum log η in the displayed subtree.</div>
     </div>
   </div>
 </div>
 <script>
 const cv=document.getElementById('c'),ctx=cv.getContext('2d');
 let mode='win',D=1,H=6,N=40,root='';
-let nodes=[],eta,win,state;
+let eta,win,state={root:1},logPoints=[],walks=[];
 function randn(){let u=1-Math.random(),v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
-function build(){ // complete binary tree, nodes indexed 1..2^(H+1)-1 (heap order)
-  const M=(1<<(H+1))-1; state={M};
-  // Poisson points P_i = 1/Gamma_i
-  let G=0; const P=[]; for(let i=0;i<N;i++){G+=-Math.log(Math.max(Number.MIN_VALUE,Math.random()));P.push(1/G)}
-  eta=new Float64Array(M+1).fill(-Infinity); win=new Int16Array(M+1);
-  for(let i=0;i<N;i++){
-    const W=new Float64Array(M+1); W[1]=0;
-    for(let v=2;v<=M;v++){W[v]=W[v>>1]+Math.sqrt(D)*randn()}
-    for(let v=1;v<=M;v++){
-      const depth=Math.floor(Math.log2(v));
-      const z=Math.log(P[i])+W[v]-D*depth/2;
+function sample(){
+  const maxPoints=150,maxNodes=1023;
+  let gamma=0;
+  logPoints=[];walks=[];
+  for(let i=0;i<maxPoints;i++){
+    gamma-=Math.log(Math.max(Number.MIN_VALUE,Math.random()));
+    logPoints.push(-Math.log(gamma));
+    const walk=new Float64Array(maxNodes+1);
+    for(let v=2;v<=maxNodes;v++)walk[v]=walk[v>>1]+randn();
+    walks.push(walk);
+  }
+}
+function build(){
+  const M=(1<<(H+1))-1,scale=Math.sqrt(D);
+  eta=new Float64Array(M+1).fill(-Infinity);win=new Int16Array(M+1);
+  for(let v=1;v<=M;v++){
+    const drift=D*Math.floor(Math.log2(v))/2;
+    for(let i=0;i<N;i++){
+      const z=logPoints[i]+scale*walks[i][v]-drift;
       if(z>eta[v]){eta[v]=z;win[v]=i}
     }
   }
@@ -109,10 +119,11 @@ function draw(){
   // normalisation of values inside the displayed subtree
   let lo=Infinity,hi=-Infinity; const list=[];
   (function rec(v,d){ if(d>levels) return; list.push([v,d]); lo=Math.min(lo,eta[v]);hi=Math.max(hi,eta[v]); rec(v*2,d+1);rec(v*2+1,d+1)})(r,0);
+  document.getElementById("low").textContent=lo.toFixed(2);document.getElementById("high").textContent=hi.toFixed(2);
   const pos=v=>{ const d=Math.floor(Math.log2(v))-dr; const idx=v-(r<<d); const n=1<<d; return [pad+(W-2*pad)*(idx+.5)/n, pad+d*dy]};
   ctx.lineWidth=1; ctx.strokeStyle=dark?'rgba(27,42,74,.18)':'rgba(27,42,74,.18)';
   for(const [v,d] of list){ if(d===0) continue; const [x,y]=pos(v),[px,py]=pos(v>>1); ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(x,y);ctx.stroke()}
-  for(const [v,d] of list){ const [x,y]=pos(v); const rad=Math.max(3.5,11-1.2*d);
+  for(const [v,d] of list){ const [x,y]=pos(v); const rad=Math.min(11-1.2*d,(W-2*pad)/(1<<d)*0.45);
     ctx.beginPath();ctx.arc(x,y,rad,0,7);
     ctx.fillStyle= mode==='val'?colVal((eta[v]-lo)/(hi-lo+1e-9)):colWin(win[v]); ctx.fill()}
   ctx.fillStyle=dark?'#5d6b85':'#5d6b85'; ctx.font='13px Inter,sans-serif';
@@ -124,13 +135,13 @@ const $=id=>document.getElementById(id);
 $('d').oninput=e=>{D=+e.target.value;$('dv').textContent=D.toFixed(1);all()};
 $('h').oninput=e=>{H=+e.target.value;$('hv').textContent=H;state.root=1;all()};
 $('n').oninput=e=>{N=+e.target.value;$('nv').textContent=N;all()};
-$('re').onclick=all;
+$('re').onclick=()=>{sample();all()};
 $('mVal').onclick=()=>{mode='val';$('mVal').classList.add('on');$('mWin').classList.remove('on');$('lg').style.visibility='visible';draw()};
 $('mWin').onclick=()=>{mode='win';$('mWin').classList.add('on');$('mVal').classList.remove('on');$('lg').style.visibility='hidden';draw()};
 $('zoom').onclick=()=>{const d=Math.min(3,H-2);const lo=1<<d;state.root=lo+Math.floor(Math.random()*lo);draw()};
 $('reset').onclick=()=>{state.root=1;draw()};
 
-build();draw();
+sample();build();draw();
 </script>
 </body>
 </html>
